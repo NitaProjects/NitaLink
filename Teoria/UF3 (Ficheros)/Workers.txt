@@ -1,0 +1,14 @@
+prog_001;frontend;1000;600
+prog_002;frontend;6000;200
+prog_003;frontend;3000;1000
+admin_001;systems;2500;600
+admin_002;systems;1500;1000
+admin_003;systems;4000;500
+prog_004;backend;5000;500
+prog_005;backend;1500;1000
+prog_006;backend;3500;100
+dvop_001;devops;6000;400
+dvop_002;devops;4500;500
+dvop_003;devops;3500;1000
+prodman_001;managment;8000;3000
+prodman_002;managment;8500;1500

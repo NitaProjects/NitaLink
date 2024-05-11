@@ -1,0 +1,69 @@
+
+h1 {
+    text-align: center; /* Centrar el título */
+    color: #2c3e50; /* Color oscuro pero suave para el título */
+    margin-bottom: 20px; /* Espacio debajo del título */
+}
+
+table {
+    width: 100%; /* Ocupar todo el ancho disponible */
+    border-collapse: collapse; /* Eliminar dobles bordes */
+    margin: 20px; /* Espacio debajo de la tabla */
+}
+
+table, th, td {
+    border: 1px solid #ccc; /* Bordes suaves para las celdas y la tabla */
+    padding: 8px; /* Espaciado dentro de cada celda */
+    text-align: left; /* Alineación del texto a la izquierda */
+}
+
+thead {
+    background-color: #2980b9; /* Fondo oscuro para el encabezado de la tabla */
+    color: white; /* Texto blanco para contraste */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ecf0f1; /* Fondo zebra para mejorar la legibilidad */
+}
+
+tbody tr:hover {
+    background-color: #bdc3c7; /* Color de fondo al pasar el mouse */
+}
+
+th {
+    text-align: center; /* Centrar texto en los encabezados */
+}
+
+@media (max-width: 768px) {
+    /* Estilos para dispositivos móviles */
+    table, thead, tbody, th, td, tr { 
+        display: block; /* Cambiar la visualización a bloque para responsividad */
+    }
+
+    thead tr {
+        position: absolute; /* Posicionar el encabezado fuera de la vista */
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr { border: 1px solid #ccc; } /* Añadir bordes a cada fila */
+
+    td {
+        border: none; /* Eliminar bordes de las celdas */
+        position: relative; /* Posicionamiento relativo para los pseudoelementos */
+        padding-left: 50%; /* Espacio a la izquierda para texto */
+        text-align: right; /* Alineación del texto a la derecha */
+    }
+
+    td:before {
+        /* Pseudo-elemento para mostrar el nombre del campo */
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%; /* Ancho del label */
+        padding-left: 15px; /* Espacio interior izquierdo */
+        font-weight: bold; /* Texto en negrita */
+        text-align: left; /* Alineación del texto a la izquierda */
+    }
+}
+

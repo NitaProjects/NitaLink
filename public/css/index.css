@@ -1,0 +1,105 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* ensures padding doesn't affect width */
+    font-family: 'Poppins';
+}
+
+@font-face {
+    font-family: 'Poppins'; 
+    src: url('../assets/Poppins-MediumItalic.ttf');
+}
+
+body {
+    background: linear-gradient(135deg, #f0f4f8, #cfe0e8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+    text-align: center;
+    position: relative;
+}
+
+header {
+    width: 100%;
+    background: #2f4f6f;
+    color: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #f4d03f;
+}
+
+main {
+    flex-grow: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; 
+}
+
+.video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; 
+    object-fit: cover; 
+    z-index: -1; 
+}
+
+#login {
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* More pronounced shadow for better visibility */
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    text-align: left;
+    z-index: 10; /* Ensures the form is above the video */
+}
+
+#login h2, #login form label, #login form button {
+    color: #2f4f6f; /* Consistent color scheme */
+}
+
+#login form input, #login form button {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#login form input:focus, #login form button:hover {
+    border-color: #f4d03f;
+    background: #f4d03f;
+    color: #2f4f6f;
+}
+
+footer {
+    width: 100%;
+    background: #2f4f6f;
+    color: #fff;
+    padding: 1rem;
+}

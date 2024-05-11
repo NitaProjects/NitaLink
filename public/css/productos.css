@@ -1,0 +1,99 @@
+/* public/css/productosCliente.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins';
+}
+@font-face {
+    font-family: 'Poppins';
+    src: url('../../public/assets/Poppins-MediumItalic.ttf');
+}
+
+body {
+    background: #f0f4f8; /* Color de fondo suave */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+    text-align: center;
+    position: relative;
+}
+
+header {
+    width: 100%;
+    background: #333; /* Fondo oscuro para la barra de navegación */
+    color: white;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: #555;
+}
+
+main {
+    padding: 2rem 0;
+    flex-grow: 1;
+    width: 90%; /* Limitar el ancho del contenido principal */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+main .video {
+    position: fixed; /* Fijo para que cubra toda la pantalla detrás del contenido */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1; /* Asegurarse de que está detrás de todo */
+}
+
+.productos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.producto {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    width: 300px; /* Tamaño fijo para cada tarjeta de producto */
+    text-align: center;
+}
+
+.producto img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+footer {
+    width: 100%;
+    background: #333;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}

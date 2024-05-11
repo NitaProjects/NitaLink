@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a NitaLink</title>
+    <link rel="stylesheet" href="public/css/index.css">
+</head>
+<body>
+    <header> 
+        <nav>
+            <ul>
+                <li><a href="views/stakeholders/users/newUserView.php">Registrar-se</a></li>
+                <li><a href="views/tests/dashboardTests.php">Dashboard Tests</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <video class="video" preload="auto" muted playsinline autoplay loop>
+            <source type="video/mp4" src="public/assets/home_1.mp4">
+        </video>
+        <section id="login">
+            <h2>Iniciar sesión</h2>
+            <form action="controllers/AccessController.php" method="POST">
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" name="username" required autocomplete = off>
+                
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+                
+                <button type="submit">Iniciar Sesión</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 NitaLink. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
