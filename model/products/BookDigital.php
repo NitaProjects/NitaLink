@@ -17,10 +17,10 @@ class BookDigital extends Product {
     protected DateTime $publishDate;
     protected DateTime $availabilityDate;
 
-    public function __construct(int $productId, string $name, float $price, int $quantity, string $author, int $pages, string $publisher, string $publishDate, string $availabilityDate) {
+    public function __construct(int $productId, string $name, float $price, int $quantity, $isbn, string $author, int $pages, string $publisher, string $publishDate, string $availabilityDate) {
         $message = "";
         try {
-            parent::__construct($productId, $name, $price, $quantity);
+            parent::__construct($productId, $name, $price, $quantity, $isbn);
         } catch (CheckException $e) {
             $message .= $e->getMessage();  
         }
@@ -124,7 +124,7 @@ class BookDigital extends Product {
         $error = Checker::checkDate($date);
         if ($error == 0) {
             $this->availabilityDate = DateTime::createFromFormat('d/m/Y', $date);
-            if ($this->availabilityDate > $this->publishDate){
+            if ($this->availabilityDate < $this->publishDate){
                 return $error;
             }   
         }
@@ -132,7 +132,7 @@ class BookDigital extends Product {
     }
    
     public function getDetails(): string {
-        $details = "Libro: {$this->name}, Autor: {$this->author}, Páginas: {$this->pages}, Editorial: {$this->publisher}, Precio: {$this->price}€";
+        $details = "Libro: {$this->name}, ISBN: {$this->isbn}, Autor: {$this->author}, Páginas: {$this->pages}, Editorial: {$this->publisher}, Precio: {$this->price}€";
         if ($this->publishDate) {
             $details .= ", Fecha de publicación: " . $this->publishDate->format('d/m/Y');
         }

@@ -18,10 +18,10 @@ class BookPhysical extends Product implements Storable {
     protected DateTime $availabilityDate;
     protected PhysicalData $physicalData;
 
-    public function __construct(int $productId, string $name, float $price, int $quantity, string $author, int $pages, string $publisher, string $publishDate, string $availabilityDate, float $height, float $width, float $length, float $weight, bool $fragile) {
+    public function __construct(int $productId, string $name, float $price, int $quantity, $isbn, string $author, int $pages, string $publisher, string $publishDate, string $availabilityDate, float $height, float $width, float $length, float $weight, bool $fragile) {
         $message = "";
         try {
-            parent::__construct($productId, $name, $price, $quantity);
+            parent::__construct($productId, $name, $price, $quantity, $isbn);
         } catch (CheckException $e) {
             $message .= $e->getMessage();  
         }
@@ -160,7 +160,7 @@ class BookPhysical extends Product implements Storable {
         $error = Checker::checkDate($date);
         if ($error == 0) {
             $this->availabilityDate = DateTime::createFromFormat('d/m/Y', $date);
-            if ($this->availabilityDate > $this->publishDate){
+            if ($this->availabilityDate < $this->publishDate){
                 return $error;
             }   
         }
@@ -168,7 +168,7 @@ class BookPhysical extends Product implements Storable {
     }
 
     public function getDetails(): string {
-        $details = "Libro: {$this->name}, Autor: {$this->author}, Páginas: {$this->pages}, Editorial: {$this->publisher}, Precio: {$this->price}€";
+        $details = "Libro: {$this->name}, ISBN: {$this->isbn}, Autor: {$this->author}, Páginas: {$this->pages}, Editorial: {$this->publisher}, Precio: {$this->price}€";
         if ($this->publishDate) {
             $details .= ", Fecha de publicación: " . $this->publishDate->format('Y-m-d');
         }

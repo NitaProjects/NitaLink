@@ -15,6 +15,7 @@
         <input type="text" name="title" placeholder="Título del Libro"><br>
         <input type="text" name="price" placeholder="Precio"><br>
         <input type="text" name="quantity" placeholder="Cantidad"><br>
+        <input type="text" name="isbn" placeholder="ISBN"><br>
         <input type="text" name="author" placeholder="Autor"><br>
         <input type="number" name="pages" placeholder="Número de Páginas"><br>
         <input type="text" name="publisher" placeholder="Editorial"><br>

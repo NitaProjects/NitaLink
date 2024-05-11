@@ -9,6 +9,7 @@ require_once '../../model/products/PhysicalData.php';
 $name = filter_input(INPUT_POST, 'title');
 $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
 $quantity = filter_input(INPUT_POST, 'quantity');
+$isbn = filter_input(INPUT_POST, 'isbn');
 $author = filter_input(INPUT_POST, 'author');
 $pages = filter_input(INPUT_POST, 'pages', FILTER_VALIDATE_INT);
 $publisher = filter_input(INPUT_POST, 'publisher');
@@ -27,7 +28,7 @@ $isFragile = filter_input(INPUT_POST, 'isFragile') === "on" ? true : false;
 
 if ($physicalData){
     try {
-    $book = new BookPhysical(1, $name, $price, $quantity, $author, $pages, $publisher, $publishDate, $availabilityDate, $height, $width, $length, $weight, $isFragile);
+    $book = new BookPhysical(1, $name, $price, $quantity, $isbn, $author, $pages, $publisher, $publishDate, $availabilityDate, $height, $width, $length, $weight, $isFragile);
     echo "Libro registrado con éxito.<br>";
     echo "Libro registrado con éxito.<br>";
     echo "Fecha de publicación: " . $book->getPublishDate() . "<br>";
@@ -47,7 +48,7 @@ if ($physicalData){
 }
 else {
     try {
-    $book = new BookDigital(1, $name, $price, $quantity, $author, $pages, $publisher, $publishDate, $availabilityDate);
+    $book = new BookDigital(1, $name, $price, $quantity, $isbn, $author, $pages, $publisher, $publishDate, $availabilityDate);
     echo "Libro registrado con éxito.<br>";
     echo "Fecha de publicación: " . $book->getPublishDate() . "<br>";
     echo "Fecha de disponibilidad: " . $book->getAvailabilityDate() . "<br>";
