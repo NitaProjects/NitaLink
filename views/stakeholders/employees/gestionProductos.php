@@ -23,7 +23,7 @@
         </video>
         <section id="lista-productos">
             <h2>Inventario de Productos</h2>
-            <button onclick="showAddForm()">Añadir Producto</button>
+            
             <table>
                 <thead>
                     <tr>
@@ -31,36 +31,45 @@
                         <th>Nombre</th>
                         <th>Precio</th>
                         <th>Cantidad</th>
+                        <th>Categoría</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Ejemplo de fila de producto -->
-                    <tr>
-                        <td>2001</td>
-                        <td>Laptop HP</td>
-                        <td>$1200.00</td>
-                        <td>15</td>
-                        <td>
-                            <button onclick="toggleEditForm('edit-product-2001')">Editar</button>
-                            <button onclick="deleteProduct(2001)">Borrar</button>
-                        </td>
-                    </tr>
-                    <tr id="edit-product-2001" class="edit-form" style="display:none;">
-                        <td colspan="5">
-                            <form action="update_producto.php" method="post">
-                                <input type="hidden" name="producto_id" value="2001">
-                                <label>Nombre: <input type="text" name="nombre" value="Laptop HP"></label>
-                                <label>Precio: <input type="text" name="precio" value="$1200.00"></label>
-                                <label>Cantidad: <input type="number" name="cantidad" value="15"></label>
-                                <button type="submit">Guardar Cambios</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <!-- Más productos -->
+                    <?php
+                    require_once '../../persistence/MySQLAdapter.php';
+                    require_once '../../persistence/MySQLBookAdapter.php';
+                    $adapter = new MysqlBookAdapter();
+                    $products = $adapter->fetchAllProducts(); 
+                    foreach ($products as $product) {
+                        echo "<tr>";
+                        echo "<td>{$product['product_id']}</td>";
+                        echo "<td>{$product['name']}</td>";
+                        echo "<td>\${$product['price']}</td>";
+                        echo "<td>{$product['quantity']}</td>";
+                        echo "<td>{$product['product_type']}</td>";
+                        echo "<td>
+                                <button onclick=\"toggleEditForm('edit-product-{$product['product_id']}')\">Editar</button>
+                                <button onclick=\"deleteProduct({$product['product_id']})\">Borrar</button>
+                              </td>";
+                        echo "</tr>";
+                        echo "<tr id='edit-product-{$product['product_id']}' class='edit-form' style='display:none;'>
+                                <td colspan='5'>
+                                    <form action='update_producto.php' method='post'>
+                                        <input type='hidden' name='producto_id' value='{$product['product_id']}'>
+                                        <label>Nombre: <input type='text' name='nombre' value='{$product['name']}'></label>
+                                        <label>Precio: <input type='text' name='precio' value='{$product['price']}'></label>
+                                        <label>Cantidad: <input type='number' name='cantidad' value='{$product['quantity']}'></label>
+                                        <button type='submit'>Guardar Cambios</button>
+                                    </form>
+                                </td>
+                              </tr>";
+                    }
+                    ?>
                 </tbody>
             </table>
         </section>
+        <button onclick="showAddForm()">Añadir Producto</button>
         <div id="new-product-form" style="display:none;">
             <form action="add_producto.php" method="post">
                 <label>Nombre: <input type="text" name="nombre" required></label>

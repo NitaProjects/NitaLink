@@ -11,9 +11,9 @@ class Product implements Marketable {
     protected string $name;
     protected float $price;
     protected int $quantity;
-    protected string $isbn;
+    
 
-    public function __construct(int $productId, string $name, float $price, int $quantity, string $isbn) {
+    public function __construct(int $productId, string $name, float $price, int $quantity) {
         $message = "";
         if ($this->setProductId($productId) != 0) {
             $message .= "-ID producto incorrecto <br>";
@@ -26,9 +26,6 @@ class Product implements Marketable {
         }
         if ($this->setQuantity($quantity) != 0) {
             $message .= "-Cantidad producto incorrecto <br>";
-        }
-        if ($this->setIsbn($isbn) != 0) {
-            $message .= "-ISBN incorrecto <br>";
         }
         if (strlen($message) > 0) {
             throw new CheckException($message);
@@ -135,13 +132,4 @@ class Product implements Marketable {
         }
         return $error;
     }
-    
-    private function setIsbn(string $isbn): int {
-        $error = Checker::checkISBN($isbn);
-        if($error == 0){
-            $this->isbn = $isbn;
-        }
-        return $error;
-    }
-
 }

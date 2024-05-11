@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-require_once '../../model/stakeholders/Client.php';
-require_once '../../model/stakeholders/ClientCompany.php';
-require_once '../../model/stakeholders/CompanyData.php';
-require_once '../../model/checkdata/Checker.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/Client.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/ClientCompany.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/CompanyData.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
 
 $name = filter_input(INPUT_POST, 'name');
 $address = filter_input(INPUT_POST, 'address');

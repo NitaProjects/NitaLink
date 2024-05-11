@@ -1,9 +1,9 @@
 <?php
 
-require_once '../../config/database.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/config/database.php');
 
 try {
-    $db = new PDO("mysql:host=localhost; dbname=nitalink", 'root', '');
+    $db = new PDO("mysql:host=localhost; dbname=nitalink2", 'root', '');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Consulta que une las tablas products, books y courses para obtener todos los detalles relevantes.
@@ -16,7 +16,7 @@ try {
     $stmt->execute();
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    include '../../views/products/listProducts.php';
+    require_once ($_SERVER['DOCUMENT_ROOT'].'nitalink/views/products/listProducts.php');
 } catch (PDOException $e) {
     echo "Error de conexión a la base de datos: " . $e->getMessage();
     exit;

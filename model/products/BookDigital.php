@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 require_once 'Product.php';  
 require_once 'PhysicalData.php';
-require_once '../../interfaces/Storable.php';
-require_once '../../interfaces/Marketable.php';
-require_once '../../model/checkdata/Checker.php';
-require_once '../../exceptions/DateException.php';
-require_once '../../exceptions/CheckException.php';
+require_once '../../../interfaces/Storable.php';
+require_once '../../../interfaces/Marketable.php';
+require_once '../../../model/checkdata/Checker.php';
+require_once '../../../exceptions/DateException.php';
+require_once '../../../exceptions/CheckException.php';
 
 class BookDigital extends Product {
     protected string $author;
@@ -16,11 +16,12 @@ class BookDigital extends Product {
     protected string $publisher;
     protected DateTime $publishDate;
     protected DateTime $availabilityDate;
+    protected string $isbn;
 
-    public function __construct(int $productId, string $name, float $price, int $quantity, $isbn, string $author, int $pages, string $publisher, string $publishDate, string $availabilityDate) {
+    public function __construct(int $productId, string $name, float $price, int $quantity, string $author, int $pages, string $publisher, string $publishDate, string $availabilityDate, string $isbn) {
         $message = "";
         try {
-            parent::__construct($productId, $name, $price, $quantity, $isbn);
+            parent::__construct($productId, $name, $price, $quantity, );
         } catch (CheckException $e) {
             $message .= $e->getMessage();  
         }
@@ -38,6 +39,9 @@ class BookDigital extends Product {
         }
         if ($this->setAvailabilityDate($availabilityDate) != 0) {
             $message .= "-Fecha disponibilidad incorrecta<br>";
+        }
+        if ($this->setIsbn($isbn) != 0) {
+            $message .= "-ISBN incorrecto <br>";
         }
         if (strlen($message) > 0) {
             throw new CheckException($message);
@@ -127,6 +131,14 @@ class BookDigital extends Product {
             if ($this->availabilityDate < $this->publishDate){
                 return $error;
             }   
+        }
+        return $error;
+    }
+    
+    private function setIsbn(string $isbn): int {
+        $error = Checker::checkISBN($isbn);
+        if($error == 0){
+            $this->isbn = $isbn;
         }
         return $error;
     }

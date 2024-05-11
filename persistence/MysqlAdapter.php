@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once '../exceptions/ServiceException.php';
+require_once '../../../exceptions/ServiceException.php';
 
 class MysqlAdapter {
 
@@ -11,7 +11,7 @@ class MysqlAdapter {
     //Aprofitem el constructor per establir la connexió per defecte a la nostra BD
     public function __construct() {
         try {
-             $this->connection = new mysqli("127.0.0.1", "root", "", "nitalink", 3306,'UTF8');
+             $this->connection = new mysqli("localhost", "root", "", "nitalink2", 3306);
              $this->connected = true;
         } catch (mysqli_sql_exception $ex) {
              throw new ServiceException("DB Connection Failure: " . $ex->getMessage());

@@ -12,7 +12,7 @@
             <tr>
                 <th>ID Producto</th>
                 <th>Nombre</th>
-                <th>Precio</th>
+                <th>Precio</th> 
                 <th>Cantidad</th>
                 <th>Descuento</th>
                 <th>Tipo de Producto</th>
