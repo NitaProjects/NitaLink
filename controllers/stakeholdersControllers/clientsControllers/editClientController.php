@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-require_once '../../config/database.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/config/Database.php');
 $clientId = filter_input(INPUT_GET, 'clientId', FILTER_SANITIZE_NUMBER_INT);
 
 try {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-require_once 'Product.php';
-require_once '../../interfaces/Marketable.php';
-require_once '../../model/checkdata/Checker.php';
-require_once '../../exceptions/CheckException.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/products/Product.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/interfaces/Marketable.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
 
 class Course extends Product {
     protected int $duration;

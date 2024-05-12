@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-include_once '../model/checkdata/Checker.php';
-include '../exceptions/BuildException.php';
-include_once '../persistence/MysqlUserAdapter.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/BuildException.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlUserAdapter.php');
 
 $persistence = new MysqlUserAdapter();
 $message = "Unsucessfully Request: ";

@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-include_once '../../model/checkdata/Checker.php';
-include '../../exceptions/BuildException.php';
-include_once '../../persistence/MysqlClientAdapter.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/ServiceException.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlClientAdapter.ph');
 
 $persistence = new MysqlClientAdapter();
 $message = "Unsuccessfully Request: ";
@@ -31,7 +32,7 @@ if ($clientType === 'empresa' && $companyWorkers !== false && $corporateReason !
 
 if ($name && $address && $email && $phoneNumber && $membershipType && $accountBalance !== false) {
     try {
-        if ($persistence->exists($email) === false) {  // Assuming existence check is by email
+        if ($persistence->exists($email) === false) { 
             $clientId = $persistence->maxClientId() + 1;
             $client = new Client($name, $address, $email, $phoneNumber, $clientId, $membershipType, $accountBalance, $companyData);
             $persistence->addClient($client);
@@ -41,7 +42,7 @@ if ($name && $address && $email && $phoneNumber && $membershipType && $accountBa
         }
     } catch (ServiceException $ex) {
         $message .= $ex->getMessage();
-    } catch (BuildException $ex) {
+    } catch (CheckException $ex) {
         $message .= $ex->getMessage();
     }
 } else {

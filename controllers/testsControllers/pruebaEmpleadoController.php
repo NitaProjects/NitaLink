@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-require_once '../../model/stakeholders/Employee.php';
-require_once '../../model/checkdata/Checker.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/Employee.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
 
 // Recuperación de datos del formulario
 $name = filter_input(INPUT_POST, 'name');

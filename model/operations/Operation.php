@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-require_once '../../model/checkdata/Checker.php';
-require_once '../../exceptions/CheckException.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
 
 abstract class Operation {
     protected int $operationId;

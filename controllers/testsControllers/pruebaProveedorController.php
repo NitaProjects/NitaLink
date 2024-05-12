@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
 
-require_once '../../model/stakeholders/Provider.php';
-require_once '../../model/stakeholders/ProviderCompany.php';
-require_once '../../model/stakeholders/CompanyData.php';
-require_once '../../model/checkdata/Checker.php';
+
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/Provider.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/ProviderCompany.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/CompanyData.php');
 
 // Filtra los datos enviados
 $name = filter_input(INPUT_POST, 'name');

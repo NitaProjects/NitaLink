@@ -1,9 +1,8 @@
 <?php
 
 declare(strict_types=1);
-
-include '../../model/stakeholders/Client.php';
-include 'MySQLAdapter.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/Client.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MySQLAdapter.php');
 
 class MysqlClientAdapter extends MysqlAdapter {
 

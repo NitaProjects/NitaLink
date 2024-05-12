@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-require_once '../../model/operations/Order.php';
-require_once '../../model/operations/OrderDetail.php';
-require_once '../../model/checkdata/Checker.php';
-require_once '../../exceptions/CheckException.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/operations/Order.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/operations/OrderDetail.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
 
 // Captura de datos básicos del pedido
 $customerName = filter_input(INPUT_POST, 'customerName', FILTER_SANITIZE_STRING);

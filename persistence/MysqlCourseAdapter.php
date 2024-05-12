@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-include '../model/stakeholders/Course.php';
-include 'MySQLAdapter.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/products/Course.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MySQLAdapter.php');
 
 class MysqlCourseAdapter extends MysqlAdapter {
 

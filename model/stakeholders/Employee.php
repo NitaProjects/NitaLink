@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-require_once 'Person.php';
-require_once '../../interfaces/Stakeholder.php';
-require_once '../../model/checkdata/Checker.php';
-require_once '../../exceptions/DateException.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/Person.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/interfaces/Stakeholder.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
 
 class Employee extends Person implements Stakeholder {
     protected int $employeeId;

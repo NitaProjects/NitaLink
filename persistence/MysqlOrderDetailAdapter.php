@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-include '../model/stakeholders/OrderDetail.php';
-include 'MySQLAdapter.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/operations/OrderDetail.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MySQLAdapter.php');
+
 
 class MysqlOrderDetailAdapter extends MysqlAdapter {
 

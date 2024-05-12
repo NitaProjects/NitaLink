@@ -1,5 +1,5 @@
 <?php
-include_once '../persistence/MysqlUserAdapter.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MySQLAdapter.php');
 
 $persistence = new MysqlUserAdapter();
 

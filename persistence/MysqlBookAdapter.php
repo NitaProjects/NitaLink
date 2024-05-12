@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-include_once '../../../model/products/BookPhysical.php';
-include_once '../../../model/products/BookDigital.php';
-include_once 'MySQLAdapter.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/products/BookPhysical.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/products/BookDigital.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MySQLAdapter.php');
 
 class MysqlBookAdapter extends MysqlAdapter {
 

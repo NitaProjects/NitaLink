@@ -37,8 +37,8 @@
                 </thead>
                 <tbody>
                     <?php
-                    require_once '../../persistence/MySQLAdapter.php';
-                    require_once '../../persistence/MySQLBookAdapter.php';
+                    require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MySQLAdapter.php');
+                    require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MySQLBookAdapter.php');
                     $adapter = new MysqlBookAdapter();
                     $products = $adapter->fetchAllProducts(); 
                     foreach ($products as $product) {

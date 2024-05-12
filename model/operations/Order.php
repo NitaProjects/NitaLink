@@ -1,9 +1,9 @@
 <?php
 
-require_once 'Operation.php';
-require_once 'OrderDetail.php';
-require_once '../../exceptions/CheckException.php'; 
-require_once '../../model/checkdata/Checker.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/operations/Operation.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/operations/OrderDetail.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
 
 class Order extends Operation {
     private array $orderDetails = [];

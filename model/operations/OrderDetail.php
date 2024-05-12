@@ -1,7 +1,7 @@
 <?php
 
-require_once '../../model/checkdata/Checker.php';
-require_once '../../exceptions/CheckException.php'; 
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
 
 class OrderDetail {
     private int $productId;

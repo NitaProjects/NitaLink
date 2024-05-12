@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-require_once '../model/stakeholders/User.php';
-include 'MysqlAdapter.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/User.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MySQLAdapter.php');
 
 class MysqlUserAdapter extends MysqlAdapter {
 

@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-require_once '../model/checkdata/Checker.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
 
 class User {
 

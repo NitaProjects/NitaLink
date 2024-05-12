@@ -1,11 +1,10 @@
 <?php
 declare(strict_types=1);
 
-require_once '../../model/stakeholders/Provider.php';
-require_once '../../model/stakeholders/CompanyData.php';
-require_once '../../lib/Check.php';
-require_once '../../lib/StatusCode.php';
-require_once '../../config/database.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/Provider.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/CompanyData.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/config/Database.php');
 
 // Recolectar los datos del formulario
 $name = filter_input(INPUT_POST, 'name');

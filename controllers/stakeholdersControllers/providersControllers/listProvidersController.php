@@ -1,7 +1,7 @@
 <?php
 
 // Incluimos el archivo de configuración de la base de datos.
-require_once '../../config/database.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/config/Database.php');
 
 try {
     // Intentamos establecer conexión con la base de datos usando PDO.

@@ -1,9 +1,10 @@
 <?php
 
-require_once '../../model/products/BookDigital.php';
-require_once '../../model/products/BookPhysical.php';
-require_once '../../model/checkdata/Checker.php';
-require_once '../../model/products/PhysicalData.php'; 
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/products/BookDigital.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/products/BookPhysical.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/products/PhysicalData.php');
+
 
 // Captura y saneamiento de datos del formulario
 $name = filter_input(INPUT_POST, 'title');

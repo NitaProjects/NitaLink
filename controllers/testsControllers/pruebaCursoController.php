@@ -1,9 +1,8 @@
 <?php
 declare(strict_types=1);
 
-require_once '../../model/products/Course.php';
-require_once '../../model/checkdata/Checker.php'; 
-
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/products/Course.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
 // Recuperación de datos del formulario
 $name = filter_input(INPUT_POST, 'name');
 $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);

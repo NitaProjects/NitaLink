@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-require_once '../../config/database.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/config/Database.php');
 
 // Recolectar los datos del formulario
 $productId = filter_input(INPUT_POST, 'productId', FILTER_VALIDATE_INT);

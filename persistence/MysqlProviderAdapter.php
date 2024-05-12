@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-include '../model/stakeholders/Provider.php';
-include 'MySQLAdapter.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/Provider.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MySQLAdapter.php');
 
 class MysqlProviderAdapter extends MysqlAdapter {
 

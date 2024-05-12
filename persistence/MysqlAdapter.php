@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once '../../../exceptions/ServiceException.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/ServiceException.php');
 
 class MysqlAdapter {
 
