@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/operations/OrderDetail.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MySQLAdapter.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlAdapter.php');
 
 
 class MysqlOrderDetailAdapter extends MysqlAdapter {

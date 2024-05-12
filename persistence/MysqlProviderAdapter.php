@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/Provider.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MySQLAdapter.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlAdapter.php');
 
 class MysqlProviderAdapter extends MysqlAdapter {
 

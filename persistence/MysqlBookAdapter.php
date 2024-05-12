@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/products/BookPhysical.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/products/BookDigital.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MySQLAdapter.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlAdapter.php');
 
 class MysqlBookAdapter extends MysqlAdapter {
 
