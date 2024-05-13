@@ -33,4 +33,4 @@ if ($usuari and $pswd) {
     }
 
 setcookie('response', $message, 0, '/', 'localhost');
-header('location: ../index.html');
+header('location: ../../../index.html');

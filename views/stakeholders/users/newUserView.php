@@ -20,7 +20,7 @@
         </video>
         <section>
             <h3>Registro de Nuevo Usuario</h3>
-            <form action="../../controllers/NewUserController.php" method="POST">
+            <form action="../../../controllers/stakeholdersControllers/usersControllers/NewUserController.php" method="POST">
                 <label for="name">Nombre:</label>
                 <input type="text" id="name" name="name" required><br>
                 
