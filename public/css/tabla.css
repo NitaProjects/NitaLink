@@ -1,69 +1,75 @@
-
-h1 {
-    text-align: center; /* Centrar el título */
-    color: #2c3e50; /* Color oscuro pero suave para el título */
-    margin-bottom: 20px; /* Espacio debajo del título */
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+   
+    color: #333;
 }
 
 table {
-    width: 100%; /* Ocupar todo el ancho disponible */
-    border-collapse: collapse; /* Eliminar dobles bordes */
-    margin: 20px; /* Espacio debajo de la tabla */
+    width: auto;
+    border-collapse: collapse;
+    margin: 20px;
+    background-color: white;
 }
 
-table, th, td {
-    border: 1px solid #ccc; /* Bordes suaves para las celdas y la tabla */
-    padding: 8px; /* Espaciado dentro de cada celda */
-    text-align: left; /* Alineación del texto a la izquierda */
+thead th {
+    background-color: #009688;
+    color: #ffffff;
+    text-align: left;
+    padding: 12px 15px;
+    border-bottom: 3px solid #00796b;
 }
 
-thead {
-    background-color: #2980b9; /* Fondo oscuro para el encabezado de la tabla */
-    color: white; /* Texto blanco para contraste */
+tbody td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
 }
 
-tbody tr:nth-child(odd) {
-    background-color: #ecf0f1; /* Fondo zebra para mejorar la legibilidad */
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
+button {
+    cursor: pointer;
+    background-color: #009688;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    margin-right: 5px;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background-color: #00796b;
+}
+
+form input[type="text"],
+form input[type="email"] {
+    padding: 8px;
+    margin: 5px 0;
+    display: block;
+    width: calc(100% - 16px);
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+form button[type="submit"] {
+    display: inline-block;
+    background-color: #4CAF50;
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+tr[style*="display:none"] {
+    display: none;
+}
+
+/* Resaltado al pasar el mouse */
 tbody tr:hover {
-    background-color: #bdc3c7; /* Color de fondo al pasar el mouse */
+    background-color: #e0f2f1;
 }
-
-th {
-    text-align: center; /* Centrar texto en los encabezados */
-}
-
-@media (max-width: 768px) {
-    /* Estilos para dispositivos móviles */
-    table, thead, tbody, th, td, tr { 
-        display: block; /* Cambiar la visualización a bloque para responsividad */
-    }
-
-    thead tr {
-        position: absolute; /* Posicionar el encabezado fuera de la vista */
-        top: -9999px;
-        left: -9999px;
-    }
-
-    tr { border: 1px solid #ccc; } /* Añadir bordes a cada fila */
-
-    td {
-        border: none; /* Eliminar bordes de las celdas */
-        position: relative; /* Posicionamiento relativo para los pseudoelementos */
-        padding-left: 50%; /* Espacio a la izquierda para texto */
-        text-align: right; /* Alineación del texto a la derecha */
-    }
-
-    td:before {
-        /* Pseudo-elemento para mostrar el nombre del campo */
-        content: attr(data-label);
-        position: absolute;
-        left: 0;
-        width: 50%; /* Ancho del label */
-        padding-left: 15px; /* Espacio interior izquierdo */
-        font-weight: bold; /* Texto en negrita */
-        text-align: left; /* Alineación del texto a la izquierda */
-    }
-}
-

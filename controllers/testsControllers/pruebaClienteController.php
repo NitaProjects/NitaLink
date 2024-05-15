@@ -12,6 +12,7 @@ $email = filter_input(INPUT_POST, 'email');
 $phoneNumber = filter_input(INPUT_POST, 'phoneNumber');
 $membershipType = filter_input(INPUT_POST, 'membershipType');
 $accountBalance = filter_input(INPUT_POST, 'accountBalance', FILTER_VALIDATE_FLOAT);
+$dni = filter_input(INPUT_POST, 'dni');
 $clientType = filter_input(INPUT_POST, 'clientType');
 $companyWorkers = filter_input(INPUT_POST, 'companyWorkers', FILTER_VALIDATE_INT);
 $corporateReason = filter_input(INPUT_POST, 'corporateReason');
@@ -33,7 +34,7 @@ try {
         echo $client->getDetails();
     } else {
         // Crea el objeto `Client` para clientes no empresariales.
-        $client = new Client($name, $address, $email, $phoneNumber, 4, $membershipType, $accountBalance);
+        $client = new Client($name, $address, $email, $phoneNumber, 4, $membershipType, $accountBalance, $dni);
 
         // Muestra los detalles del cliente no empresarial.
         echo $client->getDetails();

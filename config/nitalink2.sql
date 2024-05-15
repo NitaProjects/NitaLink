@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-05-2024 a las 10:46:59
+-- Tiempo de generación: 15-05-2024 a las 03:52:11
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -92,6 +92,51 @@ INSERT INTO `books_physical` (`product_id`, `isbn`, `author`, `pages`, `publishe
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `clients`
+--
+
+CREATE TABLE `clients` (
+  `client_id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone_number` varchar(50) DEFAULT NULL,
+  `membership_type` varchar(100) DEFAULT NULL,
+  `account_balance` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `clients`
+--
+
+INSERT INTO `clients` (`client_id`, `name`, `address`, `email`, `phone_number`, `membership_type`, `account_balance`) VALUES
+(2, 'Jane Smith', '456 Oak St', 'jane.smith@example.com', '555-5678', 'Standard', 85.5),
+(3, 'Carlos Ray', '789 Pine St', 'carlos.ray@example.com', '555-8765', 'Gold', 200),
+(4, 'Alice Johnson', '321 Maple St', 'alice.johnson@example.com', '555-4321', 'Standard', 120);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `companyclients`
+--
+
+CREATE TABLE `companyclients` (
+  `client_id` int(11) NOT NULL,
+  `company_id` int(11) DEFAULT NULL,
+  `workers` int(11) DEFAULT NULL,
+  `social_reason` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `companyclients`
+--
+
+INSERT INTO `companyclients` (`client_id`, `company_id`, `workers`, `social_reason`) VALUES
+(4, 101, 50, 'Tech Innovations Inc.');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `courses`
 --
 
@@ -117,6 +162,25 @@ INSERT INTO `courses` (`product_id`, `duration`, `instructor`, `language`) VALUE
 (28, 160, 'Sofía Castro', 'Español'),
 (29, 180, 'Enrique Juárez', 'Español'),
 (30, 200, 'Beatriz González', 'Español');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `individualclients`
+--
+
+CREATE TABLE `individualclients` (
+  `client_id` int(11) NOT NULL,
+  `dni` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `individualclients`
+--
+
+INSERT INTO `individualclients` (`client_id`, `dni`) VALUES
+(2, '23456789E'),
+(3, '34567812Q');
 
 -- --------------------------------------------------------
 
@@ -190,7 +254,8 @@ INSERT INTO `users` (`id`, `name`, `password`, `type`) VALUES
 (2, 'Ivan', 'ivan', 'client'),
 (3, 'Albert', 'albert', 'provider'),
 (4, 'Dani JR', 'danijr', 'client'),
-(5, 'Javivi', 'javivi', 'client');
+(5, 'Javivi', 'javivi', 'client'),
+(6, 'dime', 'adi', 'client');
 
 --
 -- Índices para tablas volcadas
@@ -211,10 +276,29 @@ ALTER TABLE `books_physical`
   ADD UNIQUE KEY `isbn` (`isbn`);
 
 --
+-- Indices de la tabla `clients`
+--
+ALTER TABLE `clients`
+  ADD PRIMARY KEY (`client_id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indices de la tabla `companyclients`
+--
+ALTER TABLE `companyclients`
+  ADD PRIMARY KEY (`client_id`);
+
+--
 -- Indices de la tabla `courses`
 --
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`product_id`);
+
+--
+-- Indices de la tabla `individualclients`
+--
+ALTER TABLE `individualclients`
+  ADD PRIMARY KEY (`client_id`);
 
 --
 -- Indices de la tabla `products`
@@ -233,6 +317,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `clients`
+--
+ALTER TABLE `clients`
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
@@ -263,10 +353,22 @@ ALTER TABLE `books_physical`
   ADD CONSTRAINT `books_physical_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
 --
+-- Filtros para la tabla `companyclients`
+--
+ALTER TABLE `companyclients`
+  ADD CONSTRAINT `companyclients_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `courses`
 --
 ALTER TABLE `courses`
   ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+
+--
+-- Filtros para la tabla `individualclients`
+--
+ALTER TABLE `individualclients`
+  ADD CONSTRAINT `individualclients_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -12,8 +12,9 @@ class Client extends Person implements Stakeholder {
     protected string $clientType;
     protected string $membershipType;
     protected float $accountBalance;
+    protected string $dni;
 
-    public function __construct(string $name, string $address, string $email, string $phoneNumber, int $clientId, string $membershipType, float $accountBalance) {
+    public function __construct(string $name, string $address, string $email, string $phoneNumber, int $clientId, string $membershipType, float $accountBalance, string $dni) {
         $message = "";
         try {
             parent::__construct($name, $address, $email, $phoneNumber);
@@ -28,6 +29,9 @@ class Client extends Person implements Stakeholder {
         }
         if ($this->setAccountBalance($accountBalance) != 0) {
             $message .= "-Saldo incorrecto<br>";
+        }
+        if ($this->setDNI($dni) != 0) {
+            $message .= "-DNI incorrecto<br>";
         }
         if (strlen($message) > 0) {
             throw new CheckException($message);
@@ -48,8 +52,8 @@ class Client extends Person implements Stakeholder {
         return $this->accountBalance;
     }
     
-    public function getName(): string {
-        return $this->name;
+  public function getDNI(): string {
+        return $this->dni;
     }
     
     public function getContactInfo(): string {
@@ -69,6 +73,14 @@ class Client extends Person implements Stakeholder {
         $error = Checker::NumberValidator($clientId);
         if ($error == 0) {
             $this->clientId = $clientId;
+        }
+        return $error;
+    }
+    
+    public function setDNI(string $dni): int {
+        $error = Checker::checkDNI($dni);
+        if ($error == 0) {
+            $this->dni = $dni;
         }
         return $error;
     }

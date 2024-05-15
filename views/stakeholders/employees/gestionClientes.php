@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../../../public/css/formulario2.css">
 </head>
 <body>
+    
     <header>
         <h1>Gestión de Clientes</h1>
         <nav>
@@ -20,17 +21,19 @@
             </ul>
         </nav>
     </header>
+    
     <main>
         <video class="video" preload="auto" muted playsinline autoplay loop>
             <source type="video/mp4" src="../../../public/assets/fondoHexagonal.mp4">
         </video>
-        <table>
-            <section id="listadoClientes">
+        <section id="listadoClientes">
             <h2>Listado de Clientes</h2>
-            <?php include '../../../controllers/stakeholdersControllers/clientsControllers/listClientsController.php'; ?>
-</section>
-        </table>
+            <table>
+                <?php include '../../../controllers/stakeholdersControllers/clientsControllers/listClientsController.php'; ?>
+            </table>
+        </section>
     </main>
+
     <footer>
         <p>&copy; 2024 NitaLink. Todos los derechos reservados.</p>
     </footer>
@@ -45,21 +48,25 @@
         }
         function deleteCliente(clientId) {
             if (confirm('¿Está seguro de que desea eliminar este cliente?')) {
-                fetch('../../controllers/stakeholdersControllers/clientsControllers/delateClientController.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: 'client_id=' + clientId  // Asegúrate de que 'clientId' es el valor correcto
-                    })
-                    .then(response => response.text())
-                    .then(data => {
-                        
-                            location.reload(); // Recarga la página para reflejar los cambios en la lista de clientes
-                        })
-                    .catch(error => console.error('Error:', error));
+                fetch('../../../controllers/stakeholdersControllers/clientsControllers/delateClientController.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'client_id=' + clientId
+            })
+            .then(response => response.json())
+            .then(data => {
+            if (data.success) {
+                alert("Cliente eliminado con éxito.");
+                document.getElementById('row-' + clientId).remove();
+            } else {
+                alert("Error al eliminar el cliente.");
                 }
+            })
+            .catch(error => console.error('Error:', error));
             }
+        }
     </script>
 </body>
 </html>

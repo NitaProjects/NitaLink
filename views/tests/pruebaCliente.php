@@ -32,6 +32,7 @@
             </select><br>
 
             <input type="number" name="accountBalance" placeholder="Saldo" autocomplete="off"><br>
+            <input type="text" name="dni" placeholder="DNI" autocomplete="off"><br>
             
             <div id="companyFields" style="display:none;">
                 <input type="number" name="companyWorkers" placeholder="Número de Empleados"><br>
