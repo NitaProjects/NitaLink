@@ -149,6 +149,22 @@ class Checker {
         }      
         return 0; 
     }
+    
+    public static function checkDateTimeLarga(string $date): int {
+    $pattern = '/^(?:(?:31\/(?:0[13578]|1[02]))' // Permite 31 solo en los meses que lo tienen
+            . '|(?:(?:29|30)\/(?:0[13-9]|1[0-2]))'   // Permite 29 y 30 solo en meses que tienen al menos 30 días (todos excepto febrero)
+            . '|(?:0[1-9]|1\d|2[0-8])\/(?:0[1-9]|1[0-2]))\/' // Valida días del 1 al 28 en cualquier mes
+            . '(?:19\d{2}|20\d{2}|2100)' // Valida años desde 1900 hasta 2099 y el año 2100
+            . ' (?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$' // Añade validación de hora (HH:mm:ss)
+            . '|^29\/02\/(?:19(?:[02468][048]|[13579][26])|20(?:[02468][048]|[13579][26])|2100) ' // Permite 29 de febrero para años bisiestos entre 1900 y 2100
+            . '(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/'; //añadimos formato hora, minuto y segundos
+
+    if (!preg_match($pattern, $date)) {
+        return -1;
+    }
+    return 0;
+}
+
 
     public static function UserTypeValidator(string $type): int {
         // Lista de tipos permitidos, todos en minúsculas

@@ -16,7 +16,7 @@ $companyWorkers = (int) filter_input(INPUT_POST, 'company_workers');
 $corporateReason = filter_input(INPUT_POST, 'corporate_reason');
 
 try {
-    $db = new PDO("mysql:host=localhost;dbname=nitalink", 'root', '');
+    $db = new PDO("mysql:host=localhost;dbname=nitalink2", 'root', '');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Actualizar datos en la tabla `clients`

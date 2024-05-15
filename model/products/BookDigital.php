@@ -115,25 +115,31 @@ class BookDigital extends Product {
     }
 
     public function setPublishDate(string $date): int {
-        $error = Checker::checkDate($date);
-        if ($error == 0) {
-            
-            $this->publishDate = DateTime::createFromFormat('d/m/Y', $date);
-            
+    $error = Checker::checkDate($date);
+    if ($error == 0) {
+        $this->publishDate = DateTime::createFromFormat('d/m/Y', $date);
+        if ($this->publishDate === false) {
+            return -1;
         }
-        return $error;
     }
+    return $error;
+}
+
 
     public function setAvailabilityDate(string $date): int {
-        $error = Checker::checkDate($date);
-        if ($error == 0) {
-            $this->availabilityDate = DateTime::createFromFormat('d/m/Y', $date);
-            if ($this->availabilityDate < $this->publishDate){
-                return $error;
-            }   
+    $error = Checker::checkDateTimeLarga($date);  
+    if ($error == 0) {
+        $this->availabilityDate = DateTime::createFromFormat('d/m/Y H:i:s', $date);
+        if ($this->availabilityDate === false) {
+            return -1; 
         }
-        return $error;
+        if ($this->availabilityDate < $this->publishDate) {
+            return -2; 
+        }
     }
+    return $error;
+}
+
     
     private function setIsbn(string $isbn): int {
         $error = Checker::checkISBN($isbn);

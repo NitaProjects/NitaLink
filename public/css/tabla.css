@@ -7,10 +7,11 @@ body {
 }
 
 table {
-    width: auto;
+    width: 70%;
     border-collapse: collapse;
     margin: 20px;
     background-color: white;
+    font-size: 13px;
 }
 
 thead th {

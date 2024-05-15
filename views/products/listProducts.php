@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Listado de Productos</title>
-    <link rel="stylesheet" href="../../public/css/tabla.css">
+    <link rel="stylesheet" href="../../../public/css/tabla.css">
 </head>
 <body>
     <h1>Listado de Productos</h1>
@@ -25,22 +25,36 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($products as $product): ?>
-            <tr>
-                <td><?= htmlspecialchars($product['product_id']) ?></td>
-                <td><?= htmlspecialchars($product['name']) ?></td>
-                <td><?= htmlspecialchars($product['price']) ?>€</td>
-                <td><?= htmlspecialchars($product['quantity']) ?></td>
-                <td><?= htmlspecialchars($product['discount_percent']) ?>%</td>
-                <td><?= htmlspecialchars($product['product_type']) ?></td>
-                <td><?= $product['product_type'] === 'book' ? htmlspecialchars($product['author']) : 'N/A' ?></td>
-                <td><?= $product['product_type'] === 'book' ? htmlspecialchars($product['pages']) : 'N/A' ?></td>
-                <td><?= $product['product_type'] === 'book' ? htmlspecialchars($product['publisher']) : 'N/A' ?></td>
-                <td><?= $product['product_type'] === 'course' ? htmlspecialchars($product['duration']) : 'N/A' ?></td>
-                <td><?= $product['product_type'] === 'course' ? htmlspecialchars($product['instructor']) : 'N/A' ?></td>
-                <td><?= $product['product_type'] === 'course' ? htmlspecialchars($product['language']) : 'N/A' ?></td>
-            </tr>
-            <?php endforeach; ?>
+            <?php
+                    require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MySQLAdapter.php');
+                    require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MySQLBookAdapter.php');
+                    $adapter = new MysqlBookAdapter();
+                    $products = $adapter->fetchAllProducts(); 
+                    foreach ($products as $product) {
+                        echo "<tr>";
+                        echo "<td>{$product['product_id']}</td>";
+                        echo "<td>{$product['name']}</td>";
+                        echo "<td>\${$product['price']}</td>";
+                        echo "<td>{$product['quantity']}</td>";
+                        echo "<td>{$product['product_type']}</td>";
+                        echo "<td>
+                                <button onclick=\"toggleEditForm('edit-product-{$product['product_id']}')\">Editar</button>
+                                <button onclick=\"deleteProduct({$product['product_id']})\">Borrar</button>
+                              </td>";
+                        echo "</tr>";
+                        echo "<tr id='edit-product-{$product['product_id']}' class='edit-form' style='display:none;'>
+                                <td colspan='5'>
+                                    <form action='update_producto.php' method='post'>
+                                        <input type='hidden' name='producto_id' value='{$product['product_id']}'>
+                                        <label>Nombre: <input type='text' name='nombre' value='{$product['name']}'></label>
+                                        <label>Precio: <input type='text' name='precio' value='{$product['price']}'></label>
+                                        <label>Cantidad: <input type='number' name='cantidad' value='{$product['quantity']}'></label>
+                                        <button type='submit'>Guardar Cambios</button>
+                                    </form>
+                                </td>
+                              </tr>";
+                    }
+                    ?>
         </tbody>
     </table>
 </body>

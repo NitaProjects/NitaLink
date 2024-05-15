@@ -29,7 +29,7 @@ $isFragile = filter_input(INPUT_POST, 'isFragile') === "on" ? true : false;
 
 if ($physicalData){
     try {
-    $book = new BookPhysical(1, $name, $price, $quantity, $isbn, $author, $pages, $publisher, $publishDate, $availabilityDate, $height, $width, $length, $weight, $isFragile);
+    $book = new BookPhysical(1, $name, $price, $quantity, $author, $pages, $publisher, $publishDate, $availabilityDate, $isbn, $height, $width, $length, $weight, $isFragile);
     echo "Libro registrado con éxito.<br>";
     echo "Libro registrado con éxito.<br>";
     echo "Fecha de publicación: " . $book->getPublishDate() . "<br>";
@@ -37,7 +37,7 @@ if ($physicalData){
     echo "Periodo transcurrido: " . $book->getPeriod() . "<br>";
 
     // Obtener intervalos de fechas con un valor de ejemplo para `days`
-    $days = 500;
+    $days = 50;
     $intervals = $book->getIntervals($days);
 
     echo "Intervalos de $days días entre la disponibilidad y ahora:<br>";
@@ -49,14 +49,14 @@ if ($physicalData){
 }
 else {
     try {
-    $book = new BookDigital(1, $name, $price, $quantity, $isbn, $author, $pages, $publisher, $publishDate, $availabilityDate);
+    $book = new BookDigital(1, $name, $price, $quantity, $author, $pages, $publisher, $publishDate, $availabilityDate, $isbn);
     echo "Libro registrado con éxito.<br>";
     echo "Fecha de publicación: " . $book->getPublishDate() . "<br>";
     echo "Fecha de disponibilidad: " . $book->getAvailabilityDate() . "<br>";
     echo "Periodo transcurrido: " . $book->getPeriod() . "<br>";
 
     // Obtener intervalos de fechas con un valor de ejemplo para `days`
-    $days = 500;
+    $days = 50;
     $intervals = $book->getIntervals($days);
 
     echo "Intervalos de $days días entre la disponibilidad y ahora:<br>";
