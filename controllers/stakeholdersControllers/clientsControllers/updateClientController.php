@@ -19,7 +19,7 @@ $dni = filter_input(INPUT_POST, 'dni', FILTER_SANITIZE_STRING);
 $clientType = filter_input(INPUT_POST, 'client_type', FILTER_SANITIZE_STRING);
 
 // Determinar si el cliente es de tipo Empresa y recoger datos adicionales
-if ($clientType == 'Empresa') {
+if ($clientType === 'empresa') {
     $company_workers = filter_input(INPUT_POST, 'company_workers', FILTER_VALIDATE_INT);
     $corporate_reason = filter_input(INPUT_POST, 'corporate_reason', FILTER_SANITIZE_STRING);
     $client = new ClientCompany($name, $address, $email, $phone_number, $client_id, $membership_type, $account_balance, $company_workers, $corporate_reason);

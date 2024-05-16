@@ -14,7 +14,14 @@
         <video class="video" preload="auto" muted playsinline autoplay loop>
             <source type="video/mp4" src="../../../public/assets/fondoHexagonal.mp4">
         </video>
-        <form action="../../../controllers/stakeholdersControllers/clientsControllers/newClientController.php" method="POST">
+        <form id="clientForm" action="../../../controllers/stakeholdersControllers/clientsControllers/newClientController.php" method="POST">
+            <div class="form-group">
+                <label for="clientType">Tipo de Cliente:</label>
+                <select id="clientType" name="clientType" onchange="toggleClientInfo()">
+                    <option value="particular">Particular</option>
+                    <option value="empresa">Empresa</option>
+                </select>
+            </div>
             <div class="form-group">
                 <label for="name">Nombre:</label>
                 <input type="text" id="name" name="name" required>
@@ -49,14 +56,6 @@
                 <input type="number" id="accountBalance" name="accountBalance" required>
             </div>
 
-            <div class="form-group">
-                <label for="clientType">Tipo de Cliente:</label>
-                <select id="clientType" name="clientType" onchange="toggleClientInfo()">
-                    <option value="particular">Particular</option>
-                    <option value="empresa">Empresa</option>
-                </select>
-            </div>
-
             <div id="individualInfo" class="form-group">
                 <label for="dni">DNI:</label>
                 <input type="text" id="dni" name="dni">
@@ -81,15 +80,18 @@
 
     <script>
         function toggleClientInfo() {
+            var form = document.getElementById('clientForm');
             var clientType = document.getElementById('clientType').value;
             var companyInfo = document.getElementById('companyInfo');
             var individualInfo = document.getElementById('individualInfo');
             if (clientType === 'empresa') {
                 companyInfo.style.display = 'block';
                 individualInfo.style.display = 'none';
-            } else if (clientType === 'particular') {
+                form.action = "../../../controllers/stakeholdersControllers/clientsControllers/newClientCompanyController.php";
+            } else if(clientType === 'particular'){
                 companyInfo.style.display = 'none';
                 individualInfo.style.display = 'block';
+                form.action = "../../../controllers/stakeholdersControllers/clientsControllers/newClientController.php";
             }
         }
     </script>

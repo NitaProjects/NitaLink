@@ -65,6 +65,14 @@ class ClientCompany extends Person implements Stakeholder {
         return $this->name;
     }
     
+    public function getWorkers(): int {
+        return $this->companyData->getWorkers();
+    }
+
+    public function getSocialReason(): string {
+        return $this->companyData->getSocialReason();
+    }
+    
     public function getContactInfo(): string {
         return "Email: {$this->email}, Teléfono: {$this->phoneNumber}";
     }

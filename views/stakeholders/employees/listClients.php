@@ -8,7 +8,7 @@
 <body>
     <table border="1">
         <thead>
-            <tr id="row-<?= htmlspecialchars($client['client_id']) ?>">
+            <tr>
                 <th>ID Cliente</th>
                 <th>Nombre</th>
                 <th>Dirección</th>
@@ -33,10 +33,10 @@
                 <td><?= htmlspecialchars($client['phone_number']) ?></td>
                 <td><?= htmlspecialchars($client['account_balance']) ?>€</td>
                 <td><?= htmlspecialchars($client['membership_type']) ?></td>
-                <td><?= $client['dni'] ?? '-' ?></td>
-                <td><?= isset($client['company_id']) ? 'Empresa' : 'Particular' ?></td>
-                <td><?= isset($client['company_id']) ? htmlspecialchars($client['workers']) : '-' ?></td>
-                <td><?= isset($client['company_id']) ? htmlspecialchars($client['social_reason']) : '-' ?></td>
+                <td><?= htmlspecialchars($client['dni'] ?? '-') ?></td>
+                <td><?= htmlspecialchars($client['client_type']) ?></td>
+                <td><?= htmlspecialchars($client['workers'] ?? '-') ?></td>
+                <td><?= htmlspecialchars($client['social_reason'] ?? '-') ?></td>
                 <td>
                     <button onclick="toggleEditForm('edit-form-<?= $client['client_id'] ?>')">Editar</button>
                     <button onclick="deleteCliente(<?= $client['client_id'] ?>)">Borrar</button>
@@ -52,14 +52,9 @@
                         <input type="text" name="phone_number" value="<?= htmlspecialchars($client['phone_number']) ?>">
                         <input type="text" name="account_balance" value="<?= htmlspecialchars($client['account_balance']) ?>">
                         <input type="text" name="membership_type" value="<?= htmlspecialchars($client['membership_type']) ?>">
-                        <select name="client_type">
-                            <option value="particular" <?= isset($client['company_id']) ? '' : 'selected' ?>>Particular</option>
-                            <option value="empresa" <?= isset($client['company_id']) ? 'selected' : '' ?>>Empresa</option>
-                        </select>
-
-                        <input type="text" name="dni" value="<?= $client['dni'] ?? '' ?>">
-                        <input type="text" name="company_workers" value="<?= $client['company_id'] ? htmlspecialchars($client['workers']) : '' ?>">
-                        <input type="text" name="corporate_reason" value="<?= $client['company_id'] ? htmlspecialchars($client['social_reason']) : '' ?>">
+                        <input type="text" name="dni" value="<?= htmlspecialchars($client['dni'] ?? '') ?>">
+                        <input type="text" name="company_workers" value="<?= htmlspecialchars($client['workers'] ?? '') ?>">
+                        <input type="text" name="corporate_reason" value="<?= htmlspecialchars($client['social_reason'] ?? '') ?>">
                         <button type="submit">Guardar Cambios</button>
                     </form>
                 </td>

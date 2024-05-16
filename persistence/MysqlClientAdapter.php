@@ -77,8 +77,7 @@ class MysqlClientAdapter extends MysqlAdapter {
     }
 }
 
-
-   public function addCompanyClient(ClientCompany $client) {
+    public function addCompanyClient(ClientCompany $client) {
     try {
         $this->connection->begin_transaction();
         
@@ -95,10 +94,13 @@ class MysqlClientAdapter extends MysqlAdapter {
         $client_id = $this->connection->insert_id; // Obtener el ID del cliente insertado
 
         // Insertar en la tabla 'CompanyClients' los detalles específicos de la empresa
-        $stmt = $this->connection->prepare("INSERT INTO CompanyClients (client_id, workers, social_reason, client_type) VALUES (?, ?, ?, 'Empresa')");
+        $workers = $client->getWorkers();
+        $socialReason = $client->getSocialReason();
+        $stmt = $this->connection->prepare("INSERT INTO companyclients (client_id, workers, social_reason) VALUES (?, ?, ?)");
         $stmt->bind_param("iis", 
             $client_id, 
-            $client->getCompanyData());
+            $workers, 
+            $socialReason);
         $stmt->execute();
 
         // Verificar si las inserciones fueron exitosas
@@ -118,6 +120,8 @@ class MysqlClientAdapter extends MysqlAdapter {
         }
     }
 }
+
+
 
 
 
@@ -162,21 +166,28 @@ public function addIndividualClient(Client $c) {
 
     
     public function listClients(): array {
-        $query = "SELECT c.client_id, c.name, c.address, c.email, c.phone_number, c.membership_type, c.account_balance,
-            ic.dni,
-            cc.company_id, cc.workers, cc.social_reason
-            FROM Clients c
-            LEFT JOIN IndividualClients ic ON c.client_id = ic.client_id
-            LEFT JOIN CompanyClients cc ON c.client_id = cc.client_id
-            ORDER BY c.client_id ASC";
-        $result = $this->connection->query($query);
+    $query = "
+        SELECT c.client_id, c.name, c.address, c.email, c.phone_number, c.account_balance, c.membership_type,
+               ic.dni, cc.workers, cc.social_reason,
+               CASE
+                   WHEN ic.client_id IS NOT NULL THEN 'Particular'
+                   WHEN cc.client_id IS NOT NULL THEN 'Empresa'
+                   ELSE 'Desconocido'
+               END AS client_type
+        FROM Clients c
+        LEFT JOIN IndividualClients ic ON c.client_id = ic.client_id
+        LEFT JOIN CompanyClients cc ON c.client_id = cc.client_id
+        ORDER BY c.client_id ASC";
+    
+    $result = $this->connection->query($query);
 
-        if ($result) {
-            return $result->fetch_all(MYSQLI_ASSOC);
-        } else {
-            throw new Exception("Error al obtener los clientes: " . $this->connection->error);
-        }
+    if ($result) {
+        return $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        throw new Exception("Error al obtener los clientes: " . $this->connection->error);
     }
+}
+
 
     
     public function updateClient(Client $c): bool {
