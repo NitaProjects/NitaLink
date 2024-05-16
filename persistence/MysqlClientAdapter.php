@@ -78,53 +78,190 @@ class MysqlClientAdapter extends MysqlAdapter {
 }
 
 
-    public function addClient(Client $c): bool {
-        try {
-            $this->writeQuery("INSERT INTO clients (client_id, name, address, email, phone_number, client_type, account_balance, membership_type) VALUES (" . 
-                $c->getClientId() . ", '" . $c->getName() . "', '" . $c->getAddress() . "', '" . $c->getEmail() . "', '" . 
-                $c->getPhoneNumber() . "', '" . ($c->getCompanyData() ? 'empresa' : 'particular') . "', " . $c->getAccountBalance() . ", '" . 
-                $c->getMembershipType() . "');");
+   public function addCompanyClient(ClientCompany $client) {
+    try {
+        $this->connection->begin_transaction();
+        
+        // Insertar en la tabla 'clients' los datos generales del cliente
+        $stmt = $this->connection->prepare("INSERT INTO clients (name, address, email, phone_number, membership_type, account_balance) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssd", 
+            $client->getName(), 
+            $client->getAddress(), 
+            $client->getEmail(), 
+            $client->getPhoneNumber(), 
+            $client->getMembershipType(), 
+            $client->getAccountBalance());
+        $stmt->execute();
+        $client_id = $this->connection->insert_id; // Obtener el ID del cliente insertado
 
-            // Si companyData no es null, insertar en CompanyData
-            if ($c->getCompanyData() !== null) {
-                $this->writeQuery("INSERT INTO CompanyData (client_id, company_workers, corporate_reason) VALUES (" . 
-                    $c->getClientId() . ", " . $c->getCompanyWorkers() . ", '" . $c->getCorporateReason() . "');");
-            }
+        // Insertar en la tabla 'CompanyClients' los detalles específicos de la empresa
+        $stmt = $this->connection->prepare("INSERT INTO CompanyClients (client_id, workers, social_reason, client_type) VALUES (?, ?, ?, 'Empresa')");
+        $stmt->bind_param("iis", 
+            $client_id, 
+            $client->getCompanyData());
+        $stmt->execute();
 
+        // Verificar si las inserciones fueron exitosas
+        if ($stmt->affected_rows > 0) {
+            $this->connection->commit();
             return true;
-        } catch (mysqli_sql_exception $ex) {
-            throw new ServiceException("Error al insertar cliente -->" . $ex->getMessage());
+        } else {
+            $this->connection->rollback();
+            return false;
         }
-    }
-    
-    public function listClients(): array {
-    $query = "SELECT c.client_id, c.name, c.address, c.email, c.phone_number, c.membership_type, c.account_balance,
-              ic.dni,
-              cc.company_id, cc.workers, cc.social_reason
-              FROM Clients c
-              LEFT JOIN IndividualClients ic ON c.client_id = ic.client_id
-              LEFT JOIN CompanyClients cc ON c.client_id = cc.client_id
-              ORDER BY c.client_id ASC";
-    $result = $this->connection->query($query);
-
-    if ($result) {
-        return $result->fetch_all(MYSQLI_ASSOC);
-    } else {
-        throw new Exception("Error al obtener los clientes: " . $this->connection->error);
+    } catch (mysqli_sql_exception $ex) {
+        $this->connection->rollback();
+        throw new ServiceException("Error al insertar cliente de empresa: " . $ex->getMessage());
+    } finally {
+        if (isset($stmt)) {
+            $stmt->close();
+        }
     }
 }
 
-    
-    public function updateClient(Client $c): bool {
-        try {
-            return $this->writeQuery("UPDATE clients SET name = \"" . $c->getName() . "\", address = \"" . $c->getAddress() . 
-                    "\", email = \"" . $c->getEmail() . "\", phoneNumber = \"" . $c->getPhoneNumber() . "\", membershipType = \"" . 
-                    $c->getMembershipType() . "\", accountBalance = " . $c->getAccountBalance() . ", companyData = \"" . $c->getCompanyData() . 
-                    "\" WHERE clientId = " . $c->getClientId() . ";");
-        } catch (mysqli_sql_exception $ex) {
-            throw new ServiceException("Error al actualizar cliente -->" . $ex->getMessage());
+
+
+
+public function addIndividualClient(Client $c) {
+    try {
+        $this->connection->begin_transaction();
+        
+        // Insertar en la tabla principal 'clients'
+        $stmt = $this->connection->prepare("INSERT INTO clients (name, address, email, phone_number, membership_type, account_balance) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssd", $c->getName(), $c->getAddress(), $c->getEmail(), $c->getPhoneNumber(), $c->getMembershipType(), $c->getAccountBalance());
+        $stmt->execute();
+        $client_id = $this->connection->insert_id; // Obtener el ID del cliente insertado
+
+        // Insertar en la tabla 'IndividualClients' el DNI y el client_id recién creado
+        $stmt = $this->connection->prepare("INSERT INTO IndividualClients (client_id, dni) VALUES (?, ?)");
+        $stmt->bind_param("is", $client_id, $c->getDNI());
+        $stmt->execute();
+
+        // Comprobar si todo ha salido bien y hacer commit de la transacción
+        if ($stmt->affected_rows > 0) {
+            $this->connection->commit();
+            return true;
+        } else {
+            $this->connection->rollback();
+            return false;
+        }
+    } catch (mysqli_sql_exception $ex) {
+        $this->connection->rollback();
+        throw new ServiceException("Error al insertar cliente individual: " . $ex->getMessage());
+    } finally {
+        if (isset($stmt)) {
+            $stmt->close();
         }
     }
+}
+
+
+
+
+
+
+    
+    public function listClients(): array {
+        $query = "SELECT c.client_id, c.name, c.address, c.email, c.phone_number, c.membership_type, c.account_balance,
+            ic.dni,
+            cc.company_id, cc.workers, cc.social_reason
+            FROM Clients c
+            LEFT JOIN IndividualClients ic ON c.client_id = ic.client_id
+            LEFT JOIN CompanyClients cc ON c.client_id = cc.client_id
+            ORDER BY c.client_id ASC";
+        $result = $this->connection->query($query);
+
+        if ($result) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } else {
+            throw new Exception("Error al obtener los clientes: " . $this->connection->error);
+        }
+    }
+
+    
+    public function updateClient(Client $c): bool {
+    // Iniciar la transacción para asegurar que todas las operaciones son atómicas
+    $this->connection->begin_transaction();
+
+    try {
+        // Primera actualización en la tabla 'clients'
+        $query = "UPDATE clients SET 
+                    name = ?, 
+                    address = ?, 
+                    email = ?, 
+                    phone_number = ?, 
+                    membership_type = ?, 
+                    account_balance = ? 
+                  WHERE client_id = ?";
+        $stmt = $this->connection->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Error al preparar la consulta: " . $this->connection->error);
+        }
+
+        // Asignar las propiedades de la clase Client a variables locales
+        $name = $c->getName();
+        $address = $c->getAddress();
+        $email = $c->getEmail();
+        $phoneNumber = $c->getPhoneNumber();
+        $membershipType = $c->getMembershipType();
+        $accountBalance = $c->getAccountBalance();
+        $clientId = $c->getClientId();
+
+        // Vincular los parámetros para la consulta
+        $stmt->bind_param("sssssdi", 
+            $name, 
+            $address, 
+            $email, 
+            $phoneNumber, 
+            $membershipType, 
+            $accountBalance,
+            $clientId);
+        $stmt->execute();
+        $updateSuccessful = $stmt->affected_rows > 0;
+        $stmt->close();
+
+        // Determinar si es una instancia de ClientCompany para actualizar CompanyClients
+        if ($c instanceof ClientCompany) {
+            $query = "UPDATE CompanyClients SET workers = ?, corporate_reason = ? WHERE client_id = ?";
+            $stmt = $this->connection->prepare($query);
+            if (!$stmt) {
+                throw new Exception("Error al preparar la consulta para CompanyClients: " . $this->connection->error);
+            }
+            $workers = $c->getWorkers();
+            $corporateReason = $c->getCorporateReason();
+            $stmt->bind_param("isi", $workers, $corporateReason, $clientId);
+        } else {
+            // Actualizar IndividualClients si es un cliente individual
+            $query = "UPDATE IndividualClients SET dni = ? WHERE client_id = ?";
+            $stmt = $this->connection->prepare($query);
+            if (!$stmt) {
+                throw new Exception("Error al preparar la consulta para IndividualClients: " . $this->connection->error);
+            }
+            $dni = $c->getDNI();
+            $stmt->bind_param("si", $dni, $clientId);
+        }
+
+        // Ejecutar la actualización específica del tipo de cliente
+        $stmt->execute();
+        $relatedUpdateSuccessful = $stmt->affected_rows > 0;
+        $stmt->close();
+
+        // Completar la transacción basada en el éxito de las operaciones
+        if ($updateSuccessful || $relatedUpdateSuccessful) {
+            $this->connection->commit();
+            return true; // Retornar verdadero si alguna de las actualizaciones fue exitosa
+        } else {
+            $this->connection->rollback();
+            return false; // Retornar falso si no se afectaron filas en ninguna de las operaciones
+        }
+    } catch (Exception $e) {
+        // Revertir todas las operaciones si ocurre un error
+        $this->connection->rollback();
+        throw $e; // Relanzar la excepción para manejarla en niveles superiores
+    }
+}
+
+
 }
 
 

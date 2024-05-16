@@ -14,7 +14,7 @@
         <video class="video" preload="auto" muted playsinline autoplay loop>
             <source type="video/mp4" src="../../../public/assets/fondoHexagonal.mp4">
         </video>
-        <form action="../../controllers/stakeholdersControllers/newClientController.php" method="POST">
+        <form action="../../../controllers/stakeholdersControllers/clientsControllers/newClientController.php" method="POST">
             <div class="form-group">
                 <label for="name">Nombre:</label>
                 <input type="text" id="name" name="name" required>
@@ -51,16 +51,20 @@
 
             <div class="form-group">
                 <label for="clientType">Tipo de Cliente:</label>
-                <select id="clientType" name="clientType" onchange="toggleCompanyInfo()">
+                <select id="clientType" name="clientType" onchange="toggleClientInfo()">
                     <option value="particular">Particular</option>
                     <option value="empresa">Empresa</option>
                 </select>
             </div>
 
+            <div id="individualInfo" class="form-group">
+                <label for="dni">DNI:</label>
+                <input type="text" id="dni" name="dni">
+            </div>
+
             <div id="companyInfo" class="form-group" style="display:none;">
                 <label for="companyWorkers">Número de Empleados:</label>
                 <input type="number" id="companyWorkers" name="companyWorkers">
-
                 <label for="corporateReason">Razón Social:</label>
                 <input type="text" id="corporateReason" name="corporateReason">
             </div>
@@ -76,9 +80,17 @@
     </footer>
 
     <script>
-        function toggleCompanyInfo() {
-            var display = document.getElementById('clientType').value === 'empresa' ? 'block' : 'none';
-            document.getElementById('companyInfo').style.display = display;
+        function toggleClientInfo() {
+            var clientType = document.getElementById('clientType').value;
+            var companyInfo = document.getElementById('companyInfo');
+            var individualInfo = document.getElementById('individualInfo');
+            if (clientType === 'empresa') {
+                companyInfo.style.display = 'block';
+                individualInfo.style.display = 'none';
+            } else if (clientType === 'particular') {
+                companyInfo.style.display = 'none';
+                individualInfo.style.display = 'block';
+            }
         }
     </script>
 </body>

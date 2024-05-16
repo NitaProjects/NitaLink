@@ -7,16 +7,12 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
 
 
 class CompanyData {
-    protected int $companyId;
     protected int $workers;
     protected string $socialReason;
     protected string $companyType;
 
-    public function __construct(int $companyId, int $workers, string $socialReason) {
+    public function __construct( int $workers, string $socialReason) {
         $message = "";
-        if ($this->setCompanyId($companyId) != 0) {
-            $message .= "-ID de compañía incorrecto<br>";
-        }
         if ($this->setWorkers($workers) != 0) {
             $message .= "-Numero de trabajadores incorrecto<br>";
         }
@@ -28,9 +24,7 @@ class CompanyData {
         }
     }
  
-    public function getCompanyId(): int {
-        return $this->companyId;
-    }
+   
     
     public function getWorkers(): int {
         return $this->workers;
@@ -44,13 +38,7 @@ class CompanyData {
         return $this->companyType;
     }
     
-    public function setCompanyId(int $companyId): int {
-        $error = Checker::NumberValidator($companyId);
-        if ($error == 0) {
-            $this->companyId = $companyId;
-        }
-        return $error;
-    }
+   
     
     public function setWorkers(int $workers): int {
         $error = Checker::NumberValidator($workers);

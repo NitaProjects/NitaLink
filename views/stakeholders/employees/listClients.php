@@ -52,6 +52,11 @@
                         <input type="text" name="phone_number" value="<?= htmlspecialchars($client['phone_number']) ?>">
                         <input type="text" name="account_balance" value="<?= htmlspecialchars($client['account_balance']) ?>">
                         <input type="text" name="membership_type" value="<?= htmlspecialchars($client['membership_type']) ?>">
+                        <select name="client_type">
+                            <option value="particular" <?= isset($client['company_id']) ? '' : 'selected' ?>>Particular</option>
+                            <option value="empresa" <?= isset($client['company_id']) ? 'selected' : '' ?>>Empresa</option>
+                        </select>
+
                         <input type="text" name="dni" value="<?= $client['dni'] ?? '' ?>">
                         <input type="text" name="company_workers" value="<?= $client['company_id'] ? htmlspecialchars($client['workers']) : '' ?>">
                         <input type="text" name="corporate_reason" value="<?= $client['company_id'] ? htmlspecialchars($client['social_reason']) : '' ?>">

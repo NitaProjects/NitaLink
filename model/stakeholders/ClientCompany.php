@@ -15,7 +15,7 @@ class ClientCompany extends Person implements Stakeholder {
     protected float $accountBalance;
     protected CompanyData $companyData;
 
-    public function __construct(string $name, string $address, string $email, string $phoneNumber, int $clientId, string $membershipType, float $accountBalance, int $companyId, int $workers, string $socialReason) {
+    public function __construct(string $name, string $address, string $email, string $phoneNumber, int $clientId, string $membershipType, float $accountBalance, int $workers, string $socialReason) {
         $message = "";
         try {
             parent::__construct($name, $address, $email, $phoneNumber);
@@ -33,7 +33,7 @@ class ClientCompany extends Person implements Stakeholder {
         }
         
         try {
-            $this->companyData = new CompanyData($companyId, $workers, $socialReason);
+            $this->companyData = new CompanyData($workers, $socialReason);
         } catch (CheckException $e) {
             $message .= $e->getMessage();
         }
