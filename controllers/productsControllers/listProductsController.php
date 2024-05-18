@@ -1,13 +1,13 @@
 <?php
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/config/Database.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlProductsAdapter.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlProductAdapter.php');
 
-$adapter = new MysqlClientAdapter(); 
+$adapter = new MysqlProductAdapter(); 
 
 try {
-    $clients = $adapter->listClients(); 
-    include '../../../views/stakeholders/employees/listProducts.php'; 
+    $products = $adapter->listProducts(); 
+    require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/views/products/listProducts.php');
 } catch (Exception $e) {
     echo "Error de conexión a la base de datos: " . $e->getMessage();
     exit;

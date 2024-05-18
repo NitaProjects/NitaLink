@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Clientes - NitaLink</title>
-    <link rel="stylesheet" href="../../../public/css/formulario2.css">
+    <link rel="stylesheet" href="../../../public/css/pruebaDashboardClientes.css">
 </head>
 <body>
-    
     <header>
         <h1>Gestión de Clientes</h1>
         <nav>
@@ -21,19 +20,14 @@
             </ul>
         </nav>
     </header>
-    
     <main>
         <video class="video" preload="auto" muted playsinline autoplay loop>
             <source type="video/mp4" src="../../../public/assets/fondoHexagonal.mp4">
         </video>
         <section id="listadoClientes">
-            <h2>Listado de Clientes</h2>
-            <table>
                 <?php include '../../../controllers/stakeholdersControllers/clientsControllers/listClientsController.php'; ?>
-            </table>
         </section>
     </main>
-
     <footer>
         <p>&copy; 2024 NitaLink. Todos los derechos reservados.</p>
     </footer>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard del Proveedor - NitaLink</title>
-    <link rel="stylesheet" href="../../../public/css/dashboardProvider.css">
+    <link rel="stylesheet" href="../../../public/css/formulario2.css">
 </head>
 <body>
     <header>

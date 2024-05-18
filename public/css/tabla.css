@@ -1,17 +1,52 @@
-/* Estilos generales */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
-   
-    color: #333;
+* {
+    font-family: 'Poppins';
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../assets/Poppins-MediumItalic.ttf');
+}
+
+.filter-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    background: transparent;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+}
+
+.filter-buttons button {
+    background-color: #009688;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 100%;
+}
+
+.filter-buttons button:hover {
+    background-color: #00796b;
+}
+
+main {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
 table {
-    width: 70%;
+    width: 75%;
     border-collapse: collapse;
-    margin: 20px;
     background-color: white;
-    font-size: 13px;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 thead th {
@@ -31,6 +66,10 @@ tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
+tbody tr:hover {
+    background-color: #e0f2f1;
+}
+
 button {
     cursor: pointer;
     background-color: #009688;
@@ -42,35 +81,57 @@ button {
     transition: background 0.3s ease;
 }
 
+td button {
+    cursor: pointer;
+    background-color: #009688;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    margin: 5px;
+    transition: background 0.3s ease;
+}
+
 button:hover {
     background-color: #00796b;
 }
 
-form input[type="text"],
-form input[type="email"] {
-    padding: 8px;
-    margin: 5px 0;
-    display: block;
-    width: calc(100% - 16px);
-    border-radius: 4px;
-    border: 1px solid #ccc;
+form {
+    background: rgba(255, 255, 255, 0.8); 
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 100%;
+    max-width: 600px;
+    text-align: left;
 }
 
-form button[type="submit"] {
-    display: inline-block;
-    background-color: #4CAF50;
-    padding: 10px 20px;
+form input[type="text"],
+form input[type="number"],
+form input[type="email"],
+form input[type="submit"] {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+form input[type="submit"] {
+    background: #009688;
     color: white;
     border: none;
-    border-radius: 4px;
-    margin-top: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
 
-tr[style*="display:none"] {
-    display: none;
+form input[type="submit"]:hover {
+    background: #00796b;
 }
 
-/* Resaltado al pasar el mouse */
-tbody tr:hover {
-    background-color: #e0f2f1;
+form input:focus {
+    border-color: #2f4f6f;
+    outline: none;
 }

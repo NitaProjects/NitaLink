@@ -15,21 +15,21 @@ $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
 $phone_number = filter_input(INPUT_POST, 'phone_number', FILTER_SANITIZE_STRING);
 $account_balance = filter_input(INPUT_POST, 'account_balance', FILTER_VALIDATE_FLOAT);
 $membership_type = filter_input(INPUT_POST, 'membership_type', FILTER_SANITIZE_STRING);
-$dni = filter_input(INPUT_POST, 'dni', FILTER_SANITIZE_STRING);
 $clientType = filter_input(INPUT_POST, 'client_type', FILTER_SANITIZE_STRING);
 
-// Determinar si el cliente es de tipo Empresa y recoger datos adicionales
-if ($clientType === 'empresa') {
-    $company_workers = filter_input(INPUT_POST, 'company_workers', FILTER_VALIDATE_INT);
-    $corporate_reason = filter_input(INPUT_POST, 'corporate_reason', FILTER_SANITIZE_STRING);
-    $client = new ClientCompany($name, $address, $email, $phone_number, $client_id, $membership_type, $account_balance, $company_workers, $corporate_reason);
-} else {
-    $client = new Client($name, $address, $email, $phone_number, $client_id, $membership_type, $account_balance, $dni);
-}
-
-// Intentar actualizar la información del cliente
 try {
-    if ($adapter->updateClient($client)) {
+    if ($clientType == 'Empresa') {
+        $workers = filter_input(INPUT_POST, 'workers', FILTER_VALIDATE_INT);
+        $social_reason = filter_input(INPUT_POST, 'social_reason', FILTER_SANITIZE_STRING);
+        $client = new ClientCompany($name, $address, $email, $phone_number, $client_id, $membership_type, $account_balance, $workers, $social_reason);
+        $success = $adapter->updateClientCompany($client);
+    } else {
+        $dni = filter_input(INPUT_POST, 'dni', FILTER_SANITIZE_STRING);
+        $client = new Client($name, $address, $email, $phone_number, $client_id, $membership_type, $account_balance, $dni);
+        $success = $adapter->updateClient($client);
+    }
+
+    if ($success) {
         // Redirección con mensaje de éxito
         header("Location: ../../../views/stakeholders/employees/gestionClientes.php?update=success");
         exit;

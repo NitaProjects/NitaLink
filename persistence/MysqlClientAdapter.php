@@ -27,8 +27,7 @@ class MysqlClientAdapter extends MysqlAdapter {
 
         return $data;
     }
-
-    
+ 
     public function exists(string $email): bool {
         $stmt = $this->connection->prepare("SELECT client_id FROM Clients WHERE email = ?");
         $stmt->bind_param("s", $email);
@@ -121,11 +120,6 @@ class MysqlClientAdapter extends MysqlAdapter {
     }
 }
 
-
-
-
-
-
 public function addIndividualClient(Client $c) {
     try {
         $this->connection->begin_transaction();
@@ -159,11 +153,6 @@ public function addIndividualClient(Client $c) {
     }
 }
 
-
-
-
-
-
     
     public function listClients(): array {
     $query = "
@@ -191,11 +180,9 @@ public function addIndividualClient(Client $c) {
 
     
     public function updateClient(Client $c): bool {
-    // Iniciar la transacción para asegurar que todas las operaciones son atómicas
     $this->connection->begin_transaction();
 
     try {
-        // Primera actualización en la tabla 'clients'
         $query = "UPDATE clients SET 
                     name = ?, 
                     address = ?, 
@@ -209,66 +196,90 @@ public function addIndividualClient(Client $c) {
             throw new Exception("Error al preparar la consulta: " . $this->connection->error);
         }
 
-        // Asignar las propiedades de la clase Client a variables locales
-        $name = $c->getName();
-        $address = $c->getAddress();
-        $email = $c->getEmail();
-        $phoneNumber = $c->getPhoneNumber();
-        $membershipType = $c->getMembershipType();
-        $accountBalance = $c->getAccountBalance();
-        $clientId = $c->getClientId();
-
-        // Vincular los parámetros para la consulta
         $stmt->bind_param("sssssdi", 
-            $name, 
-            $address, 
-            $email, 
-            $phoneNumber, 
-            $membershipType, 
-            $accountBalance,
-            $clientId);
+            $c->getName(), 
+            $c->getAddress(), 
+            $c->getEmail(), 
+            $c->getPhoneNumber(), 
+            $c->getMembershipType(), 
+            $c->getAccountBalance(),
+            $c->getClientId());
         $stmt->execute();
         $updateSuccessful = $stmt->affected_rows > 0;
         $stmt->close();
 
-        // Determinar si es una instancia de ClientCompany para actualizar CompanyClients
-        if ($c instanceof ClientCompany) {
-            $query = "UPDATE CompanyClients SET workers = ?, corporate_reason = ? WHERE client_id = ?";
-            $stmt = $this->connection->prepare($query);
-            if (!$stmt) {
-                throw new Exception("Error al preparar la consulta para CompanyClients: " . $this->connection->error);
-            }
-            $workers = $c->getWorkers();
-            $corporateReason = $c->getCorporateReason();
-            $stmt->bind_param("isi", $workers, $corporateReason, $clientId);
-        } else {
-            // Actualizar IndividualClients si es un cliente individual
-            $query = "UPDATE IndividualClients SET dni = ? WHERE client_id = ?";
-            $stmt = $this->connection->prepare($query);
-            if (!$stmt) {
-                throw new Exception("Error al preparar la consulta para IndividualClients: " . $this->connection->error);
-            }
-            $dni = $c->getDNI();
-            $stmt->bind_param("si", $dni, $clientId);
+        $query = "UPDATE IndividualClients SET dni = ? WHERE client_id = ?";
+        $stmt = $this->connection->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Error al preparar la consulta para IndividualClients: " . $this->connection->error);
         }
-
-        // Ejecutar la actualización específica del tipo de cliente
+        $stmt->bind_param("si", $c->getDNI(), $c->getClientId());
         $stmt->execute();
         $relatedUpdateSuccessful = $stmt->affected_rows > 0;
         $stmt->close();
 
-        // Completar la transacción basada en el éxito de las operaciones
         if ($updateSuccessful || $relatedUpdateSuccessful) {
             $this->connection->commit();
-            return true; // Retornar verdadero si alguna de las actualizaciones fue exitosa
+            return true;
         } else {
             $this->connection->rollback();
-            return false; // Retornar falso si no se afectaron filas en ninguna de las operaciones
+            return false;
         }
     } catch (Exception $e) {
-        // Revertir todas las operaciones si ocurre un error
         $this->connection->rollback();
-        throw $e; // Relanzar la excepción para manejarla en niveles superiores
+        throw $e;
+    }
+}
+
+public function updateClientCompany(ClientCompany $c): bool {
+    $this->connection->begin_transaction();
+
+    try {
+        $query = "UPDATE clients SET 
+                    name = ?, 
+                    address = ?, 
+                    email = ?, 
+                    phone_number = ?, 
+                    membership_type = ?, 
+                    account_balance = ? 
+                  WHERE client_id = ?";
+        $stmt = $this->connection->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Error al preparar la consulta: " . $this->connection->error);
+        }
+
+        $stmt->bind_param("sssssdi", 
+            $c->getName(), 
+            $c->getAddress(), 
+            $c->getEmail(), 
+            $c->getPhoneNumber(), 
+            $c->getMembershipType(), 
+            $c->getAccountBalance(),
+            $c->getClientId());
+        $stmt->execute();
+        $updateSuccessful = $stmt->affected_rows > 0;
+        $stmt->close();
+
+        $query = "UPDATE CompanyClients SET workers = ?, social_reason = ? WHERE client_id = ?";
+        $stmt = $this->connection->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Error al preparar la consulta para CompanyClients: " . $this->connection->error);
+        }
+        $stmt->bind_param("isi", $c->getWorkers(), $c->getSocialReason(), $c->getClientId());
+        $stmt->execute();
+        $relatedUpdateSuccessful = $stmt->affected_rows > 0;
+        $stmt->close();
+
+        if ($updateSuccessful || $relatedUpdateSuccessful) {
+            $this->connection->commit();
+            return true;
+        } else {
+            $this->connection->rollback();
+            return false;
+        }
+    } catch (Exception $e) {
+        $this->connection->rollback();
+        throw $e;
     }
 }
 
