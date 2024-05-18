@@ -6,43 +6,32 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/Provider.ph
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlAdapter.php');
 
 class MysqlProviderAdapter extends MysqlAdapter {
-
-    public function getProvider(int $providerId): Provider {
-        $data = $this->readQuery("SELECT providerId, name, address, email, phoneNumber, productSupplied, deliveryDays, companyData FROM providers WHERE providerId = " . $providerId . ";");
-        if (count($data) > 0) {
-            return new Provider($data[0]["name"], $data[0]["address"], $data[0]["email"], $data[0]["phoneNumber"],
-                                (int) $data[0]["providerId"], $data[0]["productSupplied"], $data[0]["deliveryDays"], $data[0]["companyData"]);
-        } else {
-            throw new ServiceException("No Provider found with providerId = " . $providerId);
-        }
-    }
-
-    public function deleteProvider(int $providerId): bool {
+    public function addProvider(Provider $provider): bool {
+        $this->connection->begin_transaction();
         try {
-            return $this->writeQuery("DELETE FROM providers WHERE providerId = " . $providerId . ";");
-        } catch (mysqli_sql_exception $ex) {
-            throw new ServiceException("Error al borrar al proveedor " . $providerId . "-->" . $ex->getMessage());
-        }
-    }
+            $query = "INSERT INTO providers (name, address, email, phone_number, provider_id, product_supplied, delivery_days) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $this->connection->prepare($query);
+            $deliveryDays = implode(',', $provider->getDeliveryDays());
+            $stmt->bind_param("ssssiis", 
+                $provider->getName(), 
+                $provider->getAddress(), 
+                $provider->getEmail(), 
+                $provider->getPhoneNumber(), 
+                $provider->getProviderId(), 
+                $provider->getProductSupplied(),
+                $deliveryDays
+            );
+            $stmt->execute();
+            $stmt->close();
 
-    public function addProvider(Provider $p): bool {
-        try {
-            return $this->writeQuery("INSERT INTO providers (providerId, name, address, email, phoneNumber, productSupplied, deliveryDays, companyData) VALUES (" . 
-                    $p->getProviderId() . ", \"" . $p->getName() . "\", \"" . $p->getAddress() . "\", \"" . $p->getEmail() . "\", \"" . 
-                    $p->getPhoneNumber() . "\", \"" . $p->getProductSupplied() . "\", \"" . $p->getDeliveryDays() . "\", \"" . $p->getCompanyData() . "\");");
+            $this->connection->commit();
+            return true;
         } catch (mysqli_sql_exception $ex) {
-            throw new ServiceException("Error al insertar proveedor -->" . $ex->getMessage());
+            $this->connection->rollback();
+            throw new Exception("Error al agregar el proveedor: " . $ex->getMessage());
         }
     }
+}
+?>
 
-    public function updateProvider(Provider $p): bool {
-        try {
-            return $this->writeQuery("UPDATE providers SET name = \"" . $p->getName() . "\", address = \"" . $p->getAddress() . 
-                    "\", email = \"" . $p->getEmail() . "\", phoneNumber = \"" . $p->getPhoneNumber() . "\", productSupplied = \"" . 
-                    $p->getProductSupplied() . "\", deliveryDays = \"" . $p->getDeliveryDays() . "\", companyData = \"" . $p->getCompanyData() . 
-                    "\" WHERE providerId = " . $p->getProviderId() . ";");
-        } catch (mysqli_sql_exception $ex) {
-            throw new ServiceException("Error al actualizar proveedor -->" . $ex->getMessage());
-        }
-    }
 }

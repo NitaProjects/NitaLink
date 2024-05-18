@@ -38,71 +38,79 @@ class MysqlProductAdapter extends MysqlAdapter {
         }
     }
 
-    public function addProduct(array $productData): bool {
+    public function addPhysicalBook(BookPhysical $book): bool {
         $this->connection->begin_transaction();
         try {
-            $query = "INSERT INTO products (name, price, quantity, product_type) VALUES (?, ?, ?, ?)";
+            $query = "INSERT INTO products (name, price, quantity, product_type) VALUES (?, ?, ?, 'Libro Físico')";
             $stmt = $this->connection->prepare($query);
-            if (!$stmt) {
-                throw new Exception("Error al preparar la consulta: " . $this->connection->error);
-            }
-
-            $stmt->bind_param("sdiss", 
-                $productData['name'], 
-                $productData['price'], 
-                $productData['quantity'], 
-                $productData['product_type']);
+            $stmt->bind_param("sdi", $book->getName(), $book->getPrice(), $book->getQuantity());
             $stmt->execute();
-
-            $product_id = $stmt->insert_id;
+            $productId = $stmt->insert_id;
             $stmt->close();
 
-            // Insertar datos específicos según el tipo de producto
-            if ($productData['product_type'] == 'Libro Digital') {
-                $query = "INSERT INTO books_digital (product_id, isbn, author, pages, publisher, publish_date, availability_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                $stmt = $this->connection->prepare($query);
-                $stmt->bind_param("issssss", 
-                    $product_id, 
-                    $productData['isbn'], 
-                    $productData['author'], 
-                    $productData['pages'], 
-                    $productData['publisher'], 
-                    $productData['publish_date'], 
-                    $productData['availability_date']);
-            } elseif ($productData['product_type'] == 'Libro Físico') {
-                $query = "INSERT INTO books_physical (product_id, isbn, author, pages, publisher, publish_date, availability_date, height, width, length, weight, fragile) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                $stmt = $this->connection->prepare($query);
-                $stmt->bind_param("isssssssssss", 
-                    $product_id, 
-                    $productData['isbn'], 
-                    $productData['author'], 
-                    $productData['pages'], 
-                    $productData['publisher'], 
-                    $productData['publish_date'], 
-                    $productData['availability_date'],
-                    $productData['height'],
-                    $productData['width'],
-                    $productData['length'],
-                    $productData['weight'],
-                    $productData['fragile']);
-            } elseif ($productData['product_type'] == 'Curso') {
-                $query = "INSERT INTO courses (product_id, duration, instructor, language) VALUES (?, ?, ?, ?)";
-                $stmt = $this->connection->prepare($query);
-                $stmt->bind_param("iiss", 
-                    $product_id, 
-                    $productData['duration'], 
-                    $productData['instructor'], 
-                    $productData['language']);
-            }
-
+            $query = "INSERT INTO books_physical (product_id, author, pages, publisher, publish_date, availability_date, height, width, length, weight, fragile, isbn) 
+                      VALUES (?, ?, ?, ?, STR_TO_DATE(?, '%d/%m/%Y'), STR_TO_DATE(?, '%d/%m/%Y'), ?, ?, ?, ?, ?, ?)";
+            $stmt = $this->connection->prepare($query);
+            $stmt->bind_param("isisssddddis", $productId, $book->getAuthor(), $book->getPages(), $book->getPublisher(), $book->getPublishDate(), $book->getAvailabilityDate(), 
+                              $book->getHeight(), $book->getWidth(), $book->getLength(), $book->getWeight(), $book->getFragile(), $book->getIsbn());
             $stmt->execute();
             $stmt->close();
 
             $this->connection->commit();
             return true;
-        } catch (Exception $e) {
+        } catch (mysqli_sql_exception $ex) {
             $this->connection->rollback();
-            throw $e;
+            throw new Exception("Error al agregar el libro físico: " . $ex->getMessage());
+        }
+    }
+
+    public function addDigitalBook(BookDigital $book): bool {
+        $this->connection->begin_transaction();
+        try {
+            $query = "INSERT INTO products (name, price, quantity, product_type) VALUES (?, ?, ?, 'Libro Digital')";
+            $stmt = $this->connection->prepare($query);
+            $stmt->bind_param("sdi", $book->getName(), $book->getPrice(), $book->getQuantity());
+            $stmt->execute();
+            $productId = $stmt->insert_id;
+            $stmt->close();
+
+            $query = "INSERT INTO books_digital (product_id, author, pages, publisher, publish_date, availability_date, isbn) 
+                      VALUES (?, ?, ?, ?, STR_TO_DATE(?, '%d/%m/%Y'), STR_TO_DATE(?, '%d/%m/%Y'), ?)";
+            $stmt = $this->connection->prepare($query);
+            $stmt->bind_param("isisssi", $productId, $book->getAuthor(), $book->getPages(), $book->getPublisher(), $book->getPublishDate(), $book->getAvailabilityDate(), $book->getIsbn());
+            $stmt->execute();
+            $stmt->close();
+
+            $this->connection->commit();
+            return true;
+        } catch (mysqli_sql_exception $ex) {
+            $this->connection->rollback();
+            throw new Exception("Error al agregar el libro digital: " . $ex->getMessage());
+        }
+    }
+
+    public function addCourse(Course $course): bool {
+        $this->connection->begin_transaction();
+        try {
+            $query = "INSERT INTO products (name, price, quantity, product_type) VALUES (?, ?, ?, 'Curso')";
+            $stmt = $this->connection->prepare($query);
+            $stmt->bind_param("sdi", $course->getName(), $course->getPrice(), $course->getQuantity());
+            $stmt->execute();
+            $productId = $stmt->insert_id;
+            $stmt->close();
+
+            $query = "INSERT INTO courses (product_id, duration, instructor, language) 
+                      VALUES (?, ?, ?, ?)";
+            $stmt = $this->connection->prepare($query);
+            $stmt->bind_param("iiss", $productId, $course->getDuration(), $course->getInstructor(), $course->getLanguage());
+            $stmt->execute();
+            $stmt->close();
+
+            $this->connection->commit();
+            return true;
+        } catch (mysqli_sql_exception $ex) {
+            $this->connection->rollback();
+            throw new Exception("Error al agregar el curso: " . $ex->getMessage());
         }
     }
 
@@ -144,71 +152,151 @@ class MysqlProductAdapter extends MysqlAdapter {
         $stmt->close();
     }
 }
+    
+    public function updatePhysicalBook(BookPhysical $book): bool {
+    $this->connection->begin_transaction();
 
+    try {
+        $query = "UPDATE products SET name = ?, price = ?, quantity = ?, product_type = 'Libro Físico' WHERE product_id = ?";
+        $stmt = $this->connection->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Error al preparar la consulta para products: " . $this->connection->error);
+        }
+        $stmt->bind_param("sdii", 
+            $book->getName(), 
+            $book->getPrice(), 
+            $book->getQuantity(), 
+            $book->getProductId());
+        $stmt->execute();
+        $updateSuccessful = $stmt->affected_rows > 0;
+        $stmt->close();
 
-    public function updateProduct(array $productData): bool {
-        $this->connection->begin_transaction();
-        try {
-            $query = "UPDATE products SET name = ?, price = ?, quantity = ?, product_type = ? WHERE product_id = ?";
-            $stmt = $this->connection->prepare($query);
-            if (!$stmt) {
-                throw new Exception("Error al preparar la consulta: " . $this->connection->error);
-            }
-            $stmt->bind_param("sdisi", 
-                $productData['name'], 
-                $productData['price'], 
-                $productData['quantity'], 
-                $productData['product_type'],
-                $productData['product_id']);
-            $stmt->execute();
-            $stmt->close();
+        $query = "UPDATE books_physical SET author = ?, pages = ?, publisher = ?, publish_date = ?, availability_date = ?, height = ?, width = ?, length = ?, weight = ?, fragile = ? WHERE product_id = ?";
+        $stmt = $this->connection->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Error al preparar la consulta para books_physical: " . $this->connection->error);
+        }
+        $stmt->bind_param("sisssddddii", 
+            $book->getAuthor(), 
+            $book->getPages(), 
+            $book->getPublisher(), 
+            $book->getPublishDate(), 
+            $book->getAvailabilityDate(), 
+            $book->getHeight(), 
+            $book->getWidth(), 
+            $book->getLength(), 
+            $book->getWeight(), 
+            $book->isFragile(), 
+            $book->getProductId());
+        $stmt->execute();
+        $relatedUpdateSuccessful = $stmt->affected_rows > 0;
+        $stmt->close();
 
-            // Actualizar datos específicos según el tipo de producto
-            if ($productData['product_type'] == 'Libro Digital') {
-                $query = "UPDATE books_digital SET isbn = ?, author = ?, pages = ?, publisher = ?, publish_date = ?, availability_date = ? WHERE product_id = ?";
-                $stmt = $this->connection->prepare($query);
-                $stmt->bind_param("ssssssi", 
-                    $productData['isbn'], 
-                    $productData['author'], 
-                    $productData['pages'], 
-                    $productData['publisher'], 
-                    $productData['publish_date'], 
-                    $productData['availability_date'],
-                    $productData['product_id']);
-            } elseif ($productData['product_type'] == 'Libro Físico') {
-                $query = "UPDATE books_physical SET isbn = ?, author = ?, pages = ?, publisher = ?, publish_date = ?, availability_date = ?, height = ?, width = ?, length = ?, weight = ?, fragile = ? WHERE product_id = ?";
-                $stmt = $this->connection->prepare($query);
-                $stmt->bind_param("sssssssssssi", 
-                    $productData['isbn'], 
-                    $productData['author'], 
-                    $productData['pages'], 
-                    $productData['publisher'], 
-                    $productData['publish_date'], 
-                    $productData['availability_date'],
-                    $productData['height'],
-                    $productData['width'],
-                    $productData['length'],
-                    $productData['weight'],
-                    $productData['fragile'],
-                    $productData['product_id']);
-            } elseif ($productData['product_type'] == 'Curso') {
-                $query = "UPDATE courses SET duration = ?, instructor = ?, language = ? WHERE product_id = ?";
-                $stmt = $this->connection->prepare($query);
-                $stmt->bind_param("issi", 
-                    $productData['duration'], 
-                    $productData['instructor'], 
-                    $productData['language'],
-                    $productData['product_id']);
-            }
-
-            $stmt->execute();
-            $stmt->close();
-
+        if ($updateSuccessful || $relatedUpdateSuccessful) {
             $this->connection->commit();
             return true;
-        } catch (Exception $e) {
+        } else {
             $this->connection->rollback();
-            throw $e;
+            return false;
         }
+    } catch (Exception $ex) {
+        $this->connection->rollback();
+        throw new Exception("Error al actualizar el libro físico: " . $ex->getMessage());
     }
+}
+
+
+    public function updateDigitalBook(BookDigital $book): bool {
+    $this->connection->begin_transaction();
+
+    try {
+        $query = "UPDATE products SET name = ?, price = ?, quantity = ?, product_type = 'Libro Digital' WHERE product_id = ?";
+        $stmt = $this->connection->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Error al preparar la consulta para products: " . $this->connection->error);
+        }
+        $stmt->bind_param("sdii", 
+            $book->getName(), 
+            $book->getPrice(), 
+            $book->getQuantity(), 
+            $book->getProductId());
+        $stmt->execute();
+        $updateSuccessful = $stmt->affected_rows > 0;
+        $stmt->close();
+
+        $query = "UPDATE books_digital SET author = ?, pages = ?, publisher = ?, publish_date = ?, availability_date = ? WHERE product_id = ?";
+        $stmt = $this->connection->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Error al preparar la consulta para books_digital: " . $this->connection->error);
+        }
+        $stmt->bind_param("sisssi", 
+            $book->getAuthor(), 
+            $book->getPages(), 
+            $book->getPublisher(), 
+            $book->getPublishDate(), 
+            $book->getAvailabilityDate(), 
+            $book->getProductId());
+        $stmt->execute();
+        $relatedUpdateSuccessful = $stmt->affected_rows > 0;
+        $stmt->close();
+
+        if ($updateSuccessful || $relatedUpdateSuccessful) {
+            $this->connection->commit();
+            return true;
+        } else {
+            $this->connection->rollback();
+            return false;
+        }
+    } catch (Exception $ex) {
+        $this->connection->rollback();
+        throw new Exception("Error al actualizar el libro digital: " . $ex->getMessage());
+    }
+}
+
+
+    public function updateCourse(Course $course): bool {
+    $this->connection->begin_transaction();
+
+    try {
+        $query = "UPDATE products SET name = ?, price = ?, quantity = ?, product_type = 'Curso' WHERE product_id = ?";
+        $stmt = $this->connection->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Error al preparar la consulta para products: " . $this->connection->error);
+        }
+        $stmt->bind_param("sdii", 
+            $course->getName(), 
+            $course->getPrice(), 
+            $course->getQuantity(), 
+            $course->getProductId());
+        $stmt->execute();
+        $updateSuccessful = $stmt->affected_rows > 0;
+        $stmt->close();
+
+        $query = "UPDATE courses SET duration = ?, instructor = ?, language = ? WHERE product_id = ?";
+        $stmt = $this->connection->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Error al preparar la consulta para courses: " . $this->connection->error);
+        }
+        $stmt->bind_param("issi", 
+            $course->getDuration(), 
+            $course->getInstructor(), 
+            $course->getLanguage(), 
+            $course->getProductId());
+        $stmt->execute();
+        $relatedUpdateSuccessful = $stmt->affected_rows > 0;
+        $stmt->close();
+
+        if ($updateSuccessful || $relatedUpdateSuccessful) {
+            $this->connection->commit();
+            return true;
+        } else {
+            $this->connection->rollback();
+            return false;
+        }
+    } catch (Exception $ex) {
+        $this->connection->rollback();
+        throw new Exception("Error al actualizar el curso: " . $ex->getMessage());
+    }
+}
+
 }

@@ -137,33 +137,102 @@ class Checker {
     }
   
     public static function checkDate(string $date): int {
-        // Expresión regular para validar la fecha en formato dd/mm/yyyy
-        $pattern = '/^(?:(?:31\/(?:0[13578]|1[02]))' // Permite 31 solo en los meses que lo tienen
-            . '|(?:(?:29|30)\/(?:0[13-9]|1[0-2]))'   // Permite 29 y 30 solo en meses que tienen al menos 30 días (todos excepto febrero)
-            . '|(?:0[1-9]|1\d|2[0-8])\/(?:0[1-9]|1[0-2]))\/' // Valida días del 1 al 28 en cualquier mes
-            . '(?:19\d{2}|20\d{2}|2100)$' // Valida años desde 1900 hasta 2099 y el año 2100
-            . '|^29\/02\/(?:19(?:[02468][048]|[13579][26])|20(?:[02468][048]|[13579][26])|2100)$/';// Permite 29 de febrero para años bisiestos entre 1900 y 2100
+        // Expresión regular básica para validar el formato general dd/mm/yyyy
+        $pattern = '/^\d{2}\-\d{2}\-\d{4}$/';
 
+        // Verificar si el formato general es válido
         if (!preg_match($pattern, $date)) {
-            return -1;
-        }      
-        return 0; 
+            return -1; // Formato inválido
+        }
+
+        // Dividir la fecha en día, mes y año
+        list($day, $month, $year) = explode('-', $date);
+
+        // Convertir a enteros
+        $day = (int)$day;
+        $month = (int)$month;
+        $year = (int)$year;
+
+        // Verificar el rango de los valores
+        if ($year < 1900 || $year > 2100) {
+            return -1; // Año fuera de rango
+        }
+        if ($month < 1 || $month > 12) {
+            return -1; // Mes fuera de rango
+        }
+
+        // Verificar el día del mes
+        if (!checkdate($month, $day, $year)) {
+            return -1; // Día fuera de rango
+        }
+
+        // Verificación específica para los años bisiestos
+        if ($month == 2 && $day == 29) {
+            if (!($year % 4 == 0 && ($year % 100 != 0 || $year % 400 == 0))) {
+                return -1; // No es un año bisiesto
+            }
+        }
+        return 0; // Fecha válida
     }
+
     
     public static function checkDateTimeLarga(string $date): int {
-    $pattern = '/^(?:(?:31\/(?:0[13578]|1[02]))' // Permite 31 solo en los meses que lo tienen
-            . '|(?:(?:29|30)\/(?:0[13-9]|1[0-2]))'   // Permite 29 y 30 solo en meses que tienen al menos 30 días (todos excepto febrero)
-            . '|(?:0[1-9]|1\d|2[0-8])\/(?:0[1-9]|1[0-2]))\/' // Valida días del 1 al 28 en cualquier mes
-            . '(?:19\d{2}|20\d{2}|2100)' // Valida años desde 1900 hasta 2099 y el año 2100
-            . ' (?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$' // Añade validación de hora (HH:mm:ss)
-            . '|^29\/02\/(?:19(?:[02468][048]|[13579][26])|20(?:[02468][048]|[13579][26])|2100) ' // Permite 29 de febrero para años bisiestos entre 1900 y 2100
-            . '(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/'; //añadimos formato hora, minuto y segundos
+        // Expresión regular básica para validar el formato general dd/mm/yyyy HH:mm:ss
+        $pattern = '/^\d{2}\-\d{2}\-\d{4} \d{2}:\d{2}:\d{2}$/';
 
-    if (!preg_match($pattern, $date)) {
-        return -1;
-    }
-    return 0;
-}
+        // Verificar si el formato general es válido
+        if (!preg_match($pattern, $date)) {
+            return -1; // Formato inválido
+        }
+
+        // Dividir la fecha y hora
+        list($datePart, $timePart) = explode(' ', $date);
+
+        // Dividir la fecha en día, mes y año
+        list($day, $month, $year) = explode('-', $datePart);
+
+        // Convertir a enteros
+        $day = (int)$day;
+        $month = (int)$month;
+        $year = (int)$year;
+
+        // Verificar el rango de los valores de la fecha
+        if ($year < 1900 || $year > 2100) {
+            return -1; // Año fuera de rango
+        }
+        if ($month < 1 || $month > 12) {
+            return -1; // Mes fuera de rango
+        }
+        if (!checkdate($month, $day, $year)) {
+            return -1; // Día fuera de rango
+        }
+
+        // Verificar el formato de la hora
+        $patternTime = '/^\d{2}:\d{2}:\d{2}$/';
+        if (!preg_match($patternTime, $timePart)) {
+            return -1; // Formato de hora inválido
+        }
+
+        // Dividir la hora en horas, minutos y segundos
+        list($hour, $minute, $second) = explode(':', $timePart);
+
+        // Convertir a enteros
+        $hour = (int)$hour;
+        $minute = (int)$minute;
+        $second = (int)$second;
+
+        // Verificar el rango de los valores de la hora
+        if ($hour < 0 || $hour > 23) {
+            return -1; // Hora fuera de rango
+        }
+        if ($minute < 0 || $minute > 59) {
+            return -1; // Minuto fuera de rango
+        }
+        if ($second < 0 || $second > 59) {
+            return -1; // Segundo fuera de rango
+        }
+        return 0; // Fecha y hora válidas
+        }
 
 
     public static function UserTypeValidator(string $type): int {
