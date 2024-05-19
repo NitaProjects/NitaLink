@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/Person.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/interfaces/Stakeholder.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/BuildException.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
 
 class Provider extends Person implements Stakeholder {
@@ -16,20 +16,20 @@ class Provider extends Person implements Stakeholder {
         $message = "";
         try {
             parent::__construct($name, $address, $email, $phoneNumber);
-        } catch (CheckException $e) {
+        } catch (BuildException $e) {
             $message .= $e->getMessage();  
         }
         if ($this->setProviderId($providerId) != 0) {
-            $message .= "-ID del proveedor incorrecto<br>";
+            $message .= "-ID del proveedor incorrecto.\n";
         }
         if ($this->setProductSupplied($productSupplied) != 0) {
-            $message .= "-No existe el producto suministrado<br>";
+            $message .= "-No existe el producto suministrado.\n";
         }
         if ($this->setDeliveryDays($deliveryDays) != 0) {
-            $message .= "-Días de reparto incorrectos<br>";
+            $message .= "-Días de reparto incorrectos.\n";
         }
         if (strlen($message) > 0) {
-            throw new CheckException($message);
+            throw new BuildException($message);
         }
     }
 

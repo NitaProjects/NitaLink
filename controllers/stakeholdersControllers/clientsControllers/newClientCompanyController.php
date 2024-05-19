@@ -17,16 +17,16 @@ $corporateReason = filter_input(INPUT_POST, 'corporateReason', FILTER_SANITIZE_S
 $lastClientId = $adapter->maxClientid();
 $clientId = $lastClientId + 1;
 
-$client = new ClientCompany($name, $address, $email, $phoneNumber, $clientId, $membershipType, $accountBalance, $companyWorkers, $corporateReason);
-
-// Intentar registrar al cliente empresa utilizando el adaptador
 try {
+    $client = new ClientCompany($name, $address, $email, $phoneNumber, $clientId, $membershipType, $accountBalance, $companyWorkers, $corporateReason);
+    
     if ($adapter->addCompanyClient($client)) {
         header("Location: ../../../views/stakeholders/employees/gestionClientes.php?update=success company");
     } else {
         header("Location: ../../../views/stakeholders/employees/gestionClientes.php?update=fail");
     }
 } catch (Exception $e) {
-    header("Location: ../../../views/error.php?message=" . urlencode($e->getMessage()));
+    $errorMessage = "Error al registrar la empresa:\n\n " . $e->getMessage();
+    include '../../../public/css/error.php';
     exit;
 }

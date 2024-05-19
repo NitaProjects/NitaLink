@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/BuildException.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
 
 abstract class Person {
@@ -14,19 +14,19 @@ abstract class Person {
     public function __construct(string $name, string $address, string $email, string $phoneNumber) {
         $message = "";
         if ($this->setName($name) != 0) {
-            $message .= "-Nombre incorrecto<br>";
+            $message .= "-Nombre incorrecto.\n";
         }
         if ($this->setAddress($address) != 0) {
-            $message .= "-Dirección incorrecta<br>";
+            $message .= "-Dirección incorrecta.\n";
         }
         if ($this->setEmail($email) != 0) {
-            $message .= "-Email incorrecto<br>";
+            $message .= "-Email incorrecto.\n";
         }
         if ($this->setPhoneNumber($phoneNumber) != 0) {
-            $message .= "-Numero de teléfono incorrecto<br>";
+            $message .= "-Numero de teléfono incorrecto.\n";
         }
         if (strlen($message) > 0) {
-            throw new CheckException($message);
+            throw new BuildException($message);
         }
     }
 

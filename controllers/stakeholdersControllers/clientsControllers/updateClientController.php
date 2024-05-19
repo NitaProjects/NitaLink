@@ -39,8 +39,8 @@ try {
         exit;
     }
 } catch (Exception $e) {
-    // Redirección con mensaje de error en caso de excepción
-    header("Location: ../../../views/stakeholders/employees/listClients.php?error=" . urlencode($e->getMessage()));
+    $errorMessage = "Error al actualizar el cliente:\n\n " . $e->getMessage();
+    header('Location: ../../public/css/error.php');
     exit;
 }
 ?>

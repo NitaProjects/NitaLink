@@ -5,7 +5,7 @@ declare(strict_types=1);
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/products/Product.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/interfaces/Marketable.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/BuildException.php');
 
 class Course extends Product {
     protected int $duration;
@@ -16,20 +16,20 @@ class Course extends Product {
         $message = "";
         try {
             parent::__construct($productId, $name, $price, $quantity);
-        } catch (CheckException $e) {
+        } catch (BuildException $e) {
             $message .= $e->getMessage();  
         }
         if ($this->setDuration($duration) != 0) {
-            $message .= "Duración incorrecta<br>";
+            $message .= "Duración incorrecta.\n";
         }
         if ($this->setInstructor($instructor) != 0) {
-            $message .= "Profesor incorrecto<br>";
+            $message .= "Profesor incorrecto.\n";
         }
         if ($this->setLanguage($language) != 0) {
-            $message .= "Idioma incorrecto<br>";
+            $message .= "Idioma incorrecto.\n";
         }
         if (strlen($message) > 0) {
-            throw new CheckException($message);
+            throw new BuildException($message);
         }
     }
     

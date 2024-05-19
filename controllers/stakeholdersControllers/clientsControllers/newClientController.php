@@ -17,16 +17,16 @@ $dni = filter_input(INPUT_POST, 'dni', FILTER_SANITIZE_STRING);
 $lastClientId = $adapter->maxClientid();
 $clientId = $lastClientId + 1;
 
-$client = new Client($name, $address, $email, $phoneNumber, $clientId, $membershipType, $accountBalance, $dni);
-
-// Intentar registrar al cliente utilizando el adaptador
 try {
+    $client = new Client($name, $address, $email, $phoneNumber, $clientId, $membershipType, $accountBalance, $dni);
+    
     if ($adapter->addIndividualClient($client)) {
         header("Location: ../../../views/stakeholders/employees/gestionClientes.php?update=success individual");
     } else {
         header("Location: ../../../views/stakeholders/employees/gestionClientes.php?update=fail");
     }
 } catch (Exception $e) {
-    header("Location: ../../../views/error.php?message=" . urlencode($e->getMessage()));
+    $errorMessage = "Error al registrar el cliente:\n\n " . $e->getMessage();
+    include '../../../public/css/error.php';
     exit;
 }

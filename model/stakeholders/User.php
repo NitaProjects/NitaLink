@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/BuildException.php');
 
 class User {
 
@@ -14,19 +14,19 @@ class User {
     public function __construct(int $id, string $name, string $password, string $type) {
         $message = "";
         if ($this->setName($name) != 0) {
-            $message .= "Nombre incorrecto, ";
+            $message .= "Nombre incorrecto.\n";
         }
         if ($this->setId($id) != 0) {
-            $message .= "ID incorrecto, ";
+            $message .= "ID incorrecto.\n";
         }
         if ($this->setPassword($password) != 0) {
-            $message .= "Password incorrecto, ";
+            $message .= "Password incorrecto.\n";
         }
         if ($this->setType($type) != 0) {
-            $message .= "no existe este tipo de usuario, ";
+            $message .= "no existe este tipo de usuario.\n";
         }
         if (strlen($message) > 0) {
-            throw new CheckException($message);
+            throw new BuildException($message);
         }
     }
 

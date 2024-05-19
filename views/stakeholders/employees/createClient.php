@@ -8,6 +8,11 @@
 <body>
     <header>
         <h1>Registrar Cliente</h1>
+        <nav>
+            <ul>
+                <li><a href="gestionClientes.php">Volver</a></li>
+            </ul>
+        </nav>
     </header>
     
     <main>

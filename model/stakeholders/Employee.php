@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/Person.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/interfaces/Stakeholder.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/BuildException.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
 
 class Employee extends Person implements Stakeholder {
@@ -17,23 +17,23 @@ class Employee extends Person implements Stakeholder {
         $message = "";
         try {
             parent::__construct($name, $address, $email, $phoneNumber);
-        } catch (CheckException $e) {
+        } catch (BuildException $e) {
             $message .= $e->getMessage();  
         }
         if ($this->setEmployeeId($employeeId) != 0) {
-            $message .= "ID de empleado incorrecto<br>";
+            $message .= "ID de empleado incorrecto.\n";
         }
         if ($this->setDepartment($department) != 0) {
-            $message .= "-Departamento incorrecto<br>";
+            $message .= "-Departamento incorrecto.\n";
         }
         if ($this->setSalary($salary) != 0) {
-            $message .= "-Salario incorrecto <br>";
+            $message .= "-Salario incorrecto.\n";
         }
         if ($this->setEndContractDate($endContractDate) != 0) {
-            $message .= "-Día fin de contrato incorrecto<br>";
+            $message .= "-Día fin de contrato incorrecto.\n";
         }
         if (strlen($message) > 0) {
-            throw new CheckException($message);
+            throw new BuildException($message);
         }
     }
 

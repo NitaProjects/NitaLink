@@ -14,21 +14,21 @@ class PhysicalData {
     public function __construct(float $height, float $width, float $length, float $weight, bool $fragile) {
         $message = "";
         if ($this->setHeight($height) != 0) {
-            $message .= "-Altura incorrecta<br>";
+            $message .= "-Altura incorrecta.\n";
         }
         if ($this->setWidth($width) != 0) {
-            $message .= "-Anchura incorrecta<br>";
+            $message .= "-Anchura incorrecta.\n";
         }
         if ($this->setLength($length) != 0) {
-            $message .= "-Largo incorrecto<br>";
+            $message .= "-Largo incorrecto.\n";
         }
         if ($this->setWeight($weight) != 0) {
-            $message .= "-Peso incorrecto<br>";
+            $message .= "-Peso incorrecto.\n";
         }
         $this->fragile = $fragile;
 
         if (strlen($message) > 0) {
-        throw new CheckException($message);
+        throw new BuildException($message);
         }
     }
     

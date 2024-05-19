@@ -8,7 +8,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/interfaces/Storable.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/interfaces/Marketable.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/DateException.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/BuildException.php');
 
 class BookPhysical extends Product implements Storable {
     protected string $author;
@@ -23,35 +23,35 @@ class BookPhysical extends Product implements Storable {
         $message = "";
         try {
             parent::__construct($productId, $name, $price, $quantity);
-        } catch (CheckException $e) {
+        } catch (BuildException $e) {
             $message .= $e->getMessage();  
         }
         if ($this->setAuthor($author) != 0) {
-            $message .= "-Escritor/a/e incorrecto<br>";
+            $message .= "-Escritor/a/e incorrecto.\n";
         }
         if ($this->setPages($pages) != 0) {
-            $message .= "-Paginas incorrectas<br>";
+            $message .= "-Paginas incorrectas.\n";
         }
         if ($this->setPublisher($publisher) != 0) {
-            $message .= "-Editorial incorrecto<br>";
+            $message .= "-Editorial incorrecto.\n";
         }
         if ($this->setPublishDate($publishDate) != 0) {
-            $message .= "-Fecha de publicación incorrecto<br>";
+            $message .= "-Fecha de publicación incorrecto.\n";
         }
         if ($this->setAvailabilityDate($availabilityDate) != 0) {
-            $message .= "-Fecha disponibilidad incorrecta<br>";
+            $message .= "-Fecha disponibilidad incorrecta.\n";
         }
         if ($this->setIsbn($isbn) != 0) {
-            $message .= "-ISBN incorrecto <br>";
+            $message .= "-ISBN incorrecto.\n";
         }
         try {
             $this->physicalData = new PhysicalData($height, $width, $length, $weight, $fragile);
-        } catch (CheckException $e) {
+        } catch (BuildException $e) {
             $message .= $e->getMessage();
         }
         
         if (strlen($message) > 0) {
-            throw new CheckException($message);
+            throw new BuildException($message);
         }
     }
 

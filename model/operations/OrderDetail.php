@@ -12,19 +12,19 @@ class OrderDetail {
     public function __construct(int $productId, int $quantity, float $unitPrice, float $discount) {
         $message = "";
         if ($this->setProductId($productId) != 0) {
-            $message .= "Id producto incorrecto";
+            $message .= "-Id producto incorrecto.\n";
         }
         if ($this->setQuantity($quantity) != 0) {
-            $message .= "Cantidad incorrecta;";
+            $message .= "-Cantidad incorrecta.\n";
         }
         if ($this->setUnitPrice($unitPrice) != 0) {
-            $message .= "Precio unitario incorrecto";
+            $message .= "-Precio unitario incorrecto.\n";
         }
         if ($this->setDiscount($discount) != 0) {
-            $message .= "Descuento incorrecto";
+            $message .= "-Descuento incorrecto.\n";
         }
         if (strlen($message) > 0) {
-            throw new CheckException($message);
+            throw new BuildException($message);
         }
     }
 

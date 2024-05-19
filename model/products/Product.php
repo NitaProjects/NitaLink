@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/BuildException.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/interfaces/Marketable.php');
 class Product implements Marketable {
@@ -15,19 +15,19 @@ class Product implements Marketable {
     public function __construct(int $productId, string $name, float $price, int $quantity) {
         $message = "";
         if ($this->setProductId($productId) != 0) {
-            $message .= "-ID producto incorrecto <br>";
+            $message .= "-ID producto incorrecto.\n";
         }
         if ($this->setName($name) != 0) {
-            $message .= "-Nombre producto incorrecto <br>";
+            $message .= "-Nombre producto incorrecto.\n";
         }
         if ($this->setPrice($price) != 0) {
-            $message .= "-Precio producto incorrecto <br>";
+            $message .= "-Precio producto incorrecto.\n";
         }
         if ($this->setQuantity($quantity) != 0) {
-            $message .= "-Cantidad producto incorrecto <br>";
+            $message .= "-Cantidad producto incorrecto.\n";
         }
         if (strlen($message) > 0) {
-            throw new CheckException($message);
+            throw new BuildException($message);
         }
     }
     

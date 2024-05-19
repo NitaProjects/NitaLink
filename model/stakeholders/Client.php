@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/Person.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/BuildException.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/interfaces/Stakeholder.php');
 
@@ -18,23 +18,23 @@ class Client extends Person implements Stakeholder {
         $message = "";
         try {
             parent::__construct($name, $address, $email, $phoneNumber);
-        } catch (CheckException $e) {
+        } catch (BuildException $e) {
             $message .= $e->getMessage();  
         }
         if ($this->setClientId($clientId) != 0) {
-            $message .= "-ID cliente incorrecto <br>";
+            $message .= "-ID cliente incorrecto.\n";
         }
         if ($this->setMembershipType($membershipType) != 0) {
-            $message .= "-Membresía incorrecta<br>";
+            $message .= "-Membresía incorrecta.\n";
         }
         if ($this->setAccountBalance($accountBalance) != 0) {
-            $message .= "-Saldo incorrecto<br>";
+            $message .= "-Saldo incorrecto.\n";
         }
         if ($this->setDNI($dni) != 0) {
-            $message .= "-DNI incorrecto<br>";
+            $message .= "-DNI incorrecto.\n";
         }
         if (strlen($message) > 0) {
-            throw new CheckException($message);
+            throw new BuildException($message);
         }
     }
     

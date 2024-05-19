@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/BuildException.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
 
 
@@ -14,13 +14,13 @@ class CompanyData {
     public function __construct( int $workers, string $socialReason) {
         $message = "";
         if ($this->setWorkers($workers) != 0) {
-            $message .= "-Numero de trabajadores incorrecto<br>";
+            $message .= "-Numero de trabajadores incorrecto.\n";
         }
         if ($this->setSocialReason($socialReason) != 0) {
-            $message .= "-Razón social incorrecto<br>";
+            $message .= "-Razón social incorrecto.\n";
         }
         if (strlen($message) > 0) {
-            throw new CheckException($message);
+            throw new BuildException($message);
         }
     }
  
