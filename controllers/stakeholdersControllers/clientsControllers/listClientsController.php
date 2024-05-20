@@ -8,10 +8,13 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlClientAdapter
 $adapter = new MysqlClientAdapter(); 
 
 // Definir el número de clientes por página
-$clientsPerPage = 5;
+$clientsPerPage = 50;
 
 // Obtener el número de página actual desde la solicitud, por defecto es 1
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT);
+if ($page === null || $page === false || $page < 1) {
+    $page = 1;
+}
 
 try {
     // Obtener los clientes paginados
@@ -23,7 +26,8 @@ try {
 
     include '../../../views/stakeholders/employees/listClients.php'; 
 } catch (Exception $e) {
-    echo "Error de conexión a la base de datos: " . $e->getMessage();
+    $errorMessage = "Error al registrar el cliente:\n\n " . $e->getMessage();
+    include '../../../public/css/error.php';
     exit;
 }
 ?>

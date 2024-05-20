@@ -11,7 +11,7 @@
     </header>
     <main>
         <video class="video" preload="auto" muted playsinline autoplay loop>
-            <source type="video/mp4" src="fondoHexagonal.mp4">
+            <source type="video/mp4" src="../assets/fondoHexagonal.mp4">
         </video>
         <div class="error-message">
             <p><?= nl2br(htmlspecialchars($errorMessage)) ?></p>

@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/Client.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlAdapter.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/stakeholders/Client.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/persistence/MysqlAdapter.php');
 
 class MysqlClientAdapter extends MysqlAdapter {
 
@@ -27,12 +27,11 @@ class MysqlClientAdapter extends MysqlAdapter {
                 throw new ServiceException("No existe el cliente, compruebe el id = " . $id);
             }
             return $data;
-        }catch (mysqli_sql_exception $ex) {
+        } catch (mysqli_sql_exception $ex) {
             throw new ServiceException("Error al obtener el cliente: " . $ex->getMessage());
-        } 
+        }
     }
 
- 
     public function exists(string $email): bool {
         $stmt = $this->connection->prepare("SELECT client_id FROM Clients WHERE email = ?");
         $stmt->bind_param("s", $email);
@@ -42,7 +41,7 @@ class MysqlClientAdapter extends MysqlAdapter {
         $stmt->close();
         return $exists;
     }
-    
+
     public function maxClientid(): int {
         $result = $this->connection->query("SELECT MAX(client_id) as last FROM Clients");
         $row = $result->fetch_assoc();
@@ -50,36 +49,36 @@ class MysqlClientAdapter extends MysqlAdapter {
     }
 
     public function deleteClient(int $id): bool {
-    $this->connection->begin_transaction();
-    try {
-        // Borrar registros relacionados en IndividualClients y CompanyClients
-        $stmt = $this->connection->prepare("DELETE FROM IndividualClients WHERE client_id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
+        $this->connection->begin_transaction();
+        try {
+            // Borrar registros relacionados en IndividualClients y CompanyClients
+            $stmt = $this->connection->prepare("DELETE FROM IndividualClients WHERE client_id = ?");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
 
-        $stmt = $this->connection->prepare("DELETE FROM CompanyClients WHERE client_id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
+            $stmt = $this->connection->prepare("DELETE FROM CompanyClients WHERE client_id = ?");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
 
-        // Ahora borrar el cliente de la tabla Clients
-        $stmt = $this->connection->prepare("DELETE FROM Clients WHERE client_id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
+            // Ahora borrar el cliente de la tabla Clients
+            $stmt = $this->connection->prepare("DELETE FROM Clients WHERE client_id = ?");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
 
-        if ($stmt->affected_rows > 0) {
-            $this->connection->commit();
-            return true;
-        } else {
+            if ($stmt->affected_rows > 0) {
+                $this->connection->commit();
+                return true;
+            } else {
+                $this->connection->rollback();
+                return false;
+            }
+        } catch (mysqli_sql_exception $ex) {
             $this->connection->rollback();
-            return false;
+            throw new ServiceException("Error al borrar el cliente " . $id . "-->" . $ex->getMessage());
+        } finally {
+            $stmt->close();
         }
-    } catch (mysqli_sql_exception $ex) {
-        $this->connection->rollback();
-        throw new ServiceException("Error al borrar el cliente " . $id . "-->" . $ex->getMessage());
-    } finally {
-        $stmt->close();
     }
-}
 
     public function addCompanyClient(ClientCompany $client) {
         try {
@@ -97,21 +96,20 @@ class MysqlClientAdapter extends MysqlAdapter {
 
             // Insertar en la tabla 'clients' los datos generales del cliente
             $stmt = $this->connection->prepare("INSERT INTO clients (name, address, email, phone_number, membership_type, account_balance) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssssd", 
-                $name, 
-                $address, 
-                $email, 
-                $phone_number, 
-                $membership_type, 
+            $stmt->bind_param("sssssd",
+                $name,
+                $address,
+                $email,
+                $phone_number,
+                $membership_type,
                 $account_balance);
             $stmt->execute();
             $client_id = $this->connection->insert_id; // Obtener el ID del cliente insertado
-
             // Insertar en la tabla 'CompanyClients' los detalles específicos de la empresa
             $stmt = $this->connection->prepare("INSERT INTO companyclients (client_id, workers, social_reason) VALUES (?, ?, ?)");
-            $stmt->bind_param("iis", 
-                $client_id, 
-                $workers, 
+            $stmt->bind_param("iis",
+                $client_id,
+                $workers,
                 $social_reason);
             $stmt->execute();
 
@@ -126,10 +124,10 @@ class MysqlClientAdapter extends MysqlAdapter {
         } catch (mysqli_sql_exception $ex) {
             $this->connection->rollback();
             if ($ex->getCode() == 1062) { // Código de error de MySQL para entrada duplicada
-            throw new ServiceException("Error al insertar cliente de empresa: Entrada duplicada para el email '".$client->getEmail()."'. El email ya existe.");
-        } else {
-            throw new ServiceException("Error al insertar cliente de empresa: " . $ex->getMessage());
-        }
+                throw new ServiceException("Error al insertar cliente de empresa: Entrada duplicada para el email '" . $client->getEmail() . "'. El email ya existe.");
+            } else {
+                throw new ServiceException("Error al insertar cliente de empresa: " . $ex->getMessage());
+            }
         } finally {
             if (isset($stmt)) {
                 $stmt->close();
@@ -137,11 +135,10 @@ class MysqlClientAdapter extends MysqlAdapter {
         }
     }
 
-    
     public function addIndividualClient(Client $c) {
         try {
             $this->connection->begin_transaction();
-        
+
             // Obtener valores a partir de los métodos del objeto $c
             $name = $c->getName();
             $address = $c->getAddress();
@@ -156,7 +153,6 @@ class MysqlClientAdapter extends MysqlAdapter {
             $stmt->bind_param("sssssd", $name, $address, $email, $phone_number, $membership_type, $account_balance);
             $stmt->execute();
             $client_id = $this->connection->insert_id; // Obtener el ID del cliente insertado
-
             // Insertar en la tabla 'IndividualClients' el DNI y el client_id recién creado
             $stmt = $this->connection->prepare("INSERT INTO IndividualClients (client_id, dni) VALUES (?, ?)");
             $stmt->bind_param("is", $client_id, $dni);
@@ -173,7 +169,7 @@ class MysqlClientAdapter extends MysqlAdapter {
         } catch (mysqli_sql_exception $ex) {
             $this->connection->rollback();
             if ($ex->getCode() == 1062) { // Código de error de MySQL para entrada duplicada
-            throw new ServiceException("Error al insertar cliente de empresa: Entrada duplicada para el email '".$c->getEmail()."'. El email ya existe.");
+                throw new ServiceException("Error al insertar cliente de empresa: Entrada duplicada para el email '" . $c->getEmail() . "'. El email ya existe.");
             } else {
                 throw new ServiceException("Error al insertar cliente de empresa: " . $ex->getMessage());
             }
@@ -184,8 +180,6 @@ class MysqlClientAdapter extends MysqlAdapter {
         }
     }
 
-
-    
     public function listClients(int $page, int $clientsPerPage): array {
         // Calcular el offset
         $offset = ($page - 1) * $clientsPerPage;
@@ -204,7 +198,7 @@ class MysqlClientAdapter extends MysqlAdapter {
             LEFT JOIN CompanyClients cc ON c.client_id = cc.client_id
             ORDER BY c.client_id ASC
             LIMIT ? OFFSET ?";
-    
+
         // Preparar la declaración
         $stmt = $this->connection->prepare($query);
         $stmt->bind_param("ii", $clientsPerPage, $offset);
@@ -220,12 +214,18 @@ class MysqlClientAdapter extends MysqlAdapter {
         }
     }
 
-    public function getTotalClients(): int {
-        $query = "SELECT COUNT(*) as total FROM Clients";
-        $result = $this->connection->query($query);
+    public function getTotalClients(string $search = ''): int {
+        // Preparar la consulta SQL con búsqueda
+        $query = "SELECT COUNT(*) as total FROM Clients WHERE name LIKE ?";
+        $stmt = $this->connection->prepare($query);
+        $searchParam = '%' . $search . '%';
+        $stmt->bind_param("s", $searchParam);
+        $stmt->execute();
+        $result = $stmt->get_result();
         if ($result) {
             $row = $result->fetch_assoc();
-            return (int)$row['total'];
+            $stmt->close();
+            return (int) $row['total'];
         } else {
             throw new Exception("Error al contar los clientes: " . $this->connection->error);
         }
@@ -248,12 +248,12 @@ class MysqlClientAdapter extends MysqlAdapter {
                 throw new Exception("Error al preparar la consulta: " . $this->connection->error);
             }
 
-            $stmt->bind_param("sssssdi", 
-                $c->getName(), 
-                $c->getAddress(), 
-                $c->getEmail(), 
-                $c->getPhoneNumber(), 
-                $c->getMembershipType(), 
+            $stmt->bind_param("sssssdi",
+                $c->getName(),
+                $c->getAddress(),
+                $c->getEmail(),
+                $c->getPhoneNumber(),
+                $c->getMembershipType(),
                 $c->getAccountBalance(),
                 $c->getClientId());
             $stmt->execute();
@@ -300,12 +300,12 @@ class MysqlClientAdapter extends MysqlAdapter {
                 throw new Exception("Error al preparar la consulta: " . $this->connection->error);
             }
 
-            $stmt->bind_param("sssssdi", 
-                $c->getName(), 
-                $c->getAddress(), 
-                $c->getEmail(), 
-                $c->getPhoneNumber(), 
-                $c->getMembershipType(), 
+            $stmt->bind_param("sssssdi",
+                $c->getName(),
+                $c->getAddress(),
+                $c->getEmail(),
+                $c->getPhoneNumber(),
+                $c->getMembershipType(),
                 $c->getAccountBalance(),
                 $c->getClientId());
             $stmt->execute();
@@ -335,5 +335,3 @@ class MysqlClientAdapter extends MysqlAdapter {
         }
     }
 }
-
-

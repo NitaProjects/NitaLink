@@ -40,7 +40,7 @@ try {
     }
 } catch (Exception $e) {
     $errorMessage = "Error al actualizar el cliente:\n\n " . $e->getMessage();
-    header('Location: ../../public/css/error.php');
+    header('Location: ../../../public/css/error.php');
     exit;
 }
 ?>

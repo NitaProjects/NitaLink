@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/products/Product.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/products/PhysicalData.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/interfaces/Storable.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/interfaces/Marketable.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/DateException.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/BuildException.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/products/Product.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/products/PhysicalData.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/interfaces/Storable.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/interfaces/Marketable.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/exceptions/DateException.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/exceptions/BuildException.php');
 
 class BookDigital extends Product {
+
     protected string $author;
     protected int $pages;
     protected string $publisher;
@@ -21,9 +22,9 @@ class BookDigital extends Product {
     public function __construct(int $productId, string $name, float $price, int $quantity, string $author, int $pages, string $publisher, string $publishDate, string $availabilityDate, string $isbn) {
         $message = "";
         try {
-            parent::__construct($productId, $name, $price, $quantity, );
+            parent::__construct($productId, $name, $price, $quantity,);
         } catch (BuildException $e) {
-            $message .= $e->getMessage();  
+            $message .= $e->getMessage();
         }
         if ($this->setAuthor($author) != 0) {
             $message .= "-Escritor/a/e incorrecto.\n";
@@ -77,7 +78,7 @@ class BookDigital extends Product {
     }
 
     // Getters
-    
+
     public function getAuthor(): string {
         return $this->author;
     }
@@ -90,6 +91,10 @@ class BookDigital extends Product {
         return $this->publisher;
     }
     
+    public function getIsbn(): string {
+        return $this->isbn;
+    }
+
     public function setAuthor(string $author): int {
         $error = Checker::StringValidator($author, 2);
         if ($error == 0) {
@@ -115,40 +120,40 @@ class BookDigital extends Product {
     }
 
     public function setPublishDate(string $date): int {
-    $error = Checker::checkDate($date);
-    if ($error == 0) {
-        $this->publishDate = DateTime::createFromFormat('d/m/Y', $date);
-        if ($this->publishDate === false) {
-            return -1;
+        $error = Checker::checkDate($date);
+        if ($error == 0) {
+            $publishDate = DateTime::createFromFormat('d/m/Y', $date);
+            if ($publishDate === false) {
+                return -1;
+            }
+            $this->publishDate = $publishDate;
         }
+        return $error;
     }
-    return $error;
-}
-
 
     public function setAvailabilityDate(string $date): int {
-    $error = Checker::checkDateTimeLarga($date);  
-    if ($error == 0) {
-        $this->availabilityDate = DateTime::createFromFormat('d/m/Y H:i:s', $date);
-        if ($this->availabilityDate === false) {
-            return -1; 
+        $error = Checker::checkDateTimeLarga($date);
+        if ($error == 0) {
+            $availabilityDate = DateTime::createFromFormat('d/m/Y H:i:s', $date);
+            if ($availabilityDate === false) {
+                return -1;
+            }
+            if ($availabilityDate < $this->publishDate) {
+                return -2;
+            }
+            $this->availabilityDate = $availabilityDate;
         }
-        if ($this->availabilityDate < $this->publishDate) {
-            return -2; 
-        }
+        return $error;
     }
-    return $error;
-}
 
-    
     private function setIsbn(string $isbn): int {
         $error = Checker::checkISBN($isbn);
-        if($error == 0){
+        if ($error == 0) {
             $this->isbn = $isbn;
         }
         return $error;
     }
-   
+
     public function getDetails(): string {
         $details = "Libro: {$this->name}, ISBN: {$this->isbn}, Autor: {$this->author}, Páginas: {$this->pages}, Editorial: {$this->publisher}, Precio: {$this->price}€";
         if ($this->publishDate) {
@@ -160,7 +165,3 @@ class BookDigital extends Product {
         return $details;
     }
 }
-
-
-
-   

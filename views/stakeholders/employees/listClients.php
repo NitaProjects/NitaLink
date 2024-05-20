@@ -65,7 +65,11 @@
                             <input type="email" name="email" value="<?= htmlspecialchars($client['email']) ?>">
                             <input type="text" name="phone_number" value="<?= htmlspecialchars($client['phone_number']) ?>">
                             <input type="text" name="account_balance" value="<?= htmlspecialchars($client['account_balance']) ?>">
-                            <input type="text" name="membership_type" value="<?= htmlspecialchars($client['membership_type']) ?>">
+                            <select name="membership_type">
+                                <option value="Gold" <?= $client['membership_type'] == 'Gold' ? 'selected' : '' ?>>Gold</option>
+                                <option value="Premium" <?= $client['membership_type'] == 'Premium' ? 'selected' : '' ?>>Premium</option>
+                                <option value="Standard" <?= $client['membership_type'] == 'Standard' ? 'selected' : '' ?>>Standard</option>
+                            </select>
                             <?php if ($client['client_type'] == 'Particular'): ?>
                                 <input type="text" name="dni" value="<?= htmlspecialchars($client['dni'] ?? '') ?>">
                             <?php else: ?>
@@ -78,8 +82,7 @@
                 </tr>
                 <?php endforeach; ?>
             </tbody>
-        </table>
-        </div>   
+        </table>   
     </main>
     <script>
         function toggleEditForm(formId) {

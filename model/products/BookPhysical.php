@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/products/Product.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/products/PhysicalData.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/interfaces/Storable.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/interfaces/Marketable.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/DateException.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/BuildException.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/products/Product.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/products/PhysicalData.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/interfaces/Storable.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/interfaces/Marketable.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/exceptions/DateException.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/exceptions/BuildException.php');
 
 class BookPhysical extends Product implements Storable {
+
     protected string $author;
     protected int $pages;
     protected string $publisher;
@@ -24,7 +25,7 @@ class BookPhysical extends Product implements Storable {
         try {
             parent::__construct($productId, $name, $price, $quantity);
         } catch (BuildException $e) {
-            $message .= $e->getMessage();  
+            $message .= $e->getMessage();
         }
         if ($this->setAuthor($author) != 0) {
             $message .= "-Escritor/a/e incorrecto.\n";
@@ -49,7 +50,7 @@ class BookPhysical extends Product implements Storable {
         } catch (BuildException $e) {
             $message .= $e->getMessage();
         }
-        
+
         if (strlen($message) > 0) {
             throw new BuildException($message);
         }
@@ -84,7 +85,7 @@ class BookPhysical extends Product implements Storable {
     }
 
     // Getters
-    
+
     public function getAuthor(): string {
         return $this->author;
     }
@@ -97,8 +98,12 @@ class BookPhysical extends Product implements Storable {
         return $this->publisher;
     }
 
+    public function getIsbn(): string {
+        return $this->isbn;
+    }
+
     // Implementación de métodos de Storable
-    
+
     public function getHeight(): ?float {
         return $this->physicalData ? $this->physicalData->getHeight() : null;
     }
@@ -126,8 +131,7 @@ class BookPhysical extends Product implements Storable {
     public function getDimensions(): ?string {
         return $this->physicalData ? $this->physicalData->getDimensions() : null;
     }
-    
-    
+
     public function setAuthor(string $author): int {
         $error = Checker::StringValidator($author, 2);
         if ($error == 0) {
@@ -155,25 +159,31 @@ class BookPhysical extends Product implements Storable {
     public function setPublishDate(string $date): int {
         $error = Checker::checkDate($date);
         if ($error == 0) {
-            $this->publishDate = DateTime::createFromFormat('d/m/Y', $date);
+            $publishDate = DateTime::createFromFormat('d/m/Y', $date);
+            if ($publishDate === false) {
+                return -1;
+            }
+            $this->publishDate = $publishDate;
         }
         return $error;
     }
 
     public function setAvailabilityDate(string $date): int {
-        $error = Checker::checkDate($date);
+        $error = Checker::checkDateTimeLarga($date);
         if ($error == 0) {
-            $this->availabilityDate = DateTime::createFromFormat('d/m/Y', $date);
-            if ($this->availabilityDate < $this->publishDate){
-                return $error;
-            }   
+            $availabilityDate = DateTime::createFromFormat('d/m/Y H:i:s', $date);
+            if ($availabilityDate === false) {
+                return -1;
+            }
+          
+            $this->availabilityDate = $availabilityDate;
         }
         return $error;
     }
-    
+
     private function setIsbn(string $isbn): int {
         $error = Checker::checkISBN($isbn);
-        if($error == 0){
+        if ($error == 0) {
             $this->isbn = $isbn;
         }
         return $error;
@@ -193,7 +203,3 @@ class BookPhysical extends Product implements Storable {
         return $details;
     }
 }
-
-
-
-   
