@@ -1,13 +1,14 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/exceptions/CheckException.php');
 
 class OrderDetail {
+
     private int $productId;
     private int $quantity;
     private float $unitPrice;
-    private float $discount;  
+    private float $discount;
 
     public function __construct(int $productId, int $quantity, float $unitPrice, float $discount) {
         $message = "";

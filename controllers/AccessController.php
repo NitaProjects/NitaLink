@@ -1,12 +1,13 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlUserAdapter.php');
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/persistence/MysqlUserAdapter.php');
 
 $persistence = new MysqlUserAdapter();
 
-    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-    
-if ($username !== null && $username !== false && $password !== null && $password !== false) { 
+$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+
+if ($username !== null && $username !== false && $password !== null && $password !== false) {
     try {
         $user = $persistence->authentication($username, $password);
         setcookie('userid', $user->getId(), 0, '/', 'localhost');

@@ -130,7 +130,7 @@ class BookDigital extends Product {
         }
         return $error;
     }
-    
+
     public function setAvailabilityDate(string $date): int {
         $error = Checker::checkDateTimeLarga($date);
         if ($error == 0) {

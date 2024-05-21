@@ -1,7 +1,8 @@
 <?php
+
 declare(strict_types=1);
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/config/Database.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlProductAdapter.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/config/Database.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/persistence/MysqlProductAdapter.php');
 
 $adapter = new MysqlProductAdapter();
 $productId = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);

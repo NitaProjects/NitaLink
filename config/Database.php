@@ -1,6 +1,8 @@
 <?php
+
 // database.php
 class Database {
+
     private $host = "localhost";
     private $db_name = "nitalink";
     private $username = "root";
@@ -15,10 +17,7 @@ class Database {
         } catch (mysqli_sql_exception $exception) {
             echo "Connection error: " . $exception->getMessage();
         }
-        
+
         return $this->conn;
     }
 }
-
-
-

@@ -1,8 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 class Checker {
-    
+
     public static function StringValidator(string $s, int $size): int {
         if ($s == null) {
             return -1;
@@ -15,7 +16,7 @@ class Checker {
         }
         return 0;
     }
-    
+
     public static function NumberValidator($i): int {
         if ($i == 0) {
             return -1;
@@ -31,7 +32,7 @@ class Checker {
         }
         return 0;
     }
-    
+
     public static function EmailValidator(string $email): int {
         // Expresión regular para validar un email
         $pattern = '/^[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.' // Comienza con caracteres alfanuméricos y símbolos especiales permitidos en la parte local.
@@ -67,17 +68,17 @@ class Checker {
             . '\d{4}' // Últimos cuatro dígitos
             . '$/';
         /*
-            * Ejemplos de Números Válidos:
-            Números Internacionales:
-            Con Prefijo de País: +34 912345678 (España)
-            Con Separadores: +44-20-1234-5678 (Reino Unido)
-            Sin Separadores: +14155552671 (Estados Unidos)
-            Números Nacionales Españoles:
-            Móvil: 612345678
-            Fijo con Código de Área: 91 123 4567
-            Formato Variado: 912-345-678
-        */
-        
+         * Ejemplos de Números Válidos:
+          Números Internacionales:
+          Con Prefijo de País: +34 912345678 (España)
+          Con Separadores: +44-20-1234-5678 (Reino Unido)
+          Sin Separadores: +14155552671 (Estados Unidos)
+          Números Nacionales Españoles:
+          Móvil: 612345678
+          Fijo con Código de Área: 91 123 4567
+          Formato Variado: 912-345-678
+         */
+
         // Comprobar si el número coincide con el patrón
         if (!preg_match($pattern, $phoneNumber)) {
             return -1; // Número de teléfono no válido
@@ -85,7 +86,7 @@ class Checker {
 
         return 0; // Número de teléfono válido
     }
-    
+
     public static function checkDNI(string $dni): int {
         // Expresión regular para validar el formato: 8 dígitos seguidos de una letra
         if (!preg_match('/^\d{8}[A-Z]$/i', $dni)) {
@@ -94,12 +95,11 @@ class Checker {
         // Extraer el número y la letra del DNI
         $numero = substr($dni, 0, 8);
         $letraIngresada = strtoupper(substr($dni, -1)); // Convertir a mayúscula
-
         // Tabla de letras correspondientes
         $letras = 'TRWAGMYFPDXBNJZSQVHLCKE';
 
         // Calcular el índice de la letra correcta
-        $indice = (int)$numero % 23;
+        $indice = (int) $numero % 23;
         $letraCorrecta = $letras[$indice];
 
         // Comparar la letra calculada con la letra proporcionada
@@ -109,7 +109,7 @@ class Checker {
 
         return 0; // DNI válido
     }
-    
+
     public static function checkISBN(string $isbn): int {
         // Expresión regular para validar el formato del ISBN-13 (prefijo + 10 dígitos)
         if (!preg_match('/^(978|979)\d{10}$/', $isbn)) {
@@ -119,7 +119,7 @@ class Checker {
         // Validar el dígito de comprobación usando el algoritmo del ISBN-13
         $sum = 0;
         for ($i = 0; $i < 12; $i++) {
-            $digit = (int)$isbn[$i];
+            $digit = (int) $isbn[$i];
             $weight = ($i % 2 === 0) ? 1 : 3; // Alternar peso de 1 y 3
             $sum += $digit * $weight;
         }
@@ -129,25 +129,25 @@ class Checker {
         $checkDigit = ($remainder == 0) ? 0 : (10 - $remainder);
 
         // Comparar con el último dígito del ISBN
-        if ((int)$isbn[12] != $checkDigit) {
+        if ((int) $isbn[12] != $checkDigit) {
             return -2; // Dígito de control incorrecto
         }
 
         return 0; // ISBN válido
     }
-  
+
     public static function checkDate(string $date): int {
         // Expresión regular para validar la fecha en formato dd/mm/yyyy
         $pattern = '/^(?:(?:31\/(?:0[13578]|1[02]))' // Permite 31 solo en los meses que lo tienen
             . '|(?:(?:29|30)\/(?:0[13-9]|1[0-2]))'   // Permite 29 y 30 solo en meses que tienen al menos 30 días (todos excepto febrero)
             . '|(?:0[1-9]|1\d|2[0-8])\/(?:0[1-9]|1[0-2]))\/' // Valida días del 1 al 28 en cualquier mes
             . '(?:19\d{2}|20\d{2}|2100)$' // Valida años desde 1900 hasta 2099 y el año 2100
-            . '|^29\/02\/(?:19(?:[02468][048]|[13579][26])|20(?:[02468][048]|[13579][26])|2100)$/';// Permite 29 de febrero para años bisiestos entre 1900 y 2100
+            . '|^29\/02\/(?:19(?:[02468][048]|[13579][26])|20(?:[02468][048]|[13579][26])|2100)$/'; // Permite 29 de febrero para años bisiestos entre 1900 y 2100
 
         if (!preg_match($pattern, $date)) {
             return -1;
-        }      
-        return 0; 
+        }
+        return 0;
     }
 
     public static function checkDateTimeLarga(string $date): int {
@@ -168,18 +168,18 @@ class Checker {
     public static function UserTypeValidator(string $type): int {
         // Lista de tipos permitidos, todos en minúsculas
         $allowedTypes = ['client', 'employee', 'provider'];
-        
+
         // Convertir el tipo ingresado a minúsculas y eliminar espacios
         $normalizedType = strtolower(trim($type));
-        
+
         // Verificar si el tipo normalizado está en la lista de permitidos
         if (!in_array($normalizedType, $allowedTypes, true)) {
             return -1;  // Tipo no permitido
         }
-        
+
         return 0;  // Tipo permitido
     }
-    
+
     public static function MembershipTypeValidator(string $membershipType): int {
         // Lista de tipos de membresía permitidos, todos en minúsculas
         $allowedTypes = ['standard', 'gold', 'premium'];
@@ -194,7 +194,7 @@ class Checker {
 
         return 0;  // Tipo permitido
     }
-    
+
     public static function AccountBalanceValidator(float $accountBalance, float $minBalance = -5000.00): int {
         // Verificar si el balance es un número finito
         if (!is_finite($accountBalance) || !is_float($accountBalance)) {
@@ -216,7 +216,7 @@ class Checker {
 
         return 0; // Balance válido
     }
-    
+
     public static function DeliveryDaysValidator(array $deliveryDays): int {
         // Lista de días válidos en minúsculas
         $validDays = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'];
@@ -234,32 +234,32 @@ class Checker {
 
         return 0; // Todos los días son válidos
     }
-    
+
     public static function PercentageValidator(int $percentage): int {
         if ($percentage < 0 || $percentage > 100) {
-            return -1; 
+            return -1;
         }
-        return 0; 
+        return 0;
     }
 
     public static function QuantityValidator(int $quantity, int $currentStock = null): int {
         if ($quantity < 0) {
-            return -1; 
+            return -1;
         }
         if ($currentStock !== null && $quantity > $currentStock) {
-            return -2; 
+            return -2;
         }
-        return 0; 
+        return 0;
     }
-    
+
     public static function OperationTypeValidator(string $type): int {
         $allowedTypes = ['Compra', 'Venta', 'Devolución', 'Cambio'];
         if (!in_array($type, $allowedTypes)) {
-            return -1;  
+            return -1;
         }
-        return 0; 
+        return 0;
     }
-    
+
     // MÉTODOS PARA ERRORES
 
     public static function PhoneNumberErrorCode(int $error): string {
@@ -372,4 +372,3 @@ class Checker {
         }
     }
 }
-  

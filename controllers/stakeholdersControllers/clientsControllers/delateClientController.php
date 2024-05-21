@@ -1,8 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/config/Database.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlClientAdapter.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/config/Database.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/persistence/MysqlClientAdapter.php');
 
 $adapter = new MysqlClientAdapter();
 $clientId = filter_input(INPUT_POST, 'client_id', FILTER_VALIDATE_INT);

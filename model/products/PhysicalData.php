@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
-
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/checkdata/Checker.php');
 
 class PhysicalData {
+
     protected float $height;
     protected float $width;
     protected float $length;
@@ -28,12 +29,12 @@ class PhysicalData {
         $this->fragile = $fragile;
 
         if (strlen($message) > 0) {
-        throw new BuildException($message);
+            throw new BuildException($message);
         }
     }
-    
+
     // GETTERS
-    
+
     public function getHeight(): float {
         return $this->height;
     }
@@ -61,9 +62,9 @@ class PhysicalData {
     public function getDimensions(): string {
         return "Altura: {$this->height} cm, Ancho: {$this->width} cm, Largo: {$this->length} cm";
     }
-    
+
     // SETTERS
-    
+
     private function setHeight(float $height): int {
         $error = Checker::NumberValidator($height);
         if ($error == 0) {

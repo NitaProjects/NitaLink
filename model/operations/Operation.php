@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/CheckException.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/exceptions/CheckException.php');
 
 abstract class Operation {
+
     protected int $operationId;
     protected DateTime $date;
     protected string $customerName;
-    protected string $operationType;  
+    protected string $operationType;
 
     public function __construct(int $operationId, string $customerName, string $operationType) {
         $message = "";
@@ -22,7 +23,7 @@ abstract class Operation {
         if ($this->setOperationType($operationType) != 0) {
             $message .= "Tipo de operacón incorrecta";
         }
-        $this->date = new DateTime(); 
+        $this->date = new DateTime();
 
         if (strlen($message) > 0) {
             throw new CheckException($message);
@@ -33,11 +34,11 @@ abstract class Operation {
     public function getOperationId(): int {
         return $this->operationId;
     }
-    
+
     public function getDate(): string {
-        return $this->date->format('d-m-Y H:i:s');
+        return $this->date->format('d/m/Y H:i:s');
     }
-    
+
     public function getCustomerName(): string {
         return $this->customerName;
     }
@@ -45,8 +46,8 @@ abstract class Operation {
     public function getOperationType(): string {
         return $this->operationType;
     }
-    
-      // Setters using Checker for validation
+
+    // Setters using Checker for validation
     public function setOperationId(int $operationId): int {
         $error = Checker::NumberValidator($operationId, 1);
         if ($error == 0) {
@@ -62,7 +63,7 @@ abstract class Operation {
         }
         return $error;
     }
-    
+
     public function setOperationType(string $operationType): int {
         $error = Checker::OperationTypeValidator($operationType);
         if ($error == 0) {

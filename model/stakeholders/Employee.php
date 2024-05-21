@@ -2,23 +2,24 @@
 
 declare(strict_types=1);
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/Person.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/interfaces/Stakeholder.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/BuildException.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/stakeholders/Person.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/interfaces/Stakeholder.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/exceptions/BuildException.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/checkdata/Checker.php');
 
 class Employee extends Person implements Stakeholder {
+
     protected int $employeeId;
-    protected string $department; 
+    protected string $department;
     protected float $salary;
     protected DateTime $endContractDate;
 
-    public function __construct(string $name, string $address, string $email, string $phoneNumber, int $employeeId, string $department, float $salary, string $endContractDate) { 
+    public function __construct(string $name, string $address, string $email, string $phoneNumber, int $employeeId, string $department, float $salary, string $endContractDate) {
         $message = "";
         try {
             parent::__construct($name, $address, $email, $phoneNumber);
         } catch (BuildException $e) {
-            $message .= $e->getMessage();  
+            $message .= $e->getMessage();
         }
         if ($this->setEmployeeId($employeeId) != 0) {
             $message .= "ID de empleado incorrecto.\n";
@@ -52,17 +53,17 @@ class Employee extends Person implements Stakeholder {
     }
 
     public function getEndContractDate(): string {
-        return $this->endContractDate; 
+        return $this->endContractDate;
     }
-    
+
     public function getDays(): int {
-        $currentDate = new DateTime(); 
-        $difference = $currentDate->diff($this->endContractDate); 
+        $currentDate = new DateTime();
+        $difference = $currentDate->diff($this->endContractDate);
         return $difference->days;
     }
 
     // Setters 
-    
+
     public function setEmployeeId(int $employeeId): int {
         $error = Checker::NumberValidator($employeeId);
         if ($error == 0) {
@@ -74,9 +75,9 @@ class Employee extends Person implements Stakeholder {
     public function setDepartment(string $department): int {
         $error = Checker::StringValidator($department, 2);
         if ($error == 0) {
-            $this->department = $department; 
+            $this->department = $department;
         }
-        return $error; 
+        return $error;
     }
 
     public function setSalary(float $salary): int {
@@ -91,16 +92,16 @@ class Employee extends Person implements Stakeholder {
         $error = Checker::checkDate($date);
         if ($error == 0) {
             $this->endContractDate = DateTime::createFromFormat('d/m/Y', $date);
-    }
+        }
         return $error;
     }
-    
+
     public function getContactInfo(): string {
         return "Email: {$this->email}, Teléfono: {$this->phoneNumber}";
     }
-    
+
     public function getDetails(): string {
-        return $this->getContactData();  
+        return $this->getContactData();
     }
 
     public function getContactData(): string {

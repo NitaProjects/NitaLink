@@ -1,8 +1,8 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/config/Database.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlProviderAdapter.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/ProviderCompany.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/config/Database.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/persistence/MysqlProviderAdapter.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/stakeholders/ProviderCompany.php');
 
 $adapter = new MysqlProviderAdapter();
 

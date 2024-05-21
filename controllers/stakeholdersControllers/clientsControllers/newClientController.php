@@ -1,8 +1,8 @@
 error_log(print_r($_POST, true));
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/config/Database.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlClientAdapter.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/Client.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/config/Database.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/persistence/MysqlClientAdapter.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/stakeholders/Client.php');
 
 $adapter = new MysqlClientAdapter();
 // Recoger los datos del formulario
@@ -19,7 +19,7 @@ $clientId = $lastClientId + 1;
 
 try {
     $client = new Client($name, $address, $email, $phoneNumber, $clientId, $membershipType, $accountBalance, $dni);
-    
+
     if ($adapter->addIndividualClient($client)) {
         header("Location: ../../../views/stakeholders/employees/gestionClientes.php?update=success individual");
     } else {

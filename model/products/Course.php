@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/products/Product.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/interfaces/Marketable.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/BuildException.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/products/Product.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/interfaces/Marketable.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/exceptions/BuildException.php');
 
 class Course extends Product {
+
     protected int $duration;
     protected string $instructor;
     protected string $language;
@@ -17,7 +18,7 @@ class Course extends Product {
         try {
             parent::__construct($productId, $name, $price, $quantity);
         } catch (BuildException $e) {
-            $message .= $e->getMessage();  
+            $message .= $e->getMessage();
         }
         if ($this->setDuration($duration) != 0) {
             $message .= "Duración incorrecta.\n";
@@ -32,7 +33,7 @@ class Course extends Product {
             throw new BuildException($message);
         }
     }
-    
+
     // Getters
     public function getDuration(): int {
         return $this->duration;
@@ -56,7 +57,7 @@ class Course extends Product {
     }
 
     public function setInstructor(string $instructor): int {
-        $error = Checker::StringValidator($instructor, 2); 
+        $error = Checker::StringValidator($instructor, 2);
         if ($error == 0) {
             $this->instructor = $instructor;
         }
@@ -64,11 +65,10 @@ class Course extends Product {
     }
 
     public function setLanguage(string $language): int {
-        $error = Checker::StringValidator($language, 2); 
+        $error = Checker::StringValidator($language, 2);
         if ($error == 0) {
             $this->language = $language;
         }
         return $error;
     }
-    
 }

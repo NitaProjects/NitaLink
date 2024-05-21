@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/config/Database.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlProductAdapter.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/config/Database.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/persistence/MysqlProductAdapter.php');
 
-$adapter = new MysqlProductAdapter(); 
+$adapter = new MysqlProductAdapter();
 
 // Definir el número de productos por página
 $productsPerPage = 50;
@@ -25,7 +25,7 @@ try {
     $totalProducts = $adapter->getTotalProducts();
     $totalPages = ceil($totalProducts / $productsPerPage);
 
-    include $_SERVER['DOCUMENT_ROOT'].'/nitalink/views/products/listProducts.php';
+    include $_SERVER['DOCUMENT_ROOT'] . '/nitalink/views/products/listProducts.php';
 } catch (Exception $e) {
     $errorMessage = "Error al registrar el cliente:\n\n " . $e->getMessage();
     include '../../views\stakeholders\error.php';

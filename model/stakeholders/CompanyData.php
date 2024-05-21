@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/BuildException.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
-
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/exceptions/BuildException.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/checkdata/Checker.php');
 
 class CompanyData {
+
     protected int $workers;
     protected string $socialReason;
     protected string $companyType;
 
-    public function __construct( int $workers, string $socialReason) {
+    public function __construct(int $workers, string $socialReason) {
         $message = "";
         if ($this->setWorkers($workers) != 0) {
             $message .= "-Numero de trabajadores incorrecto.\n";
@@ -23,9 +23,7 @@ class CompanyData {
             throw new BuildException($message);
         }
     }
- 
-   
-    
+
     public function getWorkers(): int {
         return $this->workers;
     }
@@ -37,9 +35,7 @@ class CompanyData {
     public function getCompanyType(): string {
         return $this->companyType;
     }
-    
-   
-    
+
     public function setWorkers(int $workers): int {
         $error = Checker::NumberValidator($workers);
         if ($error == 0) {
@@ -67,4 +63,3 @@ class CompanyData {
         }
     }
 }
-

@@ -1,7 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/config/Database.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/config/Database.php');
 $providerId = filter_input(INPUT_GET, 'providerId', FILTER_SANITIZE_NUMBER_INT);
 
 try {

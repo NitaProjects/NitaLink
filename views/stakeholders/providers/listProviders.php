@@ -1,1 +1,186 @@
-gestionRow .answer .annotation{width:auto;flex-shrink:0}.tallUx .text,.doubleLine .text{max-width:none}.text{max-width:65%}.smallSuggestionRow .answer .text{max-width:none}.rich .annotation{width:auto}.cortanaIcon .icon{vertical-align:top}.bookmarksFontIcon{font-family:Bookmarks MDL2 Assets}.cortanaIcon svg{width:34px;height:34px}.smallerAnswers sup,.smallerAnswers sub{line-height:0}.smallerAnswers .cortanaIcon svg{width:16px;height:16px}body[dir] #root:not(.tallUx) .smallerAnswers .cortanaIcon svg{margin-top:2px}.smallerAnswers .text>span{vertical-align:top}body[dir='ltr'] .sa_hv{border-left-style:solid;border-left-width:4px}body[dir='rtl'] .sa_hv{border-right-style:solid;border-right-width:4px}.selectable:hover{background-color:rgba(0,0,0,.1)}.suggestion:hover,.suggestion:not(.sa_hv):hover .simpleContainer,.suggestion:not(.sa_hv):hover .actionIcon{background-color:rgba(0,0,0,.05)}.icon img{width:16px;height:16px;position:relative}.inlineAdditionalInfo .secondaryIcon .icon img{max-height:20px}.detailHorizontalBox>.text>.additionalInfoText:before{content:' - '}.inlineAdditionalInfo .secondaryIcon .icon{height:auto;width:auto;max-height:20px}body[dir='ltr'] .inlineAdditionalInfo .secondaryIcon .icon{margin:0 8px 0 0}body[dir='rtl'] .inlineAdditionalInfo .secondaryIcon .icon{margin:0 0 0 8px}.secondaryIcon>.icon{max-height:40px}.secondaryIcon .icon img{width:auto;height:auto;max-width:92px;max-height:40px}.normalizedBigIcon .secondaryIcon .icon img{width:40px;height:40px;object-fit:contain}.normalizedSmallIcon .secondaryIcon .icon img{width:16px;height:16px;object-fit:contain;position:relative}body[dir='ltr'] .normalizedSmallIcon .secondaryIcon .icon img{margin:0 4px 0 0}body[dir='rtl'] .normalizedSmallIcon .secondaryIcon .icon img{margin:0 0 0 4px}.sa_hv .icon,.suggestion.sa_hv:hover .icon{color:#000}.icon{width:16px;height:16px;font-size:16px;font-family:Segoe MDL2 Assets}body[dir='ltr'] .icon{margin:0 12px 0 0}body[dir='rtl'] .icon{margin:0 0 0 12px}.rs5UX .suggestion .icon{width:13px;height:13px;font-size:13px}body[dir='ltr'] .rs5UX .suggestion .icon{margin:0 9px 0 0}body[dir='rtl'] .rs5UX .suggestion .icon{margin:0 0 0 9px}.doubleLine .secondaryIcon>.icon{width:auto;height:auto;min-height:40px}.tallUx .iconContainer:not(.secondaryIcon){display:flex;align-items:center;font-size:16px;line-height:16px}.peopleIcon .icon{background-color:#999;border-radius:50%;overflow:hidden}.peopleIcon .iconContent{font-size:8px;vertical-align:middle;text-align:center;width:inherit;color:#fff;line-height:14px}body[dir='ltr'] .peopleIcon .iconContent{margin-left:2px}body[dir='rtl'] .peopleIcon .iconContent{margin-right:2px}body[dir='ltr'] .rs5UX .bw-ppl-img{margin-right:6px !important}body[dir='rtl'] .rs5UX .bw-ppl-img{margin-left:6px}.bw-ppl-img{border-radius:50%;background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKf/wAALCAAZABkBAREA/8QAPgABAQEBAQAAAAAAAAAAAAAABwYEBQIQAAIBAwMDAgcAAAAAAAAAAAECAAMEEQUGEhQxUSFhIiM1goOywf/aAAgBAQAAPwBCUFiABkk4AloNonpsm6+dx7YHDPiRjqyMysMFSQR7ieZrs6F1WuEFtSZ3UhgAPHmJB120SnwdKq1+xocDzLeBDvULa9o13e5oNTaozN69vUzBEHaFAdFc1SO9XBPsolPgTi7noZ0d2Kj4HRhDGI+1fpf53/koZz9zADRbn7f2hTP/2Q==') no-repeat;background-size:20px 20px;width:20px;height:20px;display:inline-block;position:relative;top:2px}body[dir='ltr'] .bw-ppl-img{margin-right:10px;margin-left:-3px}body[dir='rtl'] .bw-ppl-img{margin-left:10px;margin-right:-3px}.bw-ppl-img img{border-radius:50%;position:absolute;width:100%;height:100%}.hasAction{display:flex}.hasAction .simpleContainer{flex:1;overflow:hidden}.actionIcon{justify-content:center;width:40px}body[dir] .actionIcon .icon{margin:0}.highlighted{font-weight:bold}body:not([cortana="on"]) .cortanaIcon{display:none}body[dir='ltr'] .richContainer .cortanaIcon{padding-right:12px}body[dir='rtl'] .richContainer .cortanaIcon{padding-left:12px}body[dir] .groups>div:last-child:not(:empty),body[dir] #topResults>div:last-child:not(:empty){padding-bottom:8px}.suggestion.rich.pushDown{transition:height .533s cubic-bezier(0,1,0,1)}.suggestion.rich.slideIn .richContainer{transition:top .533s cubic-bezier(0,1,0,1);top:0}.suggestion.rich.show .richContainer{top:0}.webHistoryGroupHeaderAnnotation{text-align:right}body[dir='ltr'] .webHistoryGroupHeaderAnnotation{margin-left:auto;padding-left:6px}body[dir='rtl'] .webHistoryGroupHeaderAnnotation{text-align:left;margin-right:auto;padding-right:6px}.groupHeader:hover .webHistoryGroupHeaderAnnotation,.sa_hv .webHistoryGroupHeaderAnnotation{text-decoration:underline}.answerNarratorAnnotation{height:0;width:0;font-size:0}.smallerAnswerOneLine.answer .text{display:flex}.smallerAnswerOneLine.answer .text>:first-child{flex-shrink:0}.smallerAnswerOneLine .answerContainer{overflow:hidden}body[dir='ltr'] .smallerAnswerOneLine .answerContainer{margin-left:24px}body[dir='rtl'] .smallerAnswerOneLine .answerContainer{margin-right:24px}.smallerAnswerStandardText{font-size:13px;line-height:16px}body[dir] .smallerAnswerStandardText{margin-top:-1px}body[dir='ltr'] .smallerAnswerStandardText>span:not(:first-child){margin-left:16px}body[dir='rtl'] .smallerAnswerStandardText>span:not(:first-child){margin-right:16px}body[dir='ltr'] .smallerAnswerStandardText>span.smallerAnswerTitle:not(:first-child){margin-left:8px}body[dir='rtl'] .smallerAnswerStandardText>span.smallerAnswerTitle:not(:first-child){margin-right:8px}.smallerAnswerMetadata{opacity:.6}.smallerAnswerMetadataImportant{opacity:1}.smallerAnswerSvgIcon>svg{width:20px;height:20px;vertical-align:top}.entityImage{height:20px;vertical-align:top}body[dir='ltr'] .entityImage:not(.noInfoText){margin-left:8px}body[dir='rtl'] .entityImage:not(.noInfoText){margin-right:8px}.smallerAnswerImportant{font-weight:bold}.darkThemeOverride{background-color:#000;color:HighlightText}.darkThemeOverride body{background-color:#000;color:HighlightText}.darkThemeOverride .vtesthooks,.darkThemeOverride .invtesthooks{border-top-color:transparent;border-bottom-color:transparent}body[dir='ltr'] .darkThemeOverride .vtesthooks,body[dir='ltr'] .darkThemeOverride .invtesthooks{border-left-color:transparent;border-right-color:transparent}body[dir='rtl'] .darkThemeOverride .vtesthooks,body[dir='rtl'] .darkThemeOverride .invtesthooks{border-right-color:transparent;border-left-color:transparent}.darkThemeOverride .sa_hv .icon,.darkThemeOverride .sa_hv:hover .icon,.darkThemeOverride .sa_hv:hover .actionIcon,.darkThemeOverride .text.url{color:HighlightText}.darkThemeOverride .annotation,.darkThemeOverride .groupHeader,.darkThemeOverride .title,.darkThemeOverride .additionalInfoText{color:rgba(255,255,255,.6)}.darkThemeOverride .selectable:not(.sa_hv):hover{background-color:rgba(255,255,255,.15)}.darkThemeOverride .suggestion:not(.sa_hv):hover,.darkThemeOverride .suggestion:not(.sa_hv):hover .simpleContainer,.darkThemeOverride .suggestion:not(.sa_hv):hover .actionIcon{background-color:rgba(255,255,255,.1)}.hidden{visibility:hidden}body[dir='ltr'] span .hidden.nextword{margin-left:-11.8px}body[dir='rtl'] span .hidden.nextword{margin-right:-11.8px}#root .b_tHeader,#root .b_demoteText,#root .b_secondaryText,#root .b_attribution,#root .b_factrow,#root .b_focusLabel,#root .b_footnote,#root .b_ad .b_adlabel,#root .b_expando .b_subModule,#root .b_expando .b_suppModule,#root .b_algo .b_vList td,#root .b_expando .b_secondaryText,#root .b_expando .b_attribution,#root .b_expando .b_factrow,#root .b_expando .b_footnote,#root .ctxtb{color:rgba(0,0,0,.6)}.darkThemeOverride #root .b_tHeader,.darkThemeOverride #root .b_demoteText,.darkThemeOverride #root .b_secondaryText,.darkThemeOverride #root .b_attribution,.darkThemeOverride #root .b_factrow,.darkThemeOverride #root .fin_header .b_focusLabel,.darkThemeOverride #root .b_focusLabel,.darkThemeOverride #root .b_footnote,.darkThemeOverride #root .b_ad .b_adlabel,.darkThemeOverride #root .b_expando .b_subModule,.darkThemeOverride #root .b_expando .b_suppModule,.darkThemeOverride #root .b_algo .b_vList td,.darkThemeOverride #root .b_expando .b_secondaryText,.darkThemeOverride #root .b_expando .b_attribution,.darkThemeOverride #root .b_expando .b_factrow,.darkThemeOverride #root .b_expando .b_footnote,.darkThemeOverride #root .ctxtb{color:rgba(255,255,255,.6)}@media(-ms-high-contrast){.suggestion,.suggestion *{color:ButtonText}.cortanaIcon svg,.cortanaIcon svg *{fill:ButtonText}.sa_hv .cortanaIcon svg,.sa_hv .cortanaIcon svg *,.sa_hv:hover .cortanaIcon svg,.sa_hv:hover .cortanaIcon svg *,.suggestion:hover .cortanaIcon svg,.sug
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Gestión de Proveedores - NitaLink</title>
+        <link rel="stylesheet" href="../../../public/css/listProducts.css">
+        <style>
+            .hidden {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <div class="filter-buttons">
+                <button onclick="filterProviders('')">Todos</button>
+                <button onclick="filterProviders('Particular')">Proveedores Individuales</button>
+                <button onclick="filterProviders('Empresa')">Proveedores Empresariales</button>
+                <input type="text" id="search-input" name="name" placeholder="Buscar Proveedor por nombre" autocomplete="off">
+            </div>
+            <div class="tabla-paginacion">
+                <div class="pagination">
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <a href="?page=<?= $i ?>" class="pagination-link <?= $i == $page ? 'active' : '' ?>"><?= $i ?></a>
+                    <?php endfor; ?>
+                </div>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Dirección</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th>Producto Suministrado</th>
+                            <th>Tipo de Proveedor</th>
+                            <th class="individual">DNI</th>
+                            <th class="company">Trabajadores</th>
+                            <th class="company">Razón Social</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="provider-list">
+                        <?php foreach ($providers as $provider): ?>
+                            <tr id="row-<?= htmlspecialchars($provider['provider_id']) ?>" class="provider-row" data-provider-type="<?= htmlspecialchars($provider['provider_type']) ?>">
+                                <td><?= htmlspecialchars($provider['provider_id']) ?></td>
+                                <td><?= htmlspecialchars($provider['name']) ?></td>
+                                <td><?= htmlspecialchars($provider['address']) ?></td>
+                                <td><?= htmlspecialchars($provider['email']) ?></td>
+                                <td><?= htmlspecialchars($provider['phone_number']) ?></td>
+                                <td><?= htmlspecialchars($provider['product_supplied']) ?></td>
+                                <td><?= htmlspecialchars($provider['provider_type']) ?></td>
+                                <td class="individual"><?= htmlspecialchars($provider['dni'] ?? '-') ?></td>
+                                <td class="company"><?= htmlspecialchars($provider['workers'] ?? '-') ?></td>
+                                <td class="company"><?= htmlspecialchars($provider['social_reason'] ?? '-') ?></td>
+                                <td>
+                                    <button onclick="toggleEditForm('edit-form-<?= $provider['provider_id'] ?>'); setFormAction(<?= $provider['provider_id'] ?>, '<?= $provider['provider_type'] ?>')">Editar</button>
+                                    <button onclick="deleteProvider(<?= $provider['provider_id'] ?>)">Borrar</button>
+                                </td>
+                            </tr>
+                            <tr id="edit-form-<?= htmlspecialchars($provider['provider_id']) ?>" style="display:none;">
+                                <td colspan="11">
+                                    <form id="edit-form-<?= htmlspecialchars($provider['provider_id']) ?>-form" method="post">
+                                        <input type="hidden" name="provider_id" value="<?= htmlspecialchars($provider['provider_id']) ?>">
+                                        <input type="text" name="name" value="<?= htmlspecialchars($provider['name']) ?>">
+                                        <input type="text" name="address" value="<?= htmlspecialchars($provider['address']) ?>">
+                                        <input type="email" name="email" value="<?= htmlspecialchars($provider['email']) ?>">
+                                        <input type="text" name="phone_number" value="<?= htmlspecialchars($provider['phone_number']) ?>">
+                                        <input type="text" name="product_supplied" value="<?= htmlspecialchars($provider['product_supplied']) ?>">
+                                        <input type="hidden" name="provider_type" value="<?= htmlspecialchars($provider['provider_type']) ?>">
+
+                                        <?php if ($provider['provider_type'] == 'Particular'): ?>
+                                            <input type="text" name="dni" value="<?= htmlspecialchars($provider['dni'] ?? '') ?>">
+                                        <?php elseif ($provider['provider_type'] == 'Empresa'): ?>
+                                            <input type="number" name="workers" value="<?= htmlspecialchars($provider['workers'] ?? '') ?>">
+                                            <input type="text" name="social_reason" value="<?= htmlspecialchars($provider['social_reason'] ?? '') ?>">
+                                        <?php endif; ?>
+                                        <button type="submit">Guardar Cambios</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <script>
+            function toggleEditForm(formId) {
+                var form = document.getElementById(formId);
+                form.style.display = form.style.display === 'none' ? 'table-row' : 'none';
+            }
+
+            function filterProviders(providerType) {
+                const rows = document.querySelectorAll('.provider-row');
+                rows.forEach(function (row) {
+                    if (providerType === '' || row.getAttribute('data-provider-type') === providerType) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                toggleColumns(providerType);
+            }
+
+            function toggleColumns(providerType) {
+                const columnsToShow = {
+                    'Particular': ['individual'],
+                    'Empresa': ['company'],
+                    '': ['individual', 'company']
+                };
+
+                const allColumns = ['individual', 'company'];
+                const columns = document.querySelectorAll('th, td');
+                columns.forEach(column => {
+                    allColumns.forEach(colClass => {
+                        if (columnsToShow[providerType].includes(colClass)) {
+                            column.classList.remove('hidden');
+                        } else {
+                            column.classList.add('hidden');
+                        }
+                    });
+                });
+            }
+
+            function searchProvidersByName() {
+                var input = document.getElementById('search-input').value.toLowerCase();
+                var rows = document.querySelectorAll('.provider-row');
+                rows.forEach(function (row) {
+                    var name = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                    if (name.includes(input)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+
+            document.getElementById('search-input').addEventListener('input', searchProvidersByName);
+
+            document.addEventListener('DOMContentLoaded', () => {
+                filterProviders(''); // Inicialmente mostrar todos los proveedores y todas las columnas
+            });
+
+            function setFormAction(providerId, providerType) {
+                const form = document.getElementById(`edit-form-${providerId}-form`);
+
+                let actionUrl = '';
+
+                switch (providerType) {
+                    case 'Particular':
+                        actionUrl = '/nitalink/controllers/stakeholdersControllers/providersControllers/updateIndividualProviderController.php';
+                        break;
+                    case 'Empresa':
+                        actionUrl = '/nitalink/controllers/stakeholdersControllers/providersControllers/updateCompanyProviderController.php';
+                        break;
+                    default:
+                        actionUrl = '/nitalink/controllers/stakeholdersControllers/providersControllers/updateProviderController.php';
+                }
+
+                form.action = actionUrl;
+            }
+
+            function deleteProvider(providerId) {
+                if (confirm('¿Está seguro de que desea eliminar este proveedor?')) {
+                    fetch('../../../controllers/stakeholdersControllers/providersControllers/deleteProviderController.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: 'provider_id=' + providerId
+                    })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    alert("Proveedor eliminado con éxito.");
+                                    document.getElementById('row-' + providerId).remove();
+                                } else {
+                                    alert("Error al eliminar el proveedor.");
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
+                }
+            }
+        </script>
+    </body>
+</html>

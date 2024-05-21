@@ -5,8 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/stakeholders/Client.ph
 require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/persistence/MysqlAdapter.php');
 
 class MysqlProductAdapter extends MysqlAdapter {
-    
-    
+
     public function getProducts(): array {
         $query = "SELECT product_id, name, price, image_url FROM products";
         try {

@@ -7,7 +7,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/persistence/MysqlAdapter.php
 
 class MysqlUserAdapter extends MysqlAdapter {
 
-    
     public function getUser(int $id): User {
         $data = $this->readQuery("SELECT id, name, password, type FROM users WHERE id = " . $id . ";");
         if (count($data) > 0) {

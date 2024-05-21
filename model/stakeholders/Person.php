@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/exceptions/BuildException.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/checkdata/Checker.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/exceptions/BuildException.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/checkdata/Checker.php');
 
 abstract class Person {
+
     protected string $name;
     protected string $address;
     protected string $email;
@@ -63,7 +64,7 @@ abstract class Person {
     }
 
     public function setEmail(string $email): int {
-        $error = Checker::EmailValidator($email); 
+        $error = Checker::EmailValidator($email);
         if ($error == 0) {
             $this->email = $email;
         }
@@ -71,7 +72,7 @@ abstract class Person {
     }
 
     public function setPhoneNumber(string $phoneNumber): int {
-        $error = Checker::PhoneNumberValidator($phoneNumber); 
+        $error = Checker::PhoneNumberValidator($phoneNumber);
         if ($error == 0) {
             $this->phoneNumber = $phoneNumber;
         }
@@ -79,5 +80,4 @@ abstract class Person {
     }
 
     abstract public function getContactData(): string;
-
 }
