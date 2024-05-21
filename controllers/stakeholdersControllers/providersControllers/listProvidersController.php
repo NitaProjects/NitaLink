@@ -1,24 +1,33 @@
 <?php
 
-// Incluimos el archivo de configuración de la base de datos.
+declare(strict_types=1);
+
 require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/config/Database.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlProviderAdapter.php');
+
+$adapter = new MysqlProviderAdapter(); 
+
+// Definir el número de proveedores por página
+$providersPerPage = 50;
+
+// Obtener el número de página actual desde la solicitud, por defecto es 1
+$page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT);
+if ($page === null || $page === false || $page < 1) {
+    $page = 1;
+}
 
 try {
-    // Intentamos establecer conexión con la base de datos usando PDO.
-    $db = new PDO("mysql:host=localhost;  dbname=nitalink", 'root', '');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Configuramos PDO para que muestre los errores.
+    // Obtener los proveedores paginados
+    $providers = $adapter->listProviders($page, $providersPerPage);
 
-    // Preparamos y ejecutamos la consulta SQL para obtener todos los clientes.
-    $stmt = $db->prepare("SELECT * FROM providers");
-    $stmt->execute();
-    $providers = $stmt->fetchAll(PDO::FETCH_ASSOC); // Obtenemos todos los clientes como un array asociativo.
+    // Obtener el número total de proveedores para calcular el total de páginas
+    $totalProviders = $adapter->getTotalProviders();
+    $totalPages = ceil($totalProviders / $providersPerPage);
 
-    // Si todo es correcto, incluimos la vista que muestra los clientes.
-    include '../../views/stakeholders/listProviders.php';
-} catch (PDOException $e) {
-    // Si hay un error de conexión o consulta, mostramos el mensaje de error.
-    echo "Error de conexión a la base de datos: " . $e->getMessage();
-    exit; // Terminamos la ejecución del script para evitar problemas mayores.
+    include '../../../views/stakeholders/providers/listProviders.php'; 
+} catch (Exception $e) {
+    $errorMessage = "Error al registrar el proveedor:\n\n " . $e->getMessage();
+    include '../../../views/stakeholders/error.php';
+    exit;
 }
 ?>
-

@@ -90,7 +90,7 @@ class BookDigital extends Product {
     public function getPublisher(): string {
         return $this->publisher;
     }
-    
+
     public function getIsbn(): string {
         return $this->isbn;
     }
@@ -130,7 +130,7 @@ class BookDigital extends Product {
         }
         return $error;
     }
-
+    
     public function setAvailabilityDate(string $date): int {
         $error = Checker::checkDateTimeLarga($date);
         if ($error == 0) {

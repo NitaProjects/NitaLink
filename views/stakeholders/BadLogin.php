@@ -14,7 +14,7 @@
     <main>
         <section class="central">
             <h1>Acceso Denegado!</h1>
-            <img src="../../public/assets/pulgar.gif" alt="Acceso Denegado" class="error-gif">
+            <img src="../../public/assets/novak.webp" alt="Acceso Denegado" class="error-gif">
             <br>
             <br>
             <a href="../../index.html" class="retry-link">Volver a la página principal</a>

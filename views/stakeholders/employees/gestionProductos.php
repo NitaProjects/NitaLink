@@ -21,7 +21,7 @@
         </header>
         <main>
             <video class="video" preload="auto" muted playsinline autoplay loop>
-                <source type="video/mp4" src="../../../public/assets/fondoHexagonal.mp4">
+                <source type="video/mp4" src="../../../public/assets/bosqueOtoño.mp4">
             </video>
             <section id="listadoProductos">
                 <?php include '../../../controllers/productsControllers/listProductsController.php'; ?>

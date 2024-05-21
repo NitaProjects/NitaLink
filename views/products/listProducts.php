@@ -69,7 +69,7 @@
                                 <td class="course"><?= htmlspecialchars($product['instructor'] ?? '-') ?></td>
                                 <td class="course"><?= htmlspecialchars($product['language'] ?? '-') ?></td>
                                 <td>
-                                    <button onclick="toggleEditForm('edit-form-<?= $product['product_id'] ?>')">Editar</button>
+                                    <button onclick="toggleEditForm('edit-form-<?= $product['product_id'] ?>'); setFormAction(<?= $product['product_id'] ?>, '<?= $product['product_type'] ?>')">Editar</button>
                                     <button onclick="deleteProduct(<?= $product['product_id'] ?>)">Borrar</button>
                                 </td>
                             </tr>
@@ -115,6 +115,8 @@
                                 </td>
                             </tr>
                         <?php endforeach; ?>
+
+
                     </tbody>
                 </table>
             </div>
@@ -184,16 +186,16 @@
 
                 switch (productType) {
                     case 'Libro Físico':
-                        actionUrl = '../../../controllers/productsControllers/updatePhysicalBookController.php';
+                        actionUrl = '/nitalink/controllers/productsControllers/updatePhysicalBookController.php';
                         break;
                     case 'Libro Digital':
-                        actionUrl = '../../../controllers/productsControllers/updateDigitalBookController.php';
+                        actionUrl = '/nitalink/controllers/productsControllers/updateDigitalBookController.php';
                         break;
                     case 'Curso':
-                        actionUrl = '../../../controllers/productsControllers/updateCourseController.php';
+                        actionUrl = '/nitalink/controllers/productsControllers/updateCourseController.php';
                         break;
                     default:
-                        actionUrl = '../../../controllers/productsControllers/updateProductController.php';
+                        actionUrl = '/nitalink/controllers/productsControllers/updateProductController.php';
                 }
 
                 form.action = actionUrl;

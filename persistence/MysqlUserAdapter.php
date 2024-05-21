@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/model/stakeholders/User.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitalink/persistence/MysqlAdapter.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/model/stakeholders/User.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/nitalink/persistence/MysqlAdapter.php');
 
 class MysqlUserAdapter extends MysqlAdapter {
 
+    
     public function getUser(int $id): User {
         $data = $this->readQuery("SELECT id, name, password, type FROM users WHERE id = " . $id . ";");
         if (count($data) > 0) {
@@ -26,7 +27,7 @@ class MysqlUserAdapter extends MysqlAdapter {
 
     public function addUser(User $u): bool {
         try {
-            return $this->writeQuery("INSERT INTO users (id, name, password, type) VALUES (" . 
+            return $this->writeQuery("INSERT INTO users (id, name, password, type) VALUES (" .
                     $u->getId() . ", \"" . $u->getName() . "\", \"" . $u->getPassword() . "\", \"" . $u->getType() . "\");");
         } catch (mysqli_sql_exception $ex) {
             throw new ServiceException("Error al insertar usuario -->" . $ex->getMessage());
@@ -35,7 +36,7 @@ class MysqlUserAdapter extends MysqlAdapter {
 
     public function updateUser(User $u): bool {
         try {
-            return $this->writeQuery("UPDATE users SET name = \"" . $u->getName() . "\", password = \"" . $u->getPassword() . 
+            return $this->writeQuery("UPDATE users SET name = \"" . $u->getName() . "\", password = \"" . $u->getPassword() .
                     "\", type = \"" . $u->getType() . "\" WHERE id = " . $u->getId() . ";");
         } catch (mysqli_sql_exception $ex) {
             throw new ServiceException("Error al actualizar usuario -->" . $ex->getMessage());
@@ -54,7 +55,7 @@ class MysqlUserAdapter extends MysqlAdapter {
             throw new ServiceException("Error al leer usuarios -->" . $ex->getMessage());
         }
     }
-    
+
     public function exists(string $username): bool {
         try {
             $id = $this->readQuery("SELECT id FROM users WHERE name='" . $username . "';");

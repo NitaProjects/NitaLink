@@ -30,7 +30,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: fixed; 
+    position: fixed;
     z-index: 10;
 }
 
@@ -89,4 +89,38 @@ footer {
     position: fixed; /* Opcionalmente fijar el footer */
     bottom: 0; /* Opcionalmente fijar el footer */
     z-index: 10;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+.gallery-item {
+    background: rgba(255, 255, 255, 0.8);
+    margin: 10px;
+    padding: 20px;
+    border-radius: 8px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.gallery-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+.gallery-item button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+.gallery-item button:hover {
+    background-color: #555;
 }

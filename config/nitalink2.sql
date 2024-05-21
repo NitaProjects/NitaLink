@@ -3,12 +3,10 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-05-2024 a las 12:04:59
+-- Tiempo de generación: 21-05-2024 a las 04:36:48
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
-
--- Ajustes iniciales
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -24,8 +22,6 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-
-
 CREATE DATABASE IF NOT EXISTS `nitalink2`
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_spanish_ci;
@@ -43,7 +39,7 @@ CREATE TABLE `books_digital` (
   `pages` int(11) NOT NULL,
   `publisher` varchar(255) NOT NULL,
   `publish_date` date NOT NULL,
-  `availability_date` date NOT NULL
+  `availability_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
@@ -51,14 +47,14 @@ CREATE TABLE `books_digital` (
 --
 
 INSERT INTO `books_digital` (`product_id`, `isbn`, `author`, `pages`, `publisher`, `publish_date`, `availability_date`) VALUES
-(6, '9782070612758', 'Antoine de Saint-Exupéry', 96, 'Gallimard', '0000-00-00', '0000-00-00'),
-(7, '9780811213783', 'Jorge Luis Borges', 174, 'New Directions', '0000-00-00', '0000-00-00'),
-(8, '9780307950929', 'Jorge Luis Borges', 224, 'Vintage Books', '0000-00-00', '0000-00-00'),
-(9, '9780451524935', 'George Orwell', 328, 'Signet Classics', '0000-00-00', '0000-00-00'),
-(10, '9780060850524', 'Aldous Huxley', 288, 'Harper Perennial', '0000-00-00', '0000-00-00'),
-(23, '9788497592203', 'Umberto Eco', 528, 'Debolsillo', '0000-00-00', '0000-00-00'),
-(24, '9780061120084', 'J.R.R. Tolkien', 366, 'HarperCollins', '0000-00-00', '0000-00-00'),
-(25, '9780142437223', 'Dante Alighieri', 798, 'Penguin Classics', '0000-00-00', '0000-00-00');
+(6, '9782070612758', 'Antoine de Saint-Exupéry', 960, 'Gallimard', '1993-12-12', '1994-12-12 12:00:00'),
+(7, '9780811213783', 'Jorge Luis Borges', 174, 'New Directions', '2024-01-01', '2024-01-02 00:00:00'),
+(8, '9780307950929', 'Jorge Luis Borges', 224, 'Vintage Books', '2024-01-01', '2024-01-02 00:00:00'),
+(9, '9780451524935', 'George Orwell', 328, 'Signet Classics', '2024-01-01', '2024-01-02 00:00:00'),
+(10, '9780060850524', 'Aldous Huxley', 288, 'Harper Perennial', '2024-01-01', '2024-01-02 00:00:00'),
+(23, '9788497592203', 'Umberto Eco', 528, 'Debolsillo', '2024-01-01', '2024-01-02 00:00:00'),
+(24, '9780061120084', 'J.R.R. Tolkien', 366, 'HarperCollins', '2024-01-01', '2024-01-02 00:00:00'),
+(25, '9780142437223', 'Dante Alighieri', 798, 'Penguin Classics', '2024-01-01', '2024-01-02 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -86,17 +82,17 @@ CREATE TABLE `books_physical` (
 --
 
 INSERT INTO `books_physical` (`product_id`, `isbn`, `author`, `pages`, `publisher`, `publish_date`, `availability_date`, `height`, `width`, `length`, `weight`, `fragile`) VALUES
-(2, '9780142437230', 'Miguel de Cervantes', 1072, 'Penguin Classics', '0000-00-00', '0000-00-00 00:00:00', 23.00, 15.00, 4.00, 0.80, 0),
-(3, '9780307389732', 'Gabriel García Márquez', 348, 'Vintage Books', '0000-00-00', '0000-00-00 00:00:00', 21.00, 14.00, 2.50, 0.60, 0),
-(4, '9788408163381', 'Carlos Ruiz Zafón', 569, 'Planeta', '0000-00-00', '0000-00-00 00:00:00', 22.00, 14.00, 3.50, 0.70, 0),
-(5, '9786070104228', 'Julio Cortázar', 600, 'Alfaguara', '0000-00-00', '0000-00-00 00:00:00', 24.00, 16.00, 3.80, 0.75, 0),
-(16, '9780307950929', 'Mario Vargas Llosa', 368, 'Vintage Books', '0000-00-00', '0000-00-00 00:00:00', 20.00, 13.00, 3.00, 0.60, 0),
-(17, '9780060883287', 'Mario Vargas Llosa', 556, 'Harper Perennial', '0000-00-00', '0000-00-00 00:00:00', 22.00, 15.00, 3.50, 0.70, 0),
-(18, '9780380733384', 'Ernesto Sabato', 184, 'Penguin Books', '0000-00-00', '0000-00-00 00:00:00', 20.00, 12.00, 2.50, 0.50, 0),
-(19, '9788420471842', 'Juan Rulfo', 136, 'Debolsillo', '0000-00-00', '0000-00-00 00:00:00', 19.00, 12.00, 2.00, 0.40, 0),
-(20, '9780553383805', 'Isabel Allende', 481, 'Dial Press', '0000-00-00', '0000-00-00 00:00:00', 21.00, 14.00, 3.00, 0.60, 0),
-(21, '9780060932199', 'Mario Vargas Llosa', 544, 'Harper Perennial', '0000-00-00', '0000-00-00 00:00:00', 22.00, 15.00, 3.50, 0.70, 0),
-(22, '9780061122415', 'Paulo Coelho', 208, 'HarperOne', '0000-00-00', '0000-00-00 00:00:00', 20.00, 13.00, 2.50, 0.50, 0);
+(2, '9780142437230', 'Miguel de Cervantes', 1072, 'Penguin Classics', '2024-01-01', '2024-01-02 01:00:00', 23.00, 15.00, 4.00, 0.80, 0),
+(3, '9780307389732', 'Gabriel García Márquez', 348, 'Vintage Books', '2024-01-01', '2024-01-02 00:00:00', 21.00, 14.00, 2.50, 0.60, 0),
+(4, '9788408163381', 'Carlos Ruiz Zafón', 569, 'Planeta', '2024-01-01', '2024-01-02 00:00:00', 22.00, 14.00, 3.50, 0.70, 0),
+(5, '9786070104228', 'Julio Cortázar', 600, 'Alfaguara', '2024-01-01', '2024-01-02 00:00:00', 24.00, 16.00, 3.80, 0.75, 0),
+(16, '9780307950929', 'Mario Vargas Llosa', 368, 'Vintage Books', '2024-01-01', '2024-01-02 00:00:00', 20.00, 13.00, 3.00, 0.60, 0),
+(17, '9780060883287', 'Mario Vargas Llosa', 556, 'Harper Perennial', '2024-01-01', '2024-01-02 00:00:00', 22.00, 15.00, 3.50, 0.70, 0),
+(18, '9780380733384', 'Ernesto Sabato', 184, 'Penguin Books', '2024-01-01', '2024-01-02 00:00:00', 20.00, 12.00, 2.50, 0.50, 0),
+(19, '9788420471842', 'Juan Rulfo', 136, 'Debolsillo', '2024-01-01', '2024-01-02 00:00:00', 19.00, 12.00, 2.00, 0.40, 0),
+(20, '9780553383805', 'Isabel Allende', 481, 'Dial Press', '2024-01-01', '2024-01-02 00:00:00', 21.00, 14.00, 3.00, 0.60, 0),
+(21, '9780060932199', 'Mario Vargas Llosa', 544, 'Harper Perennial', '2024-01-01', '2024-01-02 00:00:00', 22.00, 15.00, 3.50, 0.70, 0),
+(22, '9780061122415', 'Paulo Coelho', 208, 'HarperOne', '2024-01-01', '2024-01-02 00:00:00', 20.00, 13.00, 2.50, 0.50, 0);
 
 -- --------------------------------------------------------
 
@@ -119,7 +115,7 @@ CREATE TABLE `clients` (
 --
 
 INSERT INTO `clients` (`client_id`, `name`, `address`, `email`, `phone_number`, `membership_type`, `account_balance`) VALUES
-(1, 'Empresa Alphada', 'Calle Falsa 123, Madrid', 'empresa.alpha@correo.com', '600000001', 'Gold', 1000),
+(1, 'Empresa ', 'Calle Falsa 123, Madrid', 'empresa.alpha@correo.com', '60000000134', 'Premium', 100033),
 (2, 'Juan Pérez', 'Calle Real 45, Barcelona', 'juan.perez@correo.com', '600000002', 'Standard', 500),
 (3, 'Empresa Beta', 'Avenida Principal 67, Sevilla', 'empresa.beta@correo.com', '600000003', 'Premium', 1500),
 (4, 'Ana García', 'Calle Menor 89, Valencia', 'ana.garcia@correo.com', '600000004', 'Premium', 750),
@@ -188,7 +184,7 @@ CREATE TABLE `companyclients` (
 --
 
 INSERT INTO `companyclients` (`client_id`, `workers`, `social_reason`, `client_type`) VALUES
-(1, 50, 'Alpha Sociedad Anónima', 'Empresa'),
+(1, 502, 'Alpha Sociedad Anónima', 'Empresa'),
 (3, 30, 'Beta Sociedad Limitada', 'Empresa'),
 (5, 40, 'Gamma S.L.', 'Empresa'),
 (7, 25, 'Delta S.A.', 'Empresa'),
@@ -217,6 +213,36 @@ INSERT INTO `companyclients` (`client_id`, `workers`, `social_reason`, `client_t
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `companyproviders`
+--
+
+CREATE TABLE `companyproviders` (
+  `provider_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `workers` int(11) NOT NULL,
+  `social_reason` varchar(255) NOT NULL,
+  `delivery_days` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `companyproviders`
+--
+
+INSERT INTO `companyproviders` (`provider_id`, `company_id`, `workers`, `social_reason`, `delivery_days`) VALUES
+(6, 101, 50, 'Razón Social 1', 'Lunes,Miércoles,Viernes'),
+(7, 102, 100, 'Razón Social 2', 'Martes,Jueves,Sábado'),
+(8, 103, 150, 'Razón Social 3', 'Lunes,Martes,Miércoles'),
+(9, 104, 200, 'Razón Social 4', 'Jueves,Viernes,Sábado'),
+(10, 105, 250, 'Razón Social 5', 'Lunes,Miércoles,Viernes'),
+(16, 106, 300, 'Razón Social 6', 'Martes,Jueves,Sábado'),
+(17, 107, 350, 'Razón Social 7', 'Lunes,Martes,Miércoles'),
+(18, 108, 400, 'Razón Social 8', 'Jueves,Viernes,Sábado'),
+(19, 109, 450, 'Razón Social 9', 'Lunes,Miércoles,Viernes'),
+(20, 110, 500, 'Razón Social 10', 'Martes,Jueves,Sábado');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `courses`
 --
 
@@ -232,7 +258,7 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`product_id`, `duration`, `instructor`, `language`) VALUES
-(11, 60, 'Pedro González', 'Español'),
+(11, 60, 'Pedro González Blanco', 'Español'),
 (12, 80, 'Laura Martínez', 'Español'),
 (13, 100, 'Carlos Fernández', 'Español'),
 (14, 120, 'Ana Rodríguez', 'Español'),
@@ -307,6 +333,34 @@ INSERT INTO `individualclients` (`client_id`, `dni`, `client_type`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `individualproviders`
+--
+
+CREATE TABLE `individualproviders` (
+  `provider_id` int(11) NOT NULL,
+  `dni` varchar(9) NOT NULL,
+  `delivery_days` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `individualproviders`
+--
+
+INSERT INTO `individualproviders` (`provider_id`, `dni`, `delivery_days`) VALUES
+(1, '12345678A', 'Lunes,Miércoles,Viernes'),
+(2, '23456789B', 'Martes,Jueves,Sábado'),
+(3, '34567890C', 'Lunes,Martes,Miércoles'),
+(4, '45678901D', 'Jueves,Viernes,Sábado'),
+(5, '56789012E', 'Lunes,Miércoles,Viernes'),
+(11, '67890123F', 'Martes,Jueves,Sábado'),
+(12, '78901234G', 'Lunes,Martes,Miércoles'),
+(13, '89012345H', 'Jueves,Viernes,Sábado'),
+(14, '90123456I', 'Lunes,Miércoles,Viernes'),
+(15, '01234567J', 'Martes,Jueves,Sábado');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `products`
 --
 
@@ -315,62 +369,104 @@ CREATE TABLE `products` (
   `name` varchar(255) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `product_type` varchar(15) DEFAULT NULL
+  `product_type` varchar(15) DEFAULT NULL,
+  `image_url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `products`
 --
 
-INSERT INTO `products` (`product_id`, `name`, `price`, `quantity`, `product_type`) VALUES
-(2, 'Don Quijote de la Mancha', 30.00, 20, 'Libro Físico'),
-(3, 'El Amor en los Tiempos del Cólera', 20.00, 10, 'Libro Físico'),
-(4, 'La Sombra del Viento', 22.00, 25, 'Libro Físico'),
-(5, 'Rayuela', 18.00, 12, 'Libro Físico'),
-(6, 'El Principito', 5.00, 50, 'Libro Digital'),
-(7, 'Ficciones', 7.00, 40, 'Libro Digital'),
-(8, 'El Aleph', 6.00, 45, 'Libro Digital'),
-(9, '1984', 8.00, 30, 'Libro Digital'),
-(10, 'Brave New World', 9.00, 35, 'Libro Digital'),
-(11, 'Curso de Programación en Python', 50.00, 100, 'Curso'),
-(12, 'Curso de Data Science', 70.00, 80, 'Curso'),
-(13, 'Curso de Machine Learning', 90.00, 60, 'Curso'),
-(14, 'Curso de Inteligencia Artificial', 120.00, 40, 'Curso'),
-(15, 'Curso de Desarrollo Web', 100.00, 70, 'Curso'),
-(16, 'La Ciudad y los Perros', 15.00, 15, 'Libro Físico'),
-(17, 'Conversación en La Catedral', 18.00, 15, 'Libro Físico'),
-(18, 'El Tunel', 12.00, 10, 'Libro Físico'),
-(19, 'Pedro Páramo', 14.00, 12, 'Libro Físico'),
-(20, 'La Casa de los Espíritus', 16.00, 20, 'Libro Físico'),
-(21, 'La Fiesta del Chivo', 20.00, 25, 'Libro Físico'),
-(22, 'El Alquimista', 12.00, 30, 'Libro Físico'),
-(23, '1984', 8.00, 30, 'Libro Digital'),
-(24, 'El Nombre de la Rosa', 15.00, 35, 'Libro Digital'),
-(25, 'El Hobbit', 10.00, 40, 'Libro Digital'),
-(26, 'La Divina Comedia', 20.00, 30, 'Libro Digital'),
-(27, 'Curso de Marketing Digital', 150.00, 20, 'Curso'),
-(28, 'Curso de Fotografía', 100.00, 15, 'Curso'),
-(29, 'Curso de Java', 220.00, 10, 'Curso'),
-(30, 'Curso de SQL', 180.00, 25, 'Curso'),
-(31, 'Curso de Kubernetes', 200.00, 20, 'Curso'),
-(32, 'Curso de Docker', 170.00, 30, 'Curso'),
-(33, 'Curso de Big Data', 190.00, 15, 'Curso'),
-(34, 'Curso de Python Avanzado', 120.00, 40, 'Curso'),
-(35, 'Curso de Desarrollo de Apps', 110.00, 50, 'Curso'),
-(36, 'Curso de Frontend', 130.00, 45, 'Curso'),
-(37, 'Curso de Backend', 140.00, 40, 'Curso'),
-(38, 'Curso de UX/UI', 100.00, 35, 'Curso'),
-(39, 'Curso de Ciberseguridad', 90.00, 30, 'Curso'),
-(40, 'Curso de DevOps', 120.00, 25, 'Curso'),
-(41, 'Curso de Blockchain', 150.00, 20, 'Curso'),
-(42, 'Curso de Criptografía', 160.00, 15, 'Curso'),
-(43, 'Curso de IA', 140.00, 20, 'Curso'),
-(44, 'Curso de VR/AR', 180.00, 10, 'Curso'),
-(45, 'Curso de Robótica', 200.00, 15, 'Curso'),
-(46, 'Curso de IoT', 220.00, 10, 'Curso'),
-(47, 'Curso de Cloud Computing', 190.00, 20, 'Curso'),
-(48, 'Curso de Redes', 170.00, 15, 'Curso'),
-(49, 'Curso de Sistemas Operativos', 160.00, 25, 'Curso');
+INSERT INTO `products` (`product_id`, `name`, `price`, `quantity`, `product_type`, `image_url`) VALUES
+(2, 'Don Quijote de la Mancha prueba', 30.00, 20, 'Libro Físico', 'https://cdn.pixabay.com/photo/2022/11/18/16/37/man-7600526_640.jpg'),
+(3, 'El Amor en los Tiempos del Cólera', 20.00, 10, 'Libro Físico', 'https://cdn.pixabay.com/photo/2022/12/17/04/41/ai-generated-7660971_640.jpg'),
+(4, 'La Sombra del Viento', 22.00, 25, 'Libro Físico', 'https://cdn.pixabay.com/photo/2023/03/12/20/37/road-7847795_1280.jpg'),
+(5, 'Rayuela', 18.00, 12, 'Libro Físico', 'https://cdn.pixabay.com/photo/2022/10/27/20/26/house-7551753_640.jpg'),
+(6, 'El Principito', 5.00, 50, 'Libro Digital', 'https://cdn.pixabay.com/photo/2022/09/26/01/14/skeleton-7479456_640.png'),
+(7, 'Ficciones', 7.00, 40, 'Libro Digital', 'https://example.com/images/ficciones.jpg'),
+(8, 'El Aleph', 6.00, 45, 'Libro Digital', 'https://example.com/images/el_aleph.jpg'),
+(9, '1984', 8.00, 30, 'Libro Digital', 'https://example.com/images/1984.jpg'),
+(10, 'Brave New World', 9.00, 35, 'Libro Digital', 'https://example.com/images/brave_new_world.jpg'),
+(11, 'Curso de Programación en Python ', 50.00, 100, 'Curso', 'https://example.com/images/curso_programacion_python.jpg'),
+(12, 'Curso de Data Science', 70.00, 80, 'Curso', 'https://example.com/images/curso_data_science.jpg'),
+(13, 'Curso de Machine Learning', 90.00, 60, 'Curso', 'https://example.com/images/curso_machine_learning.jpg'),
+(14, 'Curso de Inteligencia Artificial', 120.00, 40, 'Curso', 'https://example.com/images/curso_inteligencia_artificial.jpg'),
+(15, 'Curso de Desarrollo Web', 100.00, 70, 'Curso', 'https://example.com/images/curso_desarrollo_web.jpg'),
+(16, 'La Ciudad y los Perros', 15.00, 15, 'Libro Físico', 'https://example.com/images/la_ciudad_y_los_perros.jpg'),
+(17, 'Conversación en La Catedral', 18.00, 15, 'Libro Físico', 'https://example.com/images/conversacion_en_la_catedral.jpg'),
+(18, 'El Tunel', 12.00, 10, 'Libro Físico', 'https://example.com/images/el_tunel.jpg'),
+(19, 'Pedro Páramo', 14.00, 12, 'Libro Físico', 'https://example.com/images/pedro_paramo.jpg'),
+(20, 'La Casa de los Espíritus', 16.00, 20, 'Libro Físico', 'https://example.com/images/la_casa_de_los_espiritus.jpg'),
+(21, 'La Fiesta del Chivo', 20.00, 25, 'Libro Físico', 'https://example.com/images/la_fiesta_del_chivo.jpg'),
+(22, 'El Alquimista', 12.00, 30, 'Libro Físico', 'https://example.com/images/el_alquimista.jpg'),
+(23, '1984', 8.00, 30, 'Libro Digital', 'https://example.com/images/1984.jpg'),
+(24, 'El Nombre de la Rosa', 15.00, 35, 'Libro Digital', 'https://example.com/images/el_nombre_de_la_rosa.jpg'),
+(25, 'El Hobbit', 10.00, 40, 'Libro Digital', 'https://example.com/images/el_hobbit.jpg'),
+(26, 'La Divina Comedia', 20.00, 30, 'Libro Digital', 'https://example.com/images/la_divina_comedia.jpg'),
+(27, 'Curso de Marketing Digital', 150.00, 20, 'Curso', 'https://example.com/images/curso_marketing_digital.jpg'),
+(28, 'Curso de Fotografía', 100.00, 15, 'Curso', 'https://example.com/images/curso_fotografia.jpg'),
+(29, 'Curso de Java', 220.00, 10, 'Curso', 'https://example.com/images/curso_java.jpg'),
+(30, 'Curso de SQL', 180.00, 25, 'Curso', 'https://example.com/images/curso_sql.jpg'),
+(31, 'Curso de Kubernetes', 200.00, 20, 'Curso', 'https://example.com/images/curso_kubernetes.jpg'),
+(32, 'Curso de Docker', 170.00, 30, 'Curso', 'https://example.com/images/curso_docker.jpg'),
+(33, 'Curso de Big Data', 190.00, 15, 'Curso', 'https://example.com/images/curso_big_data.jpg'),
+(34, 'Curso de Python Avanzado', 120.00, 40, 'Curso', 'https://example.com/images/curso_python_avanzado.jpg'),
+(35, 'Curso de Desarrollo de Apps', 110.00, 50, 'Curso', 'https://example.com/images/curso_desarrollo_apps.jpg'),
+(36, 'Curso de Frontend', 130.00, 45, 'Curso', 'https://example.com/images/curso_frontend.jpg'),
+(37, 'Curso de Backend', 140.00, 40, 'Curso', 'https://example.com/images/curso_backend.jpg'),
+(38, 'Curso de UX/UI', 100.00, 35, 'Curso', 'https://example.com/images/curso_ux_ui.jpg'),
+(39, 'Curso de Ciberseguridad', 90.00, 30, 'Curso', 'https://example.com/images/curso_ciberseguridad.jpg'),
+(40, 'Curso de DevOps', 120.00, 25, 'Curso', 'https://example.com/images/curso_devops.jpg'),
+(41, 'Curso de Blockchain', 150.00, 20, 'Curso', 'https://example.com/images/curso_blockchain.jpg'),
+(42, 'Curso de Criptografía', 160.00, 15, 'Curso', 'https://example.com/images/curso_criptografia.jpg'),
+(43, 'Curso de IA', 140.00, 20, 'Curso', 'https://example.com/images/curso_ia.jpg'),
+(44, 'Curso de VR/AR', 180.00, 10, 'Curso', 'https://example.com/images/curso_vr_ar.jpg'),
+(45, 'Curso de Robótica', 200.00, 15, 'Curso', 'https://example.com/images/curso_robotica.jpg'),
+(46, 'Curso de IoT', 220.00, 10, 'Curso', 'https://example.com/images/curso_iot.jpg'),
+(47, 'Curso de Cloud Computing', 190.00, 20, 'Curso', 'https://example.com/images/curso_cloud_computing.jpg'),
+(48, 'Curso de Redes', 170.00, 15, 'Curso', 'https://example.com/images/curso_redes.jpg'),
+(49, 'Curso de Sistemas Operativos', 160.00, 25, 'Curso', 'https://example.com/images/curso_sistemas_operativos.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `providers`
+--
+
+CREATE TABLE `providers` (
+  `provider_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone_number` varchar(20) NOT NULL,
+  `product_supplied` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `providers`
+--
+
+INSERT INTO `providers` (`provider_id`, `name`, `address`, `email`, `phone_number`, `product_supplied`) VALUES
+(1, 'Proveedor Individual 1', 'Calle Falsa 123, Ciudad', 'ind1@example.com', '600123456', 'Producto A'),
+(2, 'Proveedor Individual 2', 'Avenida Siempre Viva 742, Ciudad', 'ind2@example.com', '600234567', 'Producto B'),
+(3, 'Proveedor Individual 3', 'Calle de la Luna 45, Ciudad', 'ind3@example.com', '600345678', 'Producto C'),
+(4, 'Proveedor Individual 4', 'Calle del Sol 78, Ciudad', 'ind4@example.com', '600456789', 'Producto D'),
+(5, 'Proveedor Individual 5', 'Avenida del Mar 12, Ciudad', 'ind5@example.com', '600567890', 'Producto E'),
+(6, 'Proveedor Empresa 1', 'Calle del Comercio 99, Ciudad', 'emp1@example.com', '600678901', 'Producto F'),
+(7, 'Proveedor Empresa 2', 'Boulevard Industrial 34, Ciudad', 'emp2@example.com', '600789012', 'Producto G'),
+(8, 'Proveedor Empresa 3', 'Calle de las Empresas 56, Ciudad', 'emp3@example.com', '600890123', 'Producto H'),
+(9, 'Proveedor Empresa 4', 'Avenida Corporativa 89, Ciudad', 'emp4@example.com', '600901234', 'Producto I'),
+(10, 'Proveedor Empresa 5', 'Calle Comercial 77, Ciudad', 'emp5@example.com', '600123789', 'Producto J'),
+(11, 'Proveedor Individual 6', 'Calle Nueva 11, Ciudad', 'ind6@example.com', '600321456', 'Producto K'),
+(12, 'Proveedor Individual 7', 'Avenida Vieja 22, Ciudad', 'ind7@example.com', '600432567', 'Producto L'),
+(13, 'Proveedor Individual 8', 'Boulevard Moderno 33, Ciudad', 'ind8@example.com', '600543678', 'Producto M'),
+(14, 'Proveedor Individual 9', 'Calle Antigua 44, Ciudad', 'ind9@example.com', '600654789', 'Producto N'),
+(15, 'Proveedor Individual 10', 'Avenida Central 55, Ciudad', 'ind10@example.com', '600765890', 'Producto O'),
+(16, 'Proveedor Empresa 6', 'Calle Urbana 66, Ciudad', 'emp6@example.com', '600876901', 'Producto P'),
+(17, 'Proveedor Empresa 7', 'Avenida Metropolis 77, Ciudad', 'emp7@example.com', '600987012', 'Producto Q'),
+(18, 'Proveedor Empresa 8', 'Boulevard Central 88, Ciudad', 'emp8@example.com', '600098123', 'Producto R'),
+(19, 'Proveedor Empresa 9', 'Calle Principal 99, Ciudad', 'emp9@example.com', '600109234', 'Producto S'),
+(20, 'Proveedor Empresa 10', 'Avenida Principal 100, Ciudad', 'emp10@example.com', '600120345', 'Producto T');
 
 -- --------------------------------------------------------
 
@@ -392,7 +488,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `password`, `type`) VALUES
 (1, 'Dani', 'dani', 'employee'),
 (2, 'Ivan', 'ivan', 'client'),
-(3, 'Albert', 'albert', 'provider');
+(3, 'Albert', 'albert', 'provider'),
+(4, 'Ivan algo', 'hola', 'employee');
 
 --
 -- Índices para tablas volcadas
@@ -426,6 +523,12 @@ ALTER TABLE `companyclients`
   ADD PRIMARY KEY (`client_id`);
 
 --
+-- Indices de la tabla `companyproviders`
+--
+ALTER TABLE `companyproviders`
+  ADD PRIMARY KEY (`provider_id`);
+
+--
 -- Indices de la tabla `courses`
 --
 ALTER TABLE `courses`
@@ -438,10 +541,23 @@ ALTER TABLE `individualclients`
   ADD PRIMARY KEY (`client_id`);
 
 --
+-- Indices de la tabla `individualproviders`
+--
+ALTER TABLE `individualproviders`
+  ADD PRIMARY KEY (`provider_id`);
+
+--
 -- Indices de la tabla `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`product_id`);
+
+--
+-- Indices de la tabla `providers`
+--
+ALTER TABLE `providers`
+  ADD PRIMARY KEY (`provider_id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indices de la tabla `users`
@@ -459,13 +575,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
+
+--
+-- AUTO_INCREMENT de la tabla `providers`
+--
+ALTER TABLE `providers`
+  MODIFY `provider_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -496,6 +618,12 @@ ALTER TABLE `companyclients`
   ADD CONSTRAINT `companyclients_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `companyproviders`
+--
+ALTER TABLE `companyproviders`
+  ADD CONSTRAINT `companyproviders_ibfk_1` FOREIGN KEY (`provider_id`) REFERENCES `providers` (`provider_id`) ON DELETE CASCADE;
+
+--
 -- Filtros para la tabla `courses`
 --
 ALTER TABLE `courses`
@@ -506,8 +634,15 @@ ALTER TABLE `courses`
 --
 ALTER TABLE `individualclients`
   ADD CONSTRAINT `individualclients_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `individualproviders`
+--
+ALTER TABLE `individualproviders`
+  ADD CONSTRAINT `individualproviders_ibfk_1` FOREIGN KEY (`provider_id`) REFERENCES `providers` (`provider_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+

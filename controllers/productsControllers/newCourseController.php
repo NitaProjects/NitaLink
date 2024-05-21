@@ -30,7 +30,7 @@ try {
     }
 } catch (Exception $e) {
     $errorMessage = "Error al registrar el cliente:\n\n " . $e->getMessage();
-    include '../../public/css/error.php';
+    include '../../views\stakeholders\error.php';
     exit;
 }
 ?>
